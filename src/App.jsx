@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { lazy, Suspense, useState } from 'react'
 import { Routes, Route, Outlet, Navigate } from 'react-router-dom'
 import { AuthProvider } from './context/AuthContext'
 import ProtectedRoute from './components/ProtectedRoute'
@@ -33,6 +33,9 @@ import LeitorDeAudio from './components/Acessibilidade/LeitorDeAudio/AudioReader
 import { ClinicalProvider } from './context/ClinicalContext'
 import './style/accountTypography.css'
 
+const Privacidade = lazy(() => import('./pages/Privacidade'))
+const Termos = lazy(() => import('./pages/Termos'))
+
 export default function App() {
     const [mostrarLeitor, setMostrarLeitor] = useState(false)
 
@@ -47,6 +50,8 @@ export default function App() {
                     <Route path="/mapa-corporal" element={<MapaCorporal />} />
                     <Route path="/simulador" element={<Simulador />} />
                     <Route path="/referencias" element={<Referencias />} />
+                    <Route path="/privacidade" element={<Suspense fallback={<p role="status">Carregando documento…</p>}><Privacidade /></Suspense>} />
+                    <Route path="/termos" element={<Suspense fallback={<p role="status">Carregando documento…</p>}><Termos /></Suspense>} />
                 </Route>
 
                     {/* Login */}

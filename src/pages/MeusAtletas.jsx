@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import PatientsList from '../screens/PatientsList.jsx'
 import InviteModal from '../components/perfilDoUsuario/InviteModal.jsx'
@@ -234,6 +234,7 @@ function formatPatient(patient, exams = []) {
     highAlerts: examInfo.highAlerts,
     attentionAlerts: examInfo.attentionAlerts,
     raw: patient,
+    pendingMessageCount: patient.pendingMessageCount || 0,
     exams,
   }
 }
@@ -268,17 +269,17 @@ export default function MeusAtletas() {
   const [carregando, setCarregando] = useState(true)
   const [removingId, setRemovingId] = useState(null)
   const [removeError, setRemoveError] = useState('')
+  const toastTimer = useRef(null)
 
-  const showToast = (msg) => {
+  const showToast = useCallback((msg) => {
     setToast(msg)
-    clearTimeout(showToast._t)
-    showToast._t = setTimeout(() => setToast(null), 2400)
-  }
+    clearTimeout(toastTimer.current)
+    toastTimer.current = setTimeout(() => setToast(null), 2400)
+  }, [])
+  useEffect(() => () => clearTimeout(toastTimer.current), [])
 
-  async function carregarPacientes() {
+  const carregarPacientes = useCallback(async () => {
     try {
-      setCarregando(true)
-
       const data = await getDoctorPatients()
 
       const pacientesFormatados = await Promise.all(
@@ -298,10 +299,32 @@ export default function MeusAtletas() {
     } finally {
       setCarregando(false)
     }
-  }
+  }, [showToast])
 
   useEffect(() => {
-    carregarPacientes()
+    let active = true
+    Promise.resolve().then(() => { if (active) return carregarPacientes() })
+    return () => { active = false }
+  }, [carregarPacientes])
+
+  useEffect(() => {
+    let active = true
+    let fetching = false
+    const refreshMessages = async () => {
+      if (document.hidden || fetching) return
+      fetching = true
+      try {
+        const response = await getDoctorPatients()
+        if (active) setPatients(current => current.map(patient => ({
+          ...patient,
+          pendingMessageCount: response.patients.find(item => item._id === patient.id)?.pendingMessageCount || 0,
+        })))
+      } catch { /* Preserve the last confirmed counts when the connection fails. */ }
+      finally { fetching = false }
+    }
+    const timer = window.setInterval(refreshMessages, 30000)
+    window.addEventListener('focus', refreshMessages)
+    return () => { active = false; window.clearInterval(timer); window.removeEventListener('focus', refreshMessages) }
   }, [])
 
   async function removerAtleta(patient) {
@@ -340,6 +363,7 @@ export default function MeusAtletas() {
         search={search}
         onSearch={(e) => setSearch(e.target.value)}
         onOpenPatient={(p) => navigate(`/medico/atleta/${p.id}`)}
+        onOpenMessages={(p) => navigate(`/medico/atleta/${p.id}?tab=comunicacao`)}
         onInvite={() => setInvite(true)}
         onRemovePatient={removerAtleta}
         removingId={removingId}

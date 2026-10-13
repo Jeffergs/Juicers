@@ -221,6 +221,26 @@ export async function getMyFollowup() {
     return handleResponse(response, 'Erro ao buscar acompanhamento médico.')
 }
 
+export async function sendFollowupInteraction(payload) {
+    return handleResponse(await fetch(`${API_URL}/patients/me/followup/interactions`, {
+        method: 'POST', headers: jsonAuthHeaders(), body: JSON.stringify(payload),
+    }), 'Erro ao enviar mensagem.')
+}
+
+export async function respondToPatientFollowup(patientId, itemId, payload) {
+    return handleResponse(await fetch(`${API_URL}/doctors/patients/${patientId}/followup/${itemId}`, {
+        method: 'POST', headers: jsonAuthHeaders(), body: JSON.stringify(payload),
+    }), 'Erro ao atualizar acompanhamento.')
+}
+
+export async function submitFollowupResult(id, file) {
+    const body = new FormData()
+    body.append('examPdf', file)
+    return handleResponse(await fetch(`${API_URL}/patients/me/followup/requests/${id}/result`, {
+        method: 'POST', headers: authHeaders(), body,
+    }), 'Erro ao enviar resultado.')
+}
+
 export async function getDoctorPatientFollowup(patientId) {
     const response = await fetch(`${API_URL}/doctors/patients/${patientId}/followup`, {
         method: 'GET',

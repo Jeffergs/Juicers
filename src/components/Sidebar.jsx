@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
+import { usePatientFollowup } from '../context/patientFollowup'
 import logoIcon from '../assets/juicers.png'
 import '../style/sidebarAtleta.css'
 import '../style/sidebarMedico.css'
@@ -68,6 +69,7 @@ const VARIANTS = {
 export default function Sidebar({ variant = 'atleta', showAccount = false }) {
     const [open, setOpen] = useState(false)
     const { logout, usuario } = useAuth()
+    const patientFollowup = usePatientFollowup()
     const navigate = useNavigate()
 
     const { prefix, items } = VARIANTS[variant]
@@ -101,6 +103,7 @@ export default function Sidebar({ variant = 'atleta', showAccount = false }) {
                         >
                             <span className={`${prefix}-link-icon`}>{item.icon}</span>
                             <span className={`${prefix}-link-label`}>{item.label}</span>
+                            {variant === 'atleta' && item.to === '/perfil/acompanhamento' && patientFollowup?.unreadReplies.length > 0 && <span className="sa-reply-count" aria-label={`${patientFollowup.unreadReplies.length} respostas não lidas`}>{patientFollowup.unreadReplies.length}</span>}
                         </NavLink>
                     ))}
                 </nav>

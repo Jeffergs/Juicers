@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import '../style/patientList.css'
 import '../style/athletesDesign.css'
+import '../style/doctorFollowupInbox.css'
 
 const PAGE_SIZE = 8
 const LABELS = { ok: 'Normal', atencao: 'Em atenção', risco: 'Risco alto', semExame: 'Sem exame' }
@@ -16,31 +17,33 @@ function Icon({ name, ...props }) {
     chart: <><path d="M4 20h16M5 16V9h3v7M11 16V4h3v12M17 16v-5h3v5" /></>,
     trash: <><path d="M3 6h18M9 6V3h6v3M5 6l1 15h12l1-15M10 10v7M14 10v7" /></>,
     check: <><circle cx="12" cy="12" r="9" /><path d="m8 12 3 3 5-6" /></>,
+    message: <><path d="M4 4h16v13H9l-5 4V4Z" /><path d="M8 9h8M8 13h5" /></>,
   }
   return <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" {...props}>{paths[name]}</svg>
 }
 
-export default function PatientsList({ patients, search, onSearch, onOpenPatient, onInvite, onRemovePatient, removingId }) {
+export default function PatientsList({ patients, search, onSearch, onOpenPatient, onOpenMessages, onInvite, onRemovePatient, removingId }) {
   const [status, setStatus] = useState('all')
   const [pagination, setPagination] = useState({ page: 1, query: '', status: 'all' })
   const query = search.trim().toLocaleLowerCase('pt-BR')
-  const filtered = patients.filter(p => p.name.toLocaleLowerCase('pt-BR').includes(query) && (status === 'all' || statusOf(p) === status))
+  const filtered = patients.filter(p => p.name.toLocaleLowerCase('pt-BR').includes(query) && (status === 'all' || (status === 'messages' ? p.pendingMessageCount > 0 : statusOf(p) === status)))
   const pageCount = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE))
   const currentPage = pagination.query === query && pagination.status === status ? Math.min(pagination.page, pageCount) : 1
   const setPage = page => setPagination({ page, query, status })
   const start = (currentPage - 1) * PAGE_SIZE
   const highAlerts = patients.reduce((sum, p) => sum + (p.highAlerts || 0), 0)
   const attentionAlerts = patients.reduce((sum, p) => sum + (p.attentionAlerts || 0), 0)
+  const pendingMessages = patients.reduce((sum, p) => sum + (p.pendingMessageCount || 0), 0)
 
   return <section className="jc-athletes" aria-labelledby="athletes-title">
     <header className="jc-athletes-header"><div><h1 id="athletes-title">Meus Atletas</h1><p>Acompanhe seus atletas e seus indicadores de saúde.</p></div><button type="button" className="jc-athletes-invite" onClick={onInvite}><Icon name="plus" />Adicionar paciente</button></header>
     <div className="jc-athletes-stats">
-      {[['Total de atletas', patients.length, 'people', 'total'], ['Alertas de risco alto', highAlerts, 'risk', 'risk'], ['Alertas em atenção', attentionAlerts, 'clock', 'attention']].map(([label, value, icon, tone]) => <div key={tone} className="jc-athletes-stat"><span className={`jc-athletes-stat-icon jc-athletes-stat-icon--${tone}`}><Icon name={icon} width="28" height="28" /></span><div><span>{label}</span><strong>{value}</strong></div></div>)}
+      {[['Total de atletas', patients.length, 'people', 'total'], ['Alertas de risco alto', highAlerts, 'risk', 'risk'], ['Alertas em atenção', attentionAlerts, 'clock', 'attention'], ['Mensagens pendentes', pendingMessages, 'message', 'messages']].map(([label, value, icon, tone]) => <div key={tone} className="jc-athletes-stat"><span className={`jc-athletes-stat-icon jc-athletes-stat-icon--${tone}`}><Icon name={icon} width="28" height="28" /></span><div><span>{label}</span><strong>{value}</strong></div></div>)}
     </div>
     <div className="jc-athletes-panel">
       <div className="jc-athletes-toolbar">
         <label className="jc-athletes-search"><Icon name="search" /><input type="search" value={search} onChange={e => { onSearch(e); setPagination({ page: 1, query: e.target.value.trim().toLocaleLowerCase('pt-BR'), status }) }} placeholder="Buscar atleta por nome..." aria-label="Buscar atleta por nome" /></label>
-        <select value={status} onChange={e => { setStatus(e.target.value); setPagination({ page: 1, query, status: e.target.value }) }} aria-label="Filtrar atletas por status"><option value="all">Todos os status</option><option value="ok">Normal</option><option value="atencao">Em atenção</option><option value="risco">Risco alto</option><option value="semExame">Sem exame</option></select>
+        <select value={status} onChange={e => { setStatus(e.target.value); setPagination({ page: 1, query, status: e.target.value }) }} aria-label="Filtrar atletas por status"><option value="all">Todos os status</option><option value="messages">Com mensagens pendentes</option><option value="ok">Normal</option><option value="atencao">Em atenção</option><option value="risco">Risco alto</option><option value="semExame">Sem exame</option></select>
       </div>
       <table className="jc-athletes-table"><caption className="jc-athletes-sr-only">Atletas vinculados à sua conta médica</caption><thead><tr><th scope="col">Atleta</th><th scope="col">Substâncias informadas</th><th scope="col">Último exame</th><th scope="col">Status</th><th scope="col">Ações</th></tr></thead><tbody>
         {filtered.slice(start, start + PAGE_SIZE).map(p => {
@@ -50,7 +53,7 @@ export default function PatientsList({ patients, search, onSearch, onOpenPatient
             <td data-label="Substâncias informadas">{p.compounds?.length ? p.compounds.join(' · ') : 'Nenhuma substância informada'}</td>
             <td data-label="Último exame">{p.lastExam}</td>
             <td data-label="Status"><span className={`jc-athletes-badge jc-athletes-badge--${patientStatus}`}><Icon name={patientStatus === 'risco' ? 'risk' : patientStatus === 'ok' ? 'check' : 'clock'} width="16" height="16" />{LABELS[patientStatus] || LABELS.ok}</span></td>
-            <td data-label="Ações"><div className="jc-athletes-actions"><button type="button" className="jc-athletes-dashboard" onClick={() => onOpenPatient(p)} disabled={removingId === p.id} aria-label={`Ver dashboard de ${p.name}`}><Icon name="chart" width="17" height="17" />Ver dashboard</button>{onRemovePatient && <button type="button" className="jc-athletes-remove" onClick={() => onRemovePatient(p)} disabled={Boolean(removingId)} aria-label={`Excluir ${p.name} da lista de atletas`}><Icon name="trash" width="17" height="17" />{removingId === p.id ? 'Removendo...' : 'Excluir da lista'}</button>}</div></td>
+            <td data-label="Ações"><div className="jc-athletes-actions">{onOpenMessages && <button type="button" className="jc-athletes-messages" onClick={() => onOpenMessages(p)} disabled={removingId === p.id} aria-label={`Abrir mensagens de ${p.name}`}><Icon name="message" width="17" height="17" />Mensagens{p.pendingMessageCount > 0 && <span className="dfi-count">{p.pendingMessageCount}</span>}</button>}<button type="button" className="jc-athletes-dashboard" onClick={() => onOpenPatient(p)} disabled={removingId === p.id} aria-label={`Ver dashboard de ${p.name}`}><Icon name="chart" width="17" height="17" />Ver dashboard</button>{onRemovePatient && <button type="button" className="jc-athletes-remove" onClick={() => onRemovePatient(p)} disabled={Boolean(removingId)} aria-label={`Excluir ${p.name} da lista de atletas`}><Icon name="trash" width="17" height="17" />{removingId === p.id ? 'Removendo...' : 'Excluir da lista'}</button>}</div></td>
           </tr>
         })}
       </tbody></table>

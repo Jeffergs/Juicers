@@ -20,6 +20,13 @@ const requestedExamSchema = new mongoose.Schema(
       trim: true,
     },
 
+    resultExamId: { type: mongoose.Schema.Types.ObjectId, ref: 'Exam' },
+    submittedAt: Date,
+    performedAt: Date,
+    scheduledAt: Date,
+    reason: { type: String, trim: true, maxlength: 2000, default: '' },
+    reviewedAt: Date,
+    dueDate: Date,
     isActive: {
       type: Boolean,
       default: true,

@@ -1,12 +1,15 @@
 import React, { useState } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import Dashboard from '../components/perfilDoUsuario/Dashboard.jsx'
 import UploadZone from '../components/perfilDoUsuario/UploadZone.jsx'
 import { SectionLabel, NoteCard } from '../components/perfilDoUsuario/Primitives.jsx'
 import { STATUS } from '../theme.js'
 import '../style/patientDetail.css'
+import DoctorFollowupInbox from '../components/DoctorFollowupInbox.jsx'
 
 const TABS = [
   { key: 'dashboard', label: 'Dashboard' },
+  { key: 'comunicacao', label: 'Comunicação' },
   { key: 'notas', label: 'Anotações Clínicas' },
   { key: 'exames', label: 'Próximos Exames' },
   { key: 'historico', label: 'Histórico + Upload' },
@@ -54,8 +57,12 @@ export default function PatientDetail({
   onToggleExam,
   onUpload,
   onDeleteExam,
+  onRefreshFollowup,
 }) {
-  const [tab, setTab] = useState('dashboard')
+  const [searchParams, setSearchParams] = useSearchParams()
+  const requestedTab = searchParams.get('tab')
+  const tab = TABS.some(item => item.key === requestedTab) ? requestedTab : 'dashboard'
+  const setTab = value => setSearchParams(current => { const next = new URLSearchParams(current); next.set('tab', value); return next }, { replace: true })
   const [draft, setDraft] = useState('')
   const [outroExame, setOutroExame] = useState('')
   const [salvandoNota, setSalvandoNota] = useState(false)
@@ -84,6 +91,7 @@ export default function PatientDetail({
   )
 
   const reqCount = requestedExams.length
+  const pendingMessages = (followup.interactions || []).filter(item => !item.reply).length
 
   const saveNote = async () => {
     if (!draft.trim()) return
@@ -272,6 +280,7 @@ export default function PatientDetail({
               }}
             >
               {t.label}
+              {t.key === 'comunicacao' && pendingMessages > 0 && <span className="dfi-count">{pendingMessages}</span>}
             </button>
           )
         })}
@@ -291,6 +300,8 @@ export default function PatientDetail({
           />
         </div>
       )}
+
+      {tab === 'comunicacao' && <DoctorFollowupInbox followup={followup} patientId={patient.id} onRefresh={onRefreshFollowup} />}
 
       {tab === 'notas' && (
         <div className="jc-fade-fast" style={{ display: 'flex', flexDirection: 'column', gap: 18, maxWidth: 780 }}>
@@ -381,6 +392,7 @@ export default function PatientDetail({
                     <div style={{ display: 'flex', justifyContent: 'space-between', gap: 12 }}>
                       <span style={{ fontSize: 'var(--ui-small, 12px)', color: '#888', fontWeight: 600 }}>
                         {formatDateBR(note.createdAt)}
+                        {note.readAt && ` · Leitura confirmada em ${formatDateBR(note.readAt)}`}
                       </span>
 
                       {!isEditing && (

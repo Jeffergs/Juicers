@@ -72,8 +72,8 @@ export default function Footer() {
                 <div className="footer_bottom">
                     <p>© {new Date().getFullYear()} Juicers. {t.rights}</p>
                     <div className="footer_bottom_links">
-                        <button type="button" disabled title={t.unavailable}>{t.privacy}</button>
-                        <button type="button" disabled title={t.unavailable}>{t.terms}</button>
+                        <Link to="/privacidade">{t.privacy}</Link>
+                        <Link to="/termos">{t.terms}</Link>
                         <button type="button" onClick={() => window.scrollTo({ top: 0, behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' })}>{t.top} <span aria-hidden="true">↑</span></button>
                     </div>
                 </div>

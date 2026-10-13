@@ -9,6 +9,7 @@ import { parseExamPdfText } from "../utils/examPdfParser.js";
 import ClinicalNote from "../models/ClinicalNote.js";
 import RequestedExam from "../models/RequestedExam.js";
 import User from "../models/User.js";
+import FollowupInteraction from '../models/FollowupInteraction.js';
 import { sendDoctorInviteEmail } from "../services/doctorInviteEmailService.js";
 
 const require = createRequire(import.meta.url);
@@ -141,8 +142,14 @@ export const getMyDoctorPatients = async (req, res) => {
       .populate("userId", "name email role")
       .sort({ createdAt: -1 });
 
+    const pendingMessages = await FollowupInteraction.aggregate([
+      { $match: { doctorId: doctor._id, patientId: { $in: patients.map(patient => patient._id) }, reply: '' } },
+      { $group: { _id: '$patientId', count: { $sum: 1 } } },
+    ]);
+    const counts = new Map(pendingMessages.map(item => [String(item._id), item.count]));
+
     return res.status(200).json({
-      patients,
+      patients: patients.map(patient => ({ ...patient.toObject(), pendingMessageCount: counts.get(String(patient._id)) || 0 })),
     });
   } catch (error) {
     return res.status(500).json({
@@ -565,6 +572,7 @@ export const getDoctorPatientFollowup = async (req, res) => {
       return res.status(error.status).json({ message: error.message });
     }
 
+    const interactions = await FollowupInteraction.find({ doctorId: doctor._id, patientId: patient._id }).sort({ createdAt: -1 });
     const notes = await ClinicalNote.find({
       doctorId: doctor._id,
       patientId: patient._id,
@@ -579,6 +587,7 @@ export const getDoctorPatientFollowup = async (req, res) => {
     return res.status(200).json({
       notes,
       requestedExams,
+      interactions,
     });
   } catch (error) {
     return res.status(500).json({
@@ -653,6 +662,13 @@ export const toggleRequestedExam = async (req, res) => {
       });
     } else {
       requestedExam.isActive = !requestedExam.isActive;
+      if (requestedExam.isActive) {
+        requestedExam.resultExamId = undefined;
+        requestedExam.submittedAt = undefined;
+        requestedExam.reviewedAt = undefined;
+        requestedExam.performedAt = undefined;
+        requestedExam.scheduledAt = undefined;
+      }
       await requestedExam.save();
     }
 
@@ -718,7 +734,7 @@ export const updateClinicalNote = async (req, res) => {
 
     const note = await ClinicalNote.findOneAndUpdate(
       { _id: noteId, doctorId: doctor._id },
-      { text: text.trim() },
+      { text: text.trim(), readAt: null },
       { returnDocument: "after", runValidators: true }
     )
 

@@ -2,6 +2,7 @@ import Patient from "../models/Patient.js";
 import Doctor from "../models/Doctor.js";
 import ClinicalNote from "../models/ClinicalNote.js";
 import RequestedExam from "../models/RequestedExam.js";
+import FollowupInteraction from '../models/FollowupInteraction.js';
 
 export const createOrUpdatePatient = async (req, res) => {
   try {
@@ -144,6 +145,7 @@ export const getMyFollowup = async (req, res) => {
     }
 
     const doctor = patient.doctorId;
+    const interactions = await FollowupInteraction.find({ patientId: patient._id, doctorId: doctor._id }).sort({ createdAt: -1 });
 
     const notes = await ClinicalNote.find({
       doctorId: doctor._id,
@@ -158,6 +160,7 @@ export const getMyFollowup = async (req, res) => {
 
     return res.status(200).json({
       doctor,
+      interactions,
       notes,
       requestedExams,
     });

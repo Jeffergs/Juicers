@@ -76,6 +76,7 @@ function formatFollowup(followupResponse) {
   return {
     notes: followupResponse.notes || [],
     requestedExams: followupResponse.requestedExams || [],
+    interactions: followupResponse.interactions || [],
   }
 }
 
@@ -95,15 +96,16 @@ export default function PerfilAtletaMedico() {
   })
   const [carregando, setCarregando] = useState(true)
   const [erro, setErro] = useState('')
+  const [communicationError, setCommunicationError] = useState('')
 
-  async function carregarPaciente() {
+  useEffect(() => {
+    let active = true
+    async function carregarPaciente() {
     try {
-      setCarregando(true)
-      setErro('')
-
       const patientResponse = await getDoctorPatientById(id)
       const examsResponse = await getDoctorPatientExams(id)
       const followupResponse = await getDoctorPatientFollowup(id)
+      if (!active) return
 
       const exams = examsResponse.exams || []
 
@@ -111,17 +113,37 @@ export default function PerfilAtletaMedico() {
       setDashboardData(exams.length ? buildDashboardData(exams) : { ...data, summary: [], alerts: [], categories: [], examDates: [] })
       setImportedExams(formatImportedExams(exams))
       setFollowup(formatFollowup(followupResponse))
+      setErro('')
     } catch (error) {
+      if (!active) return
       setErro(error.message || 'Erro ao carregar paciente.')
       setPatient(null)
     } finally {
-      setCarregando(false)
+      if (active) setCarregando(false)
     }
   }
 
-  useEffect(() => {
     carregarPaciente()
+    return () => { active = false }
   }, [id, data])
+
+  useEffect(() => {
+    let active = true
+    let fetching = false
+    const refresh = async () => {
+      if (document.hidden || fetching) return
+      fetching = true
+      try {
+        const response = await getDoctorPatientFollowup(id)
+        if (active) { setFollowup(formatFollowup(response)); setCommunicationError('') }
+      } catch {
+        if (active) setCommunicationError('Não foi possível atualizar as mensagens. Use Atualizar mensagens na aba Comunicação.')
+      } finally { fetching = false }
+    }
+    const timer = window.setInterval(refresh, 30000)
+    window.addEventListener('focus', refresh)
+    return () => { active = false; window.clearInterval(timer); window.removeEventListener('focus', refresh) }
+  }, [id])
 
   async function recarregarFollowup() {
     const followupResponse = await getDoctorPatientFollowup(id)
@@ -168,10 +190,12 @@ export default function PerfilAtletaMedico() {
 
   return (
     <>
+      {communicationError && <p role="status">{communicationError}</p>}
       <PatientDetail
         patient={patient}
         data={dashboardData}
         followup={followup}
+        onRefreshFollowup={recarregarFollowup}
         importedExams={importedExams}
         today={today}
         onBack={() => navigate('/medico')}

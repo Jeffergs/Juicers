@@ -19,6 +19,7 @@ import {
 import { authMiddleware } from "../middlewares/authMiddleware.js";
 import { verifiedDoctorMiddleware } from "../middlewares/verifiedDoctorMiddleware.js";
 import { uploadPdf } from "../middlewares/uploadMiddleware.js";
+import { doctorFollowupAction } from '../controllers/followupController.js';
 
 const router = Router();
 
@@ -47,6 +48,7 @@ router.delete(
 );
 
 router.get("/patients/:id/followup", authMiddleware, verifiedDoctorMiddleware, getDoctorPatientFollowup);
+router.post('/patients/:id/followup/:itemId', authMiddleware, verifiedDoctorMiddleware, doctorFollowupAction);
 router.post("/patients/:id/notes", authMiddleware, verifiedDoctorMiddleware, createClinicalNote);
 router.post("/patients/:id/requested-exams", authMiddleware, verifiedDoctorMiddleware, toggleRequestedExam);
 

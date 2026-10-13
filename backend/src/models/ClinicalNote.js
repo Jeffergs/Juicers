@@ -14,6 +14,7 @@ const clinicalNoteSchema = new mongoose.Schema(
       required: true,
     },
 
+    readAt: Date,
     text: {
       type: String,
       required: true,
