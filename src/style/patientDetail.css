@@ -1,0 +1,23 @@
+/* Spacing for the athlete detail page opened by the doctor. */
+.jc-doctor-patient-detail {
+    box-sizing: border-box;
+    width: 100%;
+    min-width: 0;
+    padding: 32px clamp(20px, 3vw, 44px) 96px;
+}
+
+.jc-doctor-patient-detail > * {
+    min-width: 0;
+}
+
+@media (max-width: 768px) {
+    .jc-doctor-patient-detail {
+        padding: 20px 18px 96px;
+    }
+}
+
+@media (max-width: 480px) {
+    .jc-doctor-patient-detail {
+        padding: 16px 14px 96px;
+    }
+}

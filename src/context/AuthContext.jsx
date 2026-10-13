@@ -56,10 +56,17 @@ export function AuthProvider({ children }) {
     }
 
     const atualizarUsuario = (dadosAtualizados) => {
-        const usuarioAtualizado = { ...usuario, ...dadosAtualizados }
+        const role = mapRole(dadosAtualizados?.role) || usuario?.role
+        const usuarioAtualizado = {
+            ...usuario,
+            ...dadosAtualizados,
+            role,
+            token: usuario?.token,
+        }
         const { token, ...usuarioPersistido } = usuarioAtualizado
 
         localStorage.setItem('usuarioLogadoJuicers', JSON.stringify(usuarioPersistido))
+        localStorage.setItem('roleJuicers', role)
         setUsuario(usuarioAtualizado)
     }
 

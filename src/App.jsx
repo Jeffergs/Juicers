@@ -31,6 +31,7 @@ import Footer from './components/Footer'
 import AccessibilityMenu from './components/Acessibilidade/AccessibilityMenu'
 import LeitorDeAudio from './components/Acessibilidade/LeitorDeAudio/AudioReader'
 import { ClinicalProvider } from './context/ClinicalContext'
+import './style/accountTypography.css'
 
 export default function App() {
     const [mostrarLeitor, setMostrarLeitor] = useState(false)

@@ -1,0 +1,129 @@
+/* Scoped to the doctor athlete list, so other screens keep their styles. */
+.jc-athletes { padding: 36px clamp(18px, 3vw, 44px) 90px; color: #182334; font-size: 14px; display: flex; flex-direction: column; gap: 26px; }
+.jc-athletes *, .jc-athletes *::before, .jc-athletes *::after { box-sizing: border-box; }
+.jc-athletes-header { display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap; }
+.jc-athletes h1 { margin: 0; font-size: clamp(28px, 3vw, 40px); font-weight: 750; letter-spacing: -.035em; }
+.jc-athletes-header p { margin: 10px 0 0; color: #58677e; line-height: 1.6; }
+.jc-athletes button, .jc-athletes input, .jc-athletes select { font: inherit; }
+.jc-athletes button { cursor: pointer; }
+.jc-athletes button:disabled { cursor: not-allowed; opacity: .55; }
+.jc-athletes button:focus-visible, .jc-athletes select:focus-visible { outline: 3px solid #087c70; outline-offset: 3px; }
+.jc-athletes-invite { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 50px; padding: 12px 22px; border: 0; border-radius: 11px; background: #2fb8b1; color: #fff; font-weight: 700 !important; }
+.jc-athletes-invite:hover { background: #269f99; }
+.jc-athletes-stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+.jc-athletes-stat { background: #fff; border: 1px solid #e2e8f0; border-radius: 15px; padding: 24px; display: grid; grid-template-columns: minmax(0, 1fr); justify-items: center; align-content: center; gap: 10px; box-shadow: 0 4px 18px #18233403; }
+.jc-athletes-stat > div { min-width: 0; width: 100%; text-align: center; }
+.jc-athletes-stat > div > span { display: flex; align-items: center; justify-content: center; min-height: 2.8em; line-height: 1.4; color: #58677e; font-size: 14px; }
+.jc-athletes-stat strong { display: block; font-size: 34px; margin-top: 4px; line-height: 1.2; }
+.jc-athletes-stat-icon { display: flex; align-items: center; justify-content: center; width: 58px; height: 58px; border-radius: 50%; }
+.jc-athletes-stat-icon--total { background: #e5faf6; color: #087c70; }
+.jc-athletes-stat-icon--risk { background: #fff0f1; color: #b42332; }
+.jc-athletes-stat-icon--attention { background: #fff4df; color: #9a5900; }
+.jc-athletes-panel { background: #fff; border: 1px solid #e2e8f0; border-radius: 16px; padding: 22px; min-width: 0; box-shadow: 0 4px 18px #18233403; }
+.jc-athletes-toolbar { display: flex; justify-content: space-between; gap: 18px; margin-bottom: 24px; }
+.jc-athletes-search { display: flex; align-items: center; gap: 12px; border: 1px solid #ccd5e1; border-radius: 9px; padding: 0 14px; flex: 1; max-width: 560px; color: #58677e; min-width: 0; }
+.jc-athletes-search:focus-within { outline: 2px solid #087c70; outline-offset: 2px; }
+.jc-athletes-search svg { flex-shrink: 0; }
+.jc-athletes-search input { border: 0; outline: none; min-width: 0; width: 100%; background: transparent; color: #182334; padding: 13px 0; }
+.jc-athletes-search input::placeholder { color: #63738a; opacity: 1; }
+.jc-athletes-toolbar select { min-height: 48px; min-width: 185px; padding: 10px 14px; border: 1px solid #ccd5e1; border-radius: 9px; background: #fff; color: #182334; }
+.jc-athletes-table { width: 100%; border-collapse: collapse; table-layout: fixed; font-size: 14px; }
+.jc-athletes-table thead { background: #f4f6fa; }
+.jc-athletes-table thead th { text-align: left; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .025em; padding: 16px 12px; color: #58677e; }
+.jc-athletes-table thead th:first-child { width: 24%; border-radius: 8px 0 0 8px; }
+.jc-athletes-table thead th:nth-child(2) { width: 25%; }
+.jc-athletes-table thead th:nth-child(3) { width: 16%; }
+.jc-athletes-table thead th:nth-child(4) { width: 16%; }
+.jc-athletes-table thead th:last-child { width: 19%; border-radius: 0 8px 8px 0; }
+.jc-athletes-table tbody td, .jc-athletes-table tbody th { padding: 20px 12px; border-bottom: 1px solid #e2e8f0; text-align: left; vertical-align: middle; overflow-wrap: anywhere; color: #425169; font-weight: 400; }
+.jc-athletes-table tbody tr:hover { background: #fafdfc; }
+.jc-athletes-person { display: flex; align-items: center; gap: 12px; }
+.jc-athletes-person > div { min-width: 0; }
+.jc-athletes-person strong { display: block; color: #182334; font-weight: 650; line-height: 1.5; }
+.jc-athletes-person div > span { display: block; color: #63738a; font-size: 12px; margin-top: 3px; }
+.jc-athletes-avatar { display: flex; justify-content: center; align-items: center; width: 44px; height: 44px; flex-shrink: 0; border-radius: 50%; background: #e5faf6; color: #087c70; font-weight: 700; }
+.jc-athletes-badge { display: inline-flex; align-items: center; gap: 6px; padding: 8px 10px; border-radius: 30px; font-size: 12px; font-weight: 600; line-height: 1.3; }
+.jc-athletes-badge svg { flex-shrink: 0; }
+.jc-athletes-badge--ok { background: #e7f8ed; color: #19743e; }
+.jc-athletes-badge--atencao { background: #fff4df; color: #925400; }
+.jc-athletes-badge--risco { background: #fff0f1; color: #b42332; }
+.jc-athletes-badge--semExame { background: #eef2f6; color: #526177; }
+.jc-athletes-actions { display: flex; flex-direction: column; gap: 3px; align-items: stretch; }
+.jc-athletes-actions button { display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-height: 44px; border-radius: 8px; padding: 8px; font-size: 12px; font-weight: 600; }
+.jc-athletes-actions svg { flex-shrink: 0; }
+.jc-athletes-dashboard { background: #f4fffc; border: 1px solid #079c8e; color: #087f73; }
+.jc-athletes-dashboard:hover:not(:disabled) { background: #e0f8f2; }
+.jc-athletes-remove { border: 1px solid transparent; background: transparent; color: #b42332; }
+.jc-athletes-remove:hover:not(:disabled) { background: #fff0f1; }
+.jc-athletes-footer { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; padding-top: 20px; color: #58677e; font-size: 13px; }
+.jc-athletes-footer p { margin: 0; }
+.jc-athletes-pagination { display: flex; align-items: center; gap: 12px; }
+.jc-athletes-pagination button { width: 44px; height: 44px; border: 1px solid #ccd5e1; background: #fff; border-radius: 8px; color: #087c70; font-size: 24px; }
+.jc-athletes-pagination button:hover:not(:disabled) { background: #e5faf6; }
+.jc-athletes-empty { text-align: center; padding: 28px 12px; color: #58677e; line-height: 1.6; }
+.jc-athletes-sr-only { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+/* Proportions and softer surfaces from the approved visual proposal. */
+.jc-athletes { padding-top: 54px; gap: 22px; }
+.jc-athletes h1 { color: #0e1726; font-size: clamp(26px, 2.4vw, 32px); line-height: 1.15; }
+.jc-athletes-header p { font-size: 14px; color: #61708b; }
+.jc-athletes-invite { min-height: 56px; padding: 14px 26px; }
+.jc-athletes-stats { gap: 20px; }
+.jc-athletes-stat { min-height: 126px; padding: 24px; border-color: #e6ebf2; }
+.jc-athletes-stat-icon { width: 52px; height: 52px; }
+.jc-athletes-stat > div > span { font-size: 13px; }
+.jc-athletes-stat strong { font-size: 28px; }
+.jc-athletes-panel { padding: 24px; border-color: #e6ebf2; box-shadow: 0 8px 28px #18233403; }
+.jc-athletes-toolbar select { min-width: 220px; }
+.jc-athletes-table { font-size: 13px; }
+.jc-athletes-table thead th { font-size: 11px; padding: 15px 14px; }
+.jc-athletes-table tbody td, .jc-athletes-table tbody th { padding: 16px 14px; border-color: #e8edf3; }
+.jc-athletes-person { gap: 14px; }
+.jc-athletes-avatar { width: 52px; height: 52px; font-size: 14px; background: #e0efff; color: #1765bd; }
+.jc-athletes-table tbody tr:nth-child(4n + 2) .jc-athletes-avatar { background: #eee5ff; color: #7040c6; }
+.jc-athletes-table tbody tr:nth-child(4n + 3) .jc-athletes-avatar { background: #ffe5e7; color: #b42332; }
+.jc-athletes-table tbody tr:nth-child(4n + 4) .jc-athletes-avatar { background: #def5e5; color: #19743e; }
+.jc-athletes-person div > span { font-size: 12px; }
+.jc-athletes-badge { padding: 10px 12px; font-size: 12px; }
+.jc-athletes-actions { gap: 5px; }
+.jc-athletes-actions button { font-size: 12px; }
+.jc-athletes-footer { padding-top: 22px; font-size: 12px; }
+.jc-athletes-pagination button[aria-current="page"] { background: #dff8f3; border-color: #dff8f3; font-weight: 700; }
+@media (max-width: 1050px) {
+  .jc-athletes-stat { padding: 18px; gap: 12px; }
+  .jc-athletes-stat-icon { width: 44px; height: 44px; }
+  .jc-athletes-table, .jc-athletes-table tbody, .jc-athletes-table tbody tr, .jc-athletes-table tbody th, .jc-athletes-table tbody td { display: block; width: 100%; }
+  .jc-athletes-table thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+  .jc-athletes-table tbody { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+  .jc-athletes-table tbody tr { border: 1px solid #e2e8f0; border-radius: 12px; padding: 16px; }
+  .jc-athletes-table tbody td, .jc-athletes-table tbody th { border: 0; padding: 8px 0; }
+  .jc-athletes-table td::before { content: attr(data-label); display: block; color: #63738a; font-size: 11px; margin-bottom: 6px; }
+  .jc-athletes-table td:last-child::before { display: none; }
+  .jc-athletes-actions { margin-top: 8px; }
+}
+@media (max-width: 600px) {
+  .jc-athletes-stats { grid-template-columns: 1fr; gap: 12px; }
+  .jc-athletes-stat strong { font-size: 28px; }
+}
+@media (max-width: 600px) {
+  .jc-athletes { padding: 18px 14px 90px; gap: 20px; }
+  .jc-athletes-invite { width: 100%; }
+  .jc-athletes-panel { padding: 14px; }
+  .jc-athletes-toolbar { flex-direction: column; gap: 12px; }
+  .jc-athletes-search { max-width: none; }
+  .jc-athletes-table tbody { grid-template-columns: 1fr; }
+  .jc-athletes-footer { flex-direction: column; align-items: flex-start; }
+  .jc-athletes-pagination { flex-wrap: wrap; gap: 6px; }
+}
+@media (min-width: 601px) and (max-width: 1050px) {
+  .jc-athletes-stat { min-height: 106px; padding: 16px; gap: 10px; }
+  .jc-athletes-stat-icon { width: 40px; height: 40px; }
+  .jc-athletes-stat > div > span { font-size: 12px; }
+  .jc-athletes-stat strong { font-size: 28px; }
+}
+@media (max-width: 600px) {
+  .jc-athletes-header p { font-size: 14px; }
+  .jc-athletes-stat { min-height: 96px; padding: 18px; }
+  .jc-athletes-stat-icon { width: 52px; height: 52px; }
+  .jc-athletes-toolbar select { min-width: 0; width: 100%; }
+  .jc-athletes-table tbody td, .jc-athletes-table tbody th { padding: 8px 0; }
+}

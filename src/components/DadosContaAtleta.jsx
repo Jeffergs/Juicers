@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { getMyPatientProfile, savePatientProfile, updateUserProfile } from '../services/api'
+import { useAuth } from '../context/AuthContext'
 import '../style/dadosContaMedico.css'
 import '../style/dadosContaAtleta.css'
 
@@ -45,28 +46,6 @@ function normalizarCompostos(raw) {
             }
         })
         .filter(c => c.nome)
-}
-
-function carregarDadosConta() {
-    const dados = localStorage.getItem('dadosContaCicloRisco')
-    if (!dados) return INITIAL
-    try {
-        const parsed = JSON.parse(dados)
-        return {
-            ...INITIAL,
-            ...parsed,
-            compostos: normalizarCompostos(parsed.compostos),
-        }
-    } catch {
-        return INITIAL
-    }
-}
-
-function formatarStatusCiclo(status) {
-    if (status === 'sim') return 'Ciclo ativo'
-    if (status === 'off') return 'Em off'
-    if (status === 'nunca') return 'Nunca usou'
-    return ''
 }
 
 function RadioGroup({ options, value, onChange }) {
@@ -123,12 +102,16 @@ function Toast({ msg, show, warn }) {
 }
 
 export default function DadosContaAtleta({ embedded = false }) {
-    const dadosIniciais = carregarDadosConta()
+    const { atualizarUsuario } = useAuth()
+    const dadosIniciais = INITIAL
 
     const [form, setForm] = useState(dadosIniciais)
     const [saved, setSaved] = useState(dadosIniciais)
     const [toast, setToast] = useState({ show: false, msg: '', warn: false })
     const [saving, setSaving] = useState(false)
+    const [loading, setLoading] = useState(true)
+    const [profileLoaded, setProfileLoaded] = useState(false)
+    const [saveError, setSaveError] = useState('')
     const [novoComposto, setNovoComposto] = useState('')
 
     useEffect(() => {
@@ -145,7 +128,7 @@ export default function DadosContaAtleta({ embedded = false }) {
                     nome: partesNome[0] || '',
                     sobrenome: partesNome.slice(1).join(' '),
                     idade: patient.age || '',
-                    sexo: patient.biologicalSex === 'male' ? 'Masculino' : 'Feminino',
+                    sexo: patient.biologicalSex === 'male' ? 'Masculino' : patient.biologicalSex === 'female' ? 'Feminino' : '',
                     peso: patient.weight || '',
                     altura: patient.height ? patient.height * 100 : '',
                     cicloAtivo: patient.cycleStatus || 'sim',
@@ -161,9 +144,12 @@ export default function DadosContaAtleta({ embedded = false }) {
 
                 setForm(dadosBanco)
                 setSaved(dadosBanco)
+                setProfileLoaded(true)
                 localStorage.setItem('dadosContaCicloRisco', JSON.stringify(dadosBanco))
-            } catch {
-                // se não tiver perfil ainda, mantém localStorage
+            } catch (error) {
+                setSaveError(error.message || 'Não foi possível carregar seus dados. Recarregue a página.')
+            } finally {
+                setLoading(false)
             }
         }
 
@@ -215,8 +201,10 @@ export default function DadosContaAtleta({ embedded = false }) {
     }
 
     const handleSave = async () => {
+        if (saving || loading || !profileLoaded) return
         try {
             setSaving(true)
+            setSaveError('')
 
             const sexoMap = {
                 Masculino: 'male',
@@ -230,11 +218,10 @@ export default function DadosContaAtleta({ embedded = false }) {
                 0
             )
 
-            await updateUserProfile({
-                name: nomeCompleto,
-            })
+            if (!form.nome.trim() || !form.sobrenome.trim()) throw new Error('Preencha o nome e o sobrenome.')
+            if (form.compostos.some(c => !Number.isFinite(Number(c.dosagem)) || Number(c.dosagem) < 0)) throw new Error('Informe dosagens válidas e não negativas.')
 
-            await savePatientProfile({
+            const profileResponse = await savePatientProfile({
                 age: Number(form.idade),
                 biologicalSex: sexoMap[form.sexo] || 'other',
                 weight: Number(form.peso),
@@ -251,11 +238,15 @@ export default function DadosContaAtleta({ embedded = false }) {
                 healthConditions: form.condicoes,
             })
 
+            const userResponse = await updateUserProfile({ name: nomeCompleto })
+            atualizarUsuario(userResponse.user)
+
             const dadosAtualizados = {
                 ...form,
-                nome: form.nome,
-                sobrenome: form.sobrenome,
-                ultimaAtualizacao: new Date().toLocaleDateString('pt-BR', {
+                nome: form.nome.trim(),
+                sobrenome: form.sobrenome.trim(),
+                compostos: normalizarCompostos(profileResponse.patient.substances),
+                ultimaAtualizacao: new Date(profileResponse.patient.updatedAt).toLocaleDateString('pt-BR', {
                     day: '2-digit',
                     month: 'long',
                     year: 'numeric',
@@ -263,18 +254,12 @@ export default function DadosContaAtleta({ embedded = false }) {
             }
 
             localStorage.setItem('dadosContaCicloRisco', JSON.stringify(dadosAtualizados))
-            localStorage.setItem(
-                'usuarioLogadoJuicers',
-                JSON.stringify({
-                    ...JSON.parse(localStorage.getItem('usuarioLogadoJuicers') || '{}'),
-                    name: nomeCompleto,
-                })
-            )
 
             setForm(dadosAtualizados)
             setSaved(dadosAtualizados)
             showToast('Dados atualizados com sucesso')
         } catch (error) {
+            setSaveError(error.message || 'Erro ao salvar dados')
             showToast(error.message || 'Erro ao salvar dados', true)
         } finally {
             setSaving(false)
@@ -293,31 +278,29 @@ export default function DadosContaAtleta({ embedded = false }) {
     ].filter(Boolean).join(' ')
 
     const nomeCompleto = `${form.nome || 'Usuário'} ${form.sobrenome || ''}`.trim()
-    const statusCiclo = formatarStatusCiclo(form.cicloAtivo)
+    const iniciais = [form.nome, form.sobrenome].filter(Boolean).map(parte => parte.trim()[0] || '').join('').toUpperCase() || 'A'
 
     return (
         <div className={`dc-wrap${embedded ? ' dc-wrap--embedded' : ''}`}>
 
             <div className="dc-page">
+                {loading && <p role="status">Carregando seus dados...</p>}
+                {saveError && <p role="alert" className="dc-profile-save-error">{saveError}</p>}
 
-                {!embedded && (
-                    <div className="dc-header">
+                <header className="dc-header">
                         <div className="dc-header-info">
-                            <h1>
-                                {nomeCompleto}
-                                {dirty && <span className="dc-dirty-badge">● Alterações não salvas</span>}
-                            </h1>
-                            <p>
-                                {form.idade ? `${form.idade} anos` : 'Idade não informada'}
-                                {form.peso && ` · ${form.peso} kg`}
-                                {form.altura && ` · ${form.altura} cm`}
-                                {statusCiclo && ` · ${statusCiclo}`}
-                            </p>
+                            <h1>Dados da conta</h1>
+                            <p>Mantenha seu perfil e suas informações de saúde atualizados.</p>
+                            {dirty && <span className="dc-dirty-badge">● Alterações não salvas</span>}
                         </div>
-                    </div>
-                )}
+                        <div className="dc-profile-summary">
+                            <span className="dc-profile-avatar" aria-hidden="true">{iniciais}</span>
+                            <strong>{nomeCompleto}</strong>
+                            <span className="dc-profile-role">Atleta</span>
+                        </div>
+                </header>
 
-                <div className="dc-grid">
+                <div className="dc-grid" inert={loading || saving || !profileLoaded}>
 
                     <div className="dc-section dc-section--accent dc-section--perfil">
                         <div className="dc-section-title">
@@ -404,6 +387,7 @@ export default function DadosContaAtleta({ embedded = false }) {
                                 </svg>
                                 Compostos utilizados
                             </div>
+                            <p className="dc-section-description">Informe os compostos e a dosagem semanal.</p>
 
                             <div className="dc-compost-block">
                                 {sugestoesDisponiveis.length > 0 && (
@@ -419,23 +403,6 @@ export default function DadosContaAtleta({ embedded = false }) {
                                         ))}
                                     </div>
                                 )}
-
-                                <div className="dc-compost-custom">
-                                    <input
-                                        type="text"
-                                        placeholder="Outro composto (ex: Primobolan)"
-                                        value={novoComposto}
-                                        onChange={e => setNovoComposto(e.target.value)}
-                                        onKeyDown={handleCustomKeyDown}
-                                    />
-                                    <button
-                                        type="button"
-                                        className="dc-compost-custom-btn"
-                                        onClick={handleAdicionarCustom}
-                                    >
-                                        Adicionar
-                                    </button>
-                                </div>
 
                                 <div className="dc-compost-list">
                                     {form.compostos.length === 0 && (
@@ -457,7 +424,7 @@ export default function DadosContaAtleta({ embedded = false }) {
                                                         atualizarDosagemComposto(c.nome, e.target.value)
                                                     }
                                                 />
-                                                <span>mg/sem</span>
+                                                <span>mg/semana</span>
                                             </div>
 
                                             <button
@@ -470,6 +437,24 @@ export default function DadosContaAtleta({ embedded = false }) {
                                             </button>
                                         </div>
                                     ))}
+                                </div>
+
+                                <div className="dc-compost-custom">
+                                    <input
+                                        type="text"
+                                        placeholder="Outro composto (ex: Primobolan)"
+                                        aria-label="Outro composto"
+                                        value={novoComposto}
+                                        onChange={e => setNovoComposto(e.target.value)}
+                                        onKeyDown={handleCustomKeyDown}
+                                    />
+                                    <button
+                                        type="button"
+                                        className="dc-compost-custom-btn"
+                                        onClick={handleAdicionarCustom}
+                                    >
+                                        + Adicionar
+                                    </button>
                                 </div>
 
                                 <div className="dc-tag-count">
@@ -534,12 +519,11 @@ export default function DadosContaAtleta({ embedded = false }) {
                             <span>{form.ultimaAtualizacao || 'Ainda não atualizado'}</span>
                         </div>
                         <div className="dc-save-actions">
-                            {dirty && (
-                                <button className="dc-btn-discard" onClick={handleDiscard}>
-                                    Descartar
-                                </button>
-                            )}
+                            <button type="button" className="dc-btn-discard" onClick={handleDiscard} disabled={!dirty || saving}>
+                                Cancelar
+                            </button>
                             <button className={saveBtnClass} onClick={handleSave} disabled={!dirty || saving}>
+                                <svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true"><path d="m4 10 4 4 8-8" /></svg>
                                 {saving ? 'Salvando…' : 'Salvar alterações'}
                             </button>
                         </div>

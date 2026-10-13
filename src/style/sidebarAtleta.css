@@ -100,7 +100,7 @@
     transition: background 0.15s, color 0.15s;
 }
 
-.sa-sair:hover { background: var(--sa-hover); color: #a40e0e; }
+.sa-sair:hover, .sa-sair:focus-visible { background: transparent; color: #b42332; }
 
 .sa-hamburger {
     display: none;

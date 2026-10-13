@@ -13,19 +13,20 @@
     z-index: 100;
     width: 100%;
     display: flex;
+    flex-wrap: nowrap;
     align-items: center;
     justify-content: space-between;
-    padding: 0 clamp(1.5rem, 4vw, 3rem);
-    height: 64px;
+    padding: 12px clamp(1.5rem, 4vw, 3rem);
+    height: 80px;
     background: transparent;
     border-bottom: 1px solid transparent;
     transition: background 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease, backdrop-filter 0.4s ease;
 }
 
 .navbar.scrolled {
-    background: rgba(255, 255, 255, 0.75);
+    background: rgba(255, 255, 255, 0.97);
     border-bottom: 1px solid rgba(0, 0, 0, 0.06);
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.35);
+    box-shadow: 0 4px 16px rgba(16, 27, 48, 0.08);
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
 }
@@ -35,12 +36,15 @@
     display: flex;
     align-items: center;
     gap: 16px;
-    transform: translateY(-12px);
 }
 
 .navbar-brand {
     display: flex;
     align-items: center;
+    padding: 0;
+    margin: 0;
+    height: 48px;
+    overflow: hidden;
     text-decoration: none;
     flex-shrink: 0;
 }
@@ -98,7 +102,6 @@
     display: flex;
     align-items: center;
     gap: 10px;
-    transform: translateY(-12px);
 }
 
 /* ── Botão Menu ──────────────────────────────────────────── */
@@ -161,7 +164,7 @@
     font-weight: 600;
     letter-spacing: 0.04em;
     text-transform: uppercase;
-    color: var(--cor-texto) !important;
+    color: #fff !important;
     background: var(--cor-vermelho);
     border-radius: 6px;
     text-decoration: none;
@@ -181,6 +184,9 @@
     top: calc(100% + 8px);
     left: 0;
     min-width: 220px;
+    max-height: calc(100dvh - 104px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
     z-index: 150;
     background: rgba(255, 255, 255, 0.97);
     border: 1px solid var(--cor-borda);
@@ -200,6 +206,7 @@
 }
 
 .nav-dropdown a {
+    flex-shrink: 0;
     padding: 10px 12px;
     font-size: 13px;
     color: var(--cor-texto-suave);
@@ -250,17 +257,23 @@
 .mobile-panel {
     display: flex;
     flex-direction: column;
-    position: absolute;
-    top: calc(100% + 8px);
-    right: 0;
-    min-width: 220px;
+    position: fixed;
+    top: 88px;
+    left: 16px;
+    right: 16px;
+    min-width: 0;
+    max-height: calc(100vh - 104px);
+    max-height: calc(100dvh - 104px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
     z-index: 150;
-    background: rgba(255, 255, 255, 0.97);
+    background: #fff;
     border: 1px solid var(--cor-borda);
     border-radius: 10px;
     padding: 8px;
     box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
     opacity: 0;
+    visibility: hidden;
     transform: translateY(-6px);
     pointer-events: none;
     transition: opacity 0.2s ease, transform 0.2s ease;
@@ -268,17 +281,19 @@
 
 .mobile-panel.open {
     opacity: 1;
+    visibility: visible;
     transform: translateY(0);
     pointer-events: auto;
 }
 
 .mobile-panel a {
+    flex-shrink: 0;
     padding: 10px 12px;
     font-size: 13px;
     color: var(--cor-texto-suave);
     text-decoration: none;
     border-radius: 6px;
-    white-space: nowrap;
+    white-space: normal;
     transition: color 0.15s, background 0.15s;
 }
 
@@ -288,6 +303,7 @@
 }
 
 .mobile-divider {
+    flex-shrink: 0;
     height: 1px;
     margin: 6px 4px;
     background: var(--cor-borda);
@@ -316,7 +332,7 @@
 
 @media (max-width: 480px) {
     .navbar {
-        padding: 0 1rem;
+        padding: 12px 1rem;
     }
 
     .navbar-brand .logo-icon {
@@ -331,7 +347,4 @@
         padding: 5px 9px;
     }
 
-    .mobile-panel {
-        min-width: 200px;
-    }
 }

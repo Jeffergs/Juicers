@@ -53,6 +53,9 @@ function cleanMarkers(markers) {
 }
 
 function getBlocks(text) {
+  // The laboratory fallback is valid only for its explicit section delimiter.
+  // An entire unrelated PDF must never be treated as one exam block.
+  if (!text.includes('ESPACO ENTRE OS MEMOS')) return [];
   return text
     .split("ESPACO ENTRE OS MEMOS")
     .map(block => block.trim())
@@ -84,7 +87,7 @@ function findBlockValue(text, matcher, unitPattern) {
 
 function extractHemogram(text) {
   const hemoglobin = text.match(
-    /([0-9]+(?:[,.][0-9]+)?)\s*G\/DL\s+HEMOGLOBINA/i
+    /([0-9]+(?:[,.][0-9]+)?)\s*G\/DL\s+[0-9]+(?:[,.][0-9]+)?\s*-\s*[0-9]+(?:[,.][0-9]+)?\s*G\/DL\s+HEMOGLOBINA/i
   );
 
   const hematocrit =
@@ -165,13 +168,14 @@ function getRiskAndAlerts(markers) {
  * aquele laudo e falha inteiro em qualquer outro — todos os marcadores voltam
  * nulos e o exame é recusado.
  *
- * Esta passagem genérica roda DEPOIS e só preenche o que ficou faltando:
- * procura o nome do marcador no início de uma linha e lê o primeiro número.
+ * A leitura pelo nome considera resultados na mesma linha, nas linhas
+ * seguintes e hemogramas com resultado/referência antes do nome. Valores
+ * associados diretamente ao nome têm prioridade sobre o fallback do laboratório.
  *
  * Três regras evitam os erros clássicos de laudo:
  *   1. nomes mais longos primeiro — "HEMOGLOBINA GLICADA" antes de
  *      "HEMOGLOBINA", senão o valor da glicada vira o da hemoglobina;
- *   2. cada linha é consumida uma única vez;
+ *   2. a busca para ao encontrar outro marcador ou valores de referência;
  *   3. o valor passa por uma faixa de plausibilidade — hematócrito 5,6 é
  *      descartado em vez de salvo.
  * ---------------------------------------------------------------------- */
@@ -198,16 +202,15 @@ const GENERIC_MARKERS = [
 
 function firstNumberAfter(rest) {
   // Ignora pontuação/pontilhado entre o rótulo e o valor.
-  const match = rest.replace(/^[\s.:·|=-]+/, "").match(/^(\d{1,3}(?:\.\d{3})*|\d+)(?:[.,](\d+))?/);
+  const match = rest.replace(/^[\s.:·|=]+/, "").match(/^\d+(?:[.,]\d+)*/);
 
   if (!match) return null;
 
-  const inteiro = match[1].replace(/\./g, "");
-  return toNumber(match[2] ? `${inteiro}.${match[2]}` : inteiro);
+  return toNumber(match[0]);
 }
 
 export function extractByMarkerName(text) {
-  const lines = text
+  const lines = normalizeText(text)
     .split("\n")
     .map(line => line.trim())
     .filter(Boolean);
@@ -217,28 +220,53 @@ export function extractByMarkerName(text) {
     .sort((a, b) => b.nome.length - a.nome.length);
 
   const encontrados = {};
-  const usadas = new Set();
-
-  for (const alvo of alvos) {
-    if (encontrados[alvo.key] !== undefined) continue;
-
-    for (let i = 0; i < lines.length; i++) {
-      if (usadas.has(i) || !lines[i].startsWith(alvo.nome)) continue;
-
-      // O caractere seguinte não pode ser letra: evita "FERRO" casar "FERRITINA"
-      const seguinte = lines[i][alvo.nome.length];
-      if (seguinte && /[A-Z]/.test(seguinte)) continue;
-
-      const valor = firstNumberAfter(lines[i].slice(alvo.nome.length));
-      if (valor === null) continue;
-
-      const [min, max] = alvo.faixa;
-      if (valor < min || valor > max) continue;
-
-      encontrados[alvo.key] = valor;
-      usadas.add(i);
-      break;
+  const conflicts = new Set();
+  const matchName = line => alvos.find(alvo => line.startsWith(alvo.nome)
+    && !/[A-Z]/.test(line[alvo.nome.length] || ' '));
+  const metadata = /REFERENCIA|VALORES? (?:NORMAIS?|DESEJAVEIS?)|RESULTADOS? ANTERIORES?|HISTORICO|COLETA|COLETADO|DATA|METODO|MATERIAL|NASCIMENTO|LIBERACAO/;
+  const numericResult = (line, key) => {
+    const resultText = line.replace(/^RESULTADO(?: ATUAL)?\s*[:=]?\s*/, '').replace(/^[\s.:·|=]+/, '');
+    // Reference intervals and dates are not individual measured results.
+    if (/^\d+[.,]?\d*\s*(?:-|A\b|ATE\b|\/\d)/.test(resultText)) return null;
+    const value = firstNumberAfter(resultText);
+    if (value === null) return null;
+    if (['leukocytes', 'platelets'].includes(key)) {
+      // The dashboard stores these counts in thousands per mm³.
+      if (/MIL(?:HARES)?\s*\/|10\s*\^?\s*3\s*\//.test(resultText)) return value;
+      if (/(?:\/MM[3³]|\/U[Ll]|\/µL|\/ΜL)/.test(resultText)) return value / 1000;
     }
+    return value;
+  };
+
+  for (let i = 0; i < lines.length; i++) {
+    const alvo = matchName(lines[i]);
+    if (!alvo || conflicts.has(alvo.key)) continue;
+    const rest = lines[i].slice(alvo.nome.length);
+    let valor = metadata.test(rest) ? null : numericResult(rest, alvo.key);
+    // Some hemograms put measured value, reference interval, then the name.
+    // Match the measured row by its unit instead of taking the reference limit.
+    const units = { hemoglobin: /G\/DL/, hematocrit: /%/, erythrocytes: /MILHOES\/MM/, leukocytes: /MIL\/MM/, platelets: /MIL\/MM/ };
+    if (valor === null && units[alvo.key] && i >= 2
+        && /^\d+(?:[.,]\d+)?\s*-\s*\d/.test(lines[i - 1])
+        && units[alvo.key].test(lines[i - 2])) {
+      valor = numericResult(lines[i - 2], alvo.key);
+    }
+    if (valor === null) {
+      for (let next = i + 1; next < Math.min(lines.length, i + 6); next++) {
+        const line = lines[next];
+        if (matchName(line) || /REFERENCIA|RESULTADOS? ANTERIORES?|HISTORICO/.test(line)) break;
+        if (metadata.test(line)) continue;
+        valor = numericResult(line, alvo.key);
+        if (valor !== null) break;
+      }
+    }
+    if (valor === null) continue;
+    const [min, max] = alvo.faixa;
+    if (valor < min || valor > max) continue;
+    if (encontrados[alvo.key] !== undefined && encontrados[alvo.key] !== valor) {
+      delete encontrados[alvo.key];
+      conflicts.add(alvo.key);
+    } else encontrados[alvo.key] = valor;
   }
 
   return encontrados;
@@ -361,14 +389,13 @@ export function parseExamPdfText(rawText = "") {
     ...hemogramMarkers,
   });
 
-  // Preenche o que os matchers do laboratório específico não acharam.
-  // Só adiciona chaves ausentes — nunca sobrescreve o que já veio.
+  // Prefere a leitura associada ao nome para evitar importar limites de referência.
   const genericos = extractByMarkerName(text);
 
   for (const [chave, valor] of Object.entries(genericos)) {
-    if (markers[chave] === undefined || markers[chave] === null) {
-      markers[chave] = valor;
-    }
+    // A measured value explicitly associated with its name takes precedence
+    // over the old reference-text-based laboratory fallback.
+    markers[chave] = valor;
   }
 
   const { riskLevel, alerts } = getRiskAndAlerts(markers);

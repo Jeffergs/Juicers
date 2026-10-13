@@ -9,7 +9,7 @@
 .sm-sidebar {
     width: 220px;
     min-height: 100vh;
-    background: #f0f0f0;
+    background: #fff;
     border-right: 1px solid #e1e1e1;
     display: flex;
     flex-direction: column;
@@ -22,8 +22,7 @@
 }
 
 .sm-logo {
-    padding: 20px 22px 24px;
-    border-bottom: 1px solid #e1e1e1;
+    padding: 30px 22px;
     display: flex;
     align-items: center;
     gap: 10px;
@@ -44,7 +43,7 @@
 .sm-nav {
     display: flex;
     flex-direction: column;
-    gap: 3px;
+    gap: 10px;
     padding: 16px 12px;
     flex: 1;
 }
@@ -53,23 +52,24 @@
     display: flex;
     align-items: center;
     gap: 11px;
-    padding: 10px 12px;
+    padding: 16px 12px;
     border-radius: 9px;
     text-decoration: none;
-    color: #646464;
+    color: #475569;
     font-size: 0.875rem;
     font-weight: 500;
     transition: background 0.15s, color 0.15s;
 }
 
 .sm-link:hover {
-    background: #e5e5e5;
+    background: #f1f5f9;
     color: #262121;
 }
 
 .sm-link--active {
     background: var(--sm-accent-dim);
-    color: #146458;
+    color: #087c70;
+    font-weight: 650;
 }
 
 .sm-link-icon {
@@ -99,9 +99,9 @@
     transition: background 0.15s, color 0.15s;
 }
 
-.sm-sair:hover {
-    background: #e5e5e5;
-    color: #a40e0e;
+.sm-sair:hover, .sm-sair:focus-visible {
+    background: transparent;
+    color: #b42332;
 }
 
 .sm-hamburger {
@@ -151,4 +151,27 @@
     .sm-hamburger {
         display: flex;
     }
+}
+
+/* Doctor sidebar matches the floating white panel in the proposal. */
+.sm-sidebar { width: 260px; margin: 20px 0 20px 16px; border: 1px solid #edf1f5; border-radius: 16px; height: calc(100vh - 40px); min-height: 0; top: 20px; background: #fff; }
+.sm-logo { padding: 30px 24px; }
+.sm-logo-img { width: 200px; max-width: 100%; height: auto; }
+.sm-nav { padding: 16px 14px; gap: 12px; }
+.sm-link { min-height: 56px; gap: 14px; padding: 15px 16px; font-size: 15px; border-radius: 10px; color: #42516b; }
+.sm-link-icon svg { width: 22px; height: 22px; }
+.sm-link--active { color: #087f73; background: #e4faf6; }
+.sm-footer { padding: 18px 20px; margin: 0 14px; border-top-color: #e8edf3; }
+.sm-account { display: flex; align-items: center; gap: 12px; color: #42516b; text-decoration: none; margin-bottom: 16px; min-height: 56px; }
+.sm-account-avatar { display: flex; align-items: center; justify-content: center; width: 48px; height: 48px; flex-shrink: 0; border-radius: 50%; background: #e1f9f5; color: #087f73; font-weight: 700; }
+.sm-account-name { flex: 1; min-width: 0; overflow-wrap: anywhere; font-weight: 600; font-size: 14px; }
+.sm-account:focus-visible, .sm-sair:focus-visible, .sm-link:focus-visible { outline: 2px solid #087f73; outline-offset: 3px; }
+.sm-sair { padding: 12px 0; min-height: 44px; font-size: 15px; }
+@media (max-width: 1200px) and (min-width: 769px) {
+  .sm-sidebar { width: 220px; }
+  .sm-logo-img { width: 170px; }
+}
+@media (max-width: 768px) {
+  .sm-sidebar { margin: 0; top: 0; height: 100dvh; border-radius: 0 16px 16px 0; }
+  .sm-logo { padding-top: 68px; }
 }

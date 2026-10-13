@@ -306,11 +306,16 @@ export const uploadPatientExamPdf = async (req, res) => {
     }
 
     const pdfData = await pdfParse(req.file.buffer);
+    if (!pdfData.text?.trim()) {
+      return res.status(422).json({
+        message: "O PDF não contém texto legível para importação. Envie o laudo original com texto selecionável; PDFs digitalizados como imagem ainda não são reconhecidos.",
+      });
+    }
     const parsedExam = parseExamPdfText(pdfData.text);
 
     if (!parsedExam.markers || Object.keys(parsedExam.markers).length === 0) {
       return res.status(400).json({
-        message: "Não foi possível identificar marcadores no PDF",
+        message: "Não foi possível identificar os indicadores acompanhados pelo sistema neste PDF. Confira se o texto é selecionável e envie o laudo original do laboratório.",
       });
     }
 

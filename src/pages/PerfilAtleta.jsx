@@ -4,6 +4,7 @@ import Dashboard from '../components/perfilDoUsuario/Dashboard.jsx'
 import MarkerModal from '../components/perfilDoUsuario/MarkerModal.jsx'
 import { buildDashboardData, formatExamDate } from '../data/markers.js'
 import '../style/perfil.css'
+import '../style/dashboardAtleta.css'
 
 const PERFIL_VAZIO = {
     nome: 'Paciente',
@@ -93,7 +94,7 @@ export default function PerfilAtleta() {
 
     if (carregando) {
         return (
-            <div className="main">
+            <div className="main atleta-dashboard">
                 <div className="content">
                     <p className="page-sub">Carregando dashboard...</p>
                 </div>
@@ -102,11 +103,12 @@ export default function PerfilAtleta() {
     }
 
     return (
-        <div className="main">
+        <div className="main atleta-dashboard">
             <div className="content">
                 <div className="page-header">
                     <div>
-                        <h1 className="page-title">Olá, {primeiroNome}</h1>
+                        <h1 className="page-title">Dashboard</h1>
+                        <p className="ad-welcome">Olá, {primeiroNome}. Acompanhe seus indicadores de saúde.</p>
 
                         <p className="page-sub">
                             {perfilDinamico.idade && <>{perfilDinamico.idade} anos</>}
@@ -123,7 +125,6 @@ export default function PerfilAtleta() {
                 </div>
 
                 <Dashboard
-                    accent="#e6a817"
                     hideHeader
                     summary={dashboardData.summary}
                     alerts={dashboardData.alerts}
@@ -134,17 +135,7 @@ export default function PerfilAtleta() {
                 />
 
                 {exames.length === 0 && (
-                    <div
-                        style={{
-                            marginTop: 18,
-                            background: '#ebebeb',
-                            border: '1px solid #d5d5d5',
-                            borderRadius: 12,
-                            padding: 18,
-                            color: '#777',
-                            fontSize: 13,
-                        }}
-                    >
+                    <div className="ad-empty">
                         Nenhum exame importado ainda. Quando seu médico importar um exame, os gráficos aparecerão aqui.
                     </div>
                 )}

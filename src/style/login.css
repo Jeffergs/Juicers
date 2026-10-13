@@ -789,7 +789,7 @@
 .login_wrap .btn_entrar--atleta,
 .login_wrap .btn_entrar--medico {
     background: linear-gradient(110deg, #08bbaa, #29d1b8) !important;
-    color: #04201c !important;
+    color: #fff !important;
 }
 
 /* Banner backend offline */

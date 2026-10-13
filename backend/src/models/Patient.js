@@ -37,8 +37,19 @@ const patientSchema = new mongoose.Schema(
     },
 
     substances: {
-      type: [String],
+      // Keep existing string entries readable while storing name and dosage
+      // together for the current registration/account forms.
+      type: [mongoose.Schema.Types.Mixed],
       default: [],
+      validate: {
+        validator: items => items.every(item => {
+          if (typeof item === 'string') return Boolean(item.trim());
+          return item && typeof item.name === 'string' && Boolean(item.name.trim())
+            && (item.weeklyDosage == null || (typeof item.weeklyDosage === 'number'
+              && Number.isFinite(item.weeklyDosage) && item.weeklyDosage >= 0));
+        }),
+        message: 'Informe um nome válido e uma dosagem não negativa para cada composto.',
+      },
     },
 
     healthConditions: {

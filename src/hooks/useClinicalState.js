@@ -126,7 +126,7 @@ export function useClinicalState() {
                     cicloStatus: paciente?.cycleStatus || '',
                     dose: paciente?.weeklyDosage || '',
                     cicloTempo: paciente?.cycleTime || '',
-                    compounds: paciente?.substances || [],
+                    compounds: (paciente?.substances || []).map(item => typeof item === 'string' ? item : item.name || item.nome).filter(Boolean),
                     condicoes: paciente?.healthConditions || [],
                     examFreq: paciente?.examStatus || '',
                     lastExam: paciente?.lastExamDate

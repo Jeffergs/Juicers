@@ -173,6 +173,7 @@ export default function DadosContaMedico() {
     }
 
     const nomeCompleto = `${form.nome || 'Médico'} ${form.sobrenome || ''}`.trim()
+    const iniciais = nomeCompleto.split(' ').filter(Boolean).slice(0, 2).map(parte => parte[0]).join('').toUpperCase()
     const saveBtnClass = [
         'dcm-btn-save',
         dirty ? 'dcm-btn-save--active' : '',
@@ -196,10 +197,18 @@ export default function DadosContaMedico() {
             <div className="dcm-page">
                 <div className="dcm-page-header">
                     <div>
-                        <h1 className="dcm-page-title">Dados da Conta</h1>
+                        <h1 className="dcm-page-title">Dados da conta</h1>
                         <p className="dcm-page-sub">
-                            {nomeCompleto} · {form.email || 'E-mail não informado'}
+                            Mantenha seu perfil e os dados da sua conta atualizados.
                         </p>
+                        {dirty && <span className="dcm-dirty-badge">● Alterações não salvas</span>}
+                    </div>
+                    <div className="dcm-profile-summary">
+                        <span className="dcm-profile-avatar" aria-hidden="true">{iniciais}</span>
+                        <div className="dcm-profile-identity">
+                            <strong>{nomeCompleto}</strong>
+                            <span className="dcm-profile-role">Médico</span>
+                        </div>
                     </div>
                 </div>
 
@@ -210,7 +219,7 @@ export default function DadosContaMedico() {
                                 <circle cx="8" cy="5.5" r="3" />
                                 <path d="M2 14.5c0-3.3 2.7-6 6-6s6 2.7 6 6" />
                             </svg>
-                            Perfil
+                            Perfil básico
                         </div>
 
                         <div className="dcm-row2">
@@ -343,16 +352,15 @@ export default function DadosContaMedico() {
                 <div className="dcm-save-bar">
                     <div className="dcm-save-info">Salve para aplicar alterações no nome e sobrenome.</div>
                     <div className="dcm-save-actions">
-                        {dirty && (
-                            <button className="dcm-btn-discard" onClick={handleDiscard}>
-                                Descartar
-                            </button>
-                        )}
+                        <button type="button" className="dcm-btn-discard" onClick={handleDiscard} disabled={!dirty || saving}>
+                            Cancelar
+                        </button>
                         <button
                             className={saveBtnClass}
                             onClick={handleSave}
                             disabled={!dirty || saving}
                         >
+                            <svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true"><path d="m4 10 4 4 8-8" /></svg>
                             {saving ? 'Salvando…' : 'Salvar alterações'}
                         </button>
                     </div>

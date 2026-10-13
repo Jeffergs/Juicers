@@ -4,18 +4,16 @@ import "../../style/cta.css";
 
 const T = {
   pt: {
-    h2: "Ajude a validar a próxima versão da Juicers.",
-    p: "Teste o protótipo, registre um exame de exemplo e nos diga o que faria você acompanhar de verdade.",
-    primary: "Testar o protótipo",
-    ghost: "Enviar feedback",
-    note: "leva ~2 min",
+    h2: "Acompanhe sua saúde com mais clareza.",
+    p: "Organize seus exames e entenda a evolução dos seus indicadores.",
+    primary: "Começar agora",
+    ghost: "Conhecer o projeto",
   },
   en: {
-    h2: "Help validate the next version of Juicers.",
-    p: "Try the prototype, log a sample exam and tell us what would make you actually keep track.",
-    primary: "Try the prototype",
-    ghost: "Send feedback",
-    note: "takes ~2 min",
+    h2: "Track your health with greater clarity.",
+    p: "Organize your exams and understand how your indicators change over time.",
+    primary: "Start now",
+    ghost: "About the project",
   },
 };
 
@@ -33,8 +31,7 @@ export default function CTAFinal() {
             </div>
             <div className="cta-actions">
               <Link className="btn-j btn-primary-j" to="/login">{t.primary}</Link>
-              <a className="btn-j btn-ghost-j" href="https://forms.gle/Px1jDZzcVkgYH9zD9" target="_blank" rel="noopener noreferrer">{t.ghost}</a>
-              <span className="note">{t.note}</span>
+              <Link className="btn-j btn-ghost-j" to="/#sobre">{t.ghost}</Link>
             </div>
           </div>
         </div>

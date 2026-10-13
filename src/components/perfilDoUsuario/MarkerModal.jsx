@@ -26,7 +26,7 @@ export default function MarkerModal({ marker, onClose }) {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        zIndex: 60,
+        zIndex: 300,
         padding: 24,
         animation: 'jc-fade .15s ease',
       }}
@@ -35,8 +35,8 @@ export default function MarkerModal({ marker, onClose }) {
         onClick={(e) => e.stopPropagation()}
         className="jc-modal-anim"
         style={{
-          background: '#ebebeb',
-          border: '1px solid #d5d5d5',
+          background: 'var(--ad-surface, #ebebeb)',
+          border: '1px solid var(--ad-border, #d5d5d5)',
           borderRadius: 18,
           width: 'min(700px,100%)',
           padding: '26px 28px',
@@ -44,13 +44,13 @@ export default function MarkerModal({ marker, onClose }) {
           flexDirection: 'column',
           gap: 20,
           boxShadow: '0 30px 70px -30px rgba(0,0,0,.5)',
-          color: '#0f0f0f',
+          color: 'var(--ad-text, #0f0f0f)',
         }}
       >
         <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 16 }}>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
-            <h2 style={{ margin: 0, fontSize: 21, fontWeight: 700, letterSpacing: '-.01em', color: '#0f0f0f' }}>{marker.name}</h2>
-            <p style={{ margin: 0, fontSize: 12.5, color: '#656565' }}>
+            <h2 style={{ margin: 0, fontSize: 21, fontWeight: 700, letterSpacing: '-.01em', color: 'var(--ad-text, #0f0f0f)' }}>{marker.name}</h2>
+            <p style={{ margin: 0, fontSize: 12.5, color: 'var(--ad-muted, #656565)' }}>
               {nPontos > 1 ? `Evolução em ${nPontos} coletas` : 'Uma única coleta registrada'} · Referência:{' '}
               <span style={{ color: '#0f0f0f', fontWeight: 600 }}>
                 {marker.ref} {marker.unit}
@@ -66,9 +66,9 @@ export default function MarkerModal({ marker, onClose }) {
               width: 34,
               height: 34,
               borderRadius: 9,
-              background: '#e0e0e0',
-              border: '1px solid #d5d5d5',
-              color: '#555555',
+              background: 'var(--ad-accent-soft, #e0e0e0)',
+              border: '1px solid var(--ad-border, #d5d5d5)',
+              color: 'var(--ad-accent-text, #555555)',
               cursor: 'pointer',
               display: 'flex',
               alignItems: 'center',
@@ -82,7 +82,7 @@ export default function MarkerModal({ marker, onClose }) {
           </button>
         </div>
 
-        <div style={{ background: '#f4f4f4', border: '1px solid #dcdcdc', borderRadius: 12, padding: '14px 10px 6px', height: 340 }}>
+        <div style={{ background: 'var(--ad-surface, #f4f4f4)', border: '1px solid var(--ad-border, #dcdcdc)', borderRadius: 12, padding: '14px 10px 6px', height: 340 }}>
           <MarkerChart marker={marker} height={320} />
         </div>
 

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import PatientDetail from '../screens/PatientDetail.jsx'
 import MarkerModal from '../components/perfilDoUsuario/MarkerModal.jsx'
-import { buildDashboardData } from '../data/markers.js'
+import { buildDashboardData, formatExamDate } from '../data/markers.js'
 import { useClinical } from '../context/ClinicalContext.jsx'
 import {
   getDoctorPatientById,
@@ -38,9 +38,11 @@ function formatPatient(patient, exams = []) {
     initials: getInitials(name),
     age: patient.age || '-',
     compounds: patient.substances?.length
-      ? patient.substances
-      : ['Sem compostos informados'],
-    lastExam: lastExam?.examDate || patient.lastExamDate || 'Sem exame',
+      ? patient.substances.map(item => typeof item === 'string' ? item : item.name || item.nome).filter(Boolean)
+      : ['Nenhuma substância informada'],
+    lastExam: lastExam?.examDate || patient.lastExamDate
+      ? formatExamDate(lastExam?.examDate || patient.lastExamDate)
+      : 'Sem exame',
     status: lastExam ? 'estavel' : 'ok',
     alerts: 0,
     raw: patient,
@@ -49,18 +51,7 @@ function formatPatient(patient, exams = []) {
 
 function formatDateBR(dateString) {
   if (!dateString) return 'Sem data'
-
-  const date = new Date(dateString)
-
-  if (Number.isNaN(date.getTime())) return dateString
-
-  return date
-    .toLocaleDateString('pt-BR', {
-      day: '2-digit',
-      month: 'short',
-      year: 'numeric',
-    })
-    .replace('.', '')
+  return formatExamDate(dateString)
 }
 
 // O catálogo de marcadores e a montagem da série agora vivem em

@@ -33,7 +33,7 @@ export default function Dashboard({
       {!hideHeader && (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
           <h1 style={{ margin: 0, fontSize: 26, fontWeight: 700, color: '#0f0f0f', letterSpacing: '-.02em' }}>{heading}</h1>
-          <p style={{ margin: 0, fontSize: 13, color: '#777', lineHeight: 1.4 }}>{sub}</p>
+          <p style={{ margin: 0, fontSize: 'var(--ui-body, 14px)', color: '#777', lineHeight: 1.4 }}>{sub}</p>
         </div>
       )}
 
@@ -50,15 +50,15 @@ export default function Dashboard({
             gap: 6,
           }}
         >
-          <strong style={{ fontSize: 13, color: '#8a6d1f' }}>
+          <strong style={{ fontSize: 'var(--ui-body, 14px)', color: '#8a6d1f' }}>
             {examDates.length} exame{examDates.length > 1 ? 's' : ''} importado{examDates.length > 1 ? 's' : ''}, mas nenhum marcador foi reconhecido
           </strong>
-          <span style={{ fontSize: 12.5, color: '#777', lineHeight: 1.5 }}>
+          <span style={{ fontSize: 'var(--ui-small, 12px)', color: '#777', lineHeight: 1.5 }}>
             Os exames chegaram sem valores numéricos ou com nomes de campo que o catálogo não conhece.
             {unknownKeys.length > 0 && (
               <>
                 {' '}Campos encontrados que não batem com nenhum marcador:{' '}
-                <code style={{ background: '#e0e0e0', padding: '1px 5px', borderRadius: 4, fontSize: 11.5 }}>
+                <code style={{ background: '#e0e0e0', padding: '1px 5px', borderRadius: 4, fontSize: 'var(--ui-small, 12px)' }}>
                   {unknownKeys.slice(0, 12).join(', ')}
                   {unknownKeys.length > 12 ? ` … (+${unknownKeys.length - 12})` : ''}
                 </code>
@@ -76,3 +76,4 @@ export default function Dashboard({
     </div>
   );
 }
+

@@ -1,1 +1,5 @@
 .juicer{min-height:100vh}
+
+.juicer [id] {
+    scroll-margin-top: 104px;
+}

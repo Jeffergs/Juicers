@@ -60,7 +60,7 @@ export const createOrUpdatePatient = async (req, res) => {
       patient,
     });
   } catch (error) {
-    return res.status(500).json({
+    return res.status(error.name === 'ValidationError' || error.name === 'CastError' ? 400 : 500).json({
       message: error.message,
     });
   }

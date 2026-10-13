@@ -83,11 +83,11 @@ export default function UploadZone({
         <path d="M4 16v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3" />
       </svg>
 
-      <p style={{ margin: 0, fontSize: 14, fontWeight: 650, color: '#171717' }}>
+      <p style={{ margin: 0, fontSize: 'var(--ui-body, 14px)', fontWeight: 650, color: '#171717' }}>
         {label}
       </p>
 
-      <p style={{ margin: 0, fontSize: 12.5, color: '#818181' }}>
+      <p style={{ margin: 0, fontSize: 'var(--ui-small, 12px)', color: '#818181' }}>
         Arraste o arquivo PDF aqui, ou
       </p>
 
@@ -97,7 +97,7 @@ export default function UploadZone({
           display: 'inline-flex',
           alignItems: 'center',
           cursor: loading ? 'not-allowed' : 'pointer',
-          fontSize: 12.5,
+          fontSize: 'var(--ui-small, 12px)',
           fontWeight: 650,
           color: accent,
           border: `1px solid ${accent}`,
@@ -125,7 +125,7 @@ export default function UploadZone({
             display: 'flex',
             alignItems: 'center',
             gap: 7,
-            fontSize: 12,
+            fontSize: 'var(--ui-small, 12px)',
             color: '#303030',
           }}
         >
@@ -134,13 +134,13 @@ export default function UploadZone({
       )}
 
       {success && (
-        <div style={{ fontSize: 12, color: '#3fb950', marginTop: 4 }}>
+        <div style={{ fontSize: 'var(--ui-small, 12px)', color: '#3fb950', marginTop: 4 }}>
           {success}
         </div>
       )}
 
       {erro && (
-        <div style={{ fontSize: 12, color: '#f04747', marginTop: 4 }}>
+        <div style={{ fontSize: 'var(--ui-small, 12px)', color: '#f04747', marginTop: 4 }}>
           {erro}
         </div>
       )}

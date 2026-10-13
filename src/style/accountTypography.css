@@ -1,0 +1,61 @@
+/* Shared scale for patient and doctor pages. Specific font-size rules also
+   cover older components that still define typography in inline styles. */
+:is(.atleta-layout, .medico-layout, .ob-wrap) {
+    --ui-page-title: 32px;
+    --ui-section-title: 18px;
+    --ui-card-number: 28px;
+    --ui-body: 14px;
+    --ui-button: 13px;
+    --ui-small: 12px;
+    --ui-table: 13px;
+    --ui-table-heading: 11px;
+    font-family: 'DM Sans', system-ui, sans-serif;
+    font-size: var(--ui-body);
+}
+:is(.atleta-layout, .medico-layout, .ob-wrap) :is(h1, .page-title, .dcm-page-title, .jc-page-header-title, .jc-patient-page-title) {
+    font-size: var(--ui-page-title) !important;
+    line-height: 1.25;
+}
+:is(.atleta-layout, .medico-layout, .ob-wrap) :is(h2, .dc-section-title, .dcm-section-title, .ep-title, .jc-section-label, .jc-section-card-title, .he-section-title, .he-upload-title) {
+    font-size: var(--ui-section-title) !important;
+    line-height: 1.4;
+}
+:is(.atleta-layout, .medico-layout, .ob-wrap) :is(p, input, select, textarea) {
+    font-family: inherit;
+    font-size: var(--ui-body) !important;
+}
+:is(.atleta-layout, .medico-layout, .ob-wrap) :is(button, .he-upload-btn) {
+    font-family: inherit;
+    font-size: var(--ui-button) !important;
+}
+:is(.atleta-layout, .medico-layout, .ob-wrap) :is(.dc-field label, .dcm-field label, .ob-field label, .jc-field-label) {
+    font-size: var(--ui-small) !important;
+}
+:is(.atleta-layout, .medico-layout) :is(.jc-athletes-stat strong, .he-stat-val, .ep-hero-value, .ep-stats-value) {
+    font-size: var(--ui-card-number) !important;
+}
+:is(.atleta-layout, .medico-layout) :is(.jc-athletes-stat > div > span, .he-stat-label, .jc-athletes-person strong, .af-request h3, .af-doctor-info h2, .dc-profile-summary strong, .dcm-profile-summary strong, .ep-stats-title, .sa-link, .sm-link, .sa-sair, .sm-sair, .sa-account-name, .sm-account-name) {
+    font-size: var(--ui-body) !important;
+}
+:is(.atleta-layout, .medico-layout) :is(.jc-athletes-table, table tbody td, table tbody th) {
+    font-size: var(--ui-table) !important;
+}
+:is(.atleta-layout, .medico-layout) table thead th {
+    font-size: var(--ui-table-heading) !important;
+}
+:is(.atleta-layout, .medico-layout) :is(.jc-athletes-badge, .he-badge, .dc-profile-role, .dcm-profile-role, .jc-athletes-person div > span, .he-exam-meta, .af-note-date, .af-eyebrow, .ep-stats-label, .ep-group-title, .ep-hero-label, .ep-ref, .ep-item-value, .ep-hero-value em, .ep-stats-value em) {
+    font-size: var(--ui-small) !important;
+}
+:is(.atleta-layout, .medico-layout) :is(.jc-athletes-avatar, .dc-profile-avatar, .dcm-profile-avatar, .sa-account-avatar, .sm-account-avatar) {
+    font-size: var(--ui-body) !important;
+    line-height: 1;
+}
+:is(.atleta-layout, .medico-layout) .jc-athletes-pagination button {
+    font-size: 20px !important;
+}
+:is(.atleta-layout, .medico-layout) .ad-alerts {
+    --ad-heading-size: var(--ui-section-title);
+}
+@media (max-width: 768px) {
+    :is(.atleta-layout, .medico-layout, .ob-wrap) { --ui-page-title: 26px; }
+}

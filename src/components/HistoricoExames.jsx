@@ -168,14 +168,23 @@ export default function HistoricoExames() {
                     <StatCard
                         label="Alertas ativos"
                         value={highCount}
-                        sub="marcadores fora do limite"
+                        sub="exames com risco alto"
                         modifier={highCount > 0 ? 'red' : 'green'}
                     />
                 </div>
 
                 <div
                     className={`he-upload-zone${dragging ? ' he-upload-zone--dragging' : ''}`}
-                    onClick={() => fileRef.current.click()}
+                    role="button"
+                    tabIndex={0}
+                    aria-label="Selecionar PDF de exame"
+                    onClick={e => { if (e.target !== fileRef.current) fileRef.current.click() }}
+                    onKeyDown={e => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                            e.preventDefault()
+                            fileRef.current.click()
+                        }
+                    }}
                     onDragOver={e => {
                         e.preventDefault()
                         setDragging(true)
@@ -236,7 +245,7 @@ export default function HistoricoExames() {
 
                                 <div className="he-exam-meta">
                                     {formatarData(exam.examDate)} ·{' '}
-                                    {exam.source === 'manual' ? 'Importado manualmente' : 'PDF'} · MongoDB
+                                    {exam.source === 'manual' ? 'Importado manualmente' : 'PDF'}
                                 </div>
                             </div>
 
@@ -248,11 +257,15 @@ export default function HistoricoExames() {
                                 </span>
 
                                 <button
+                                    type="button"
                                     className="he-btn-remove"
-                                    title="Remover"
+                                    title="Excluir exame"
                                     onClick={e => removeExam(exam._id, e)}
                                 >
-                                    ✕
+                                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                                        <path d="M3 6h18M9 6V3h6v3M5 6l1 15h12l1-15M10 10v7M14 10v7" />
+                                    </svg>
+                                    Excluir exame
                                 </button>
                             </div>
                         </div>

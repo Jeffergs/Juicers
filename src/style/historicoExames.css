@@ -1,65 +1,64 @@
 .he-wrap {
-    min-height: 100vh;
+    color: #101b30;
+    font-family: 'DM Sans', system-ui, sans-serif;
 }
 
 /* PAGE */
 .he-page {
-    max-width: 1850px;
+    max-width: 1440px;
     margin: 0 auto;
-    padding: 32px 32px 0px;
-    background-color: #eee;
-    border: 1px solid #e9e9e9;
-    border-radius: 10px;
+    padding: 12px 12px 96px;
     box-sizing: border-box;
 }
 
 /* PAGE HEADER */
 .he-page-header {
-    margin-bottom: 28px;
+    margin-bottom: 24px;
 }
 
 .he-page-header h1 {
-    font-size: 20px;
-    font-weight: 600;
-    color: #000;
-    letter-spacing: -.3px;
-    margin-bottom: 4px;
+    font-size: 32px;
+    font-weight: 700;
+    color: #101b30;
+    letter-spacing: -.5px;
+    margin: 0 0 6px;
 }
 
 .he-page-header p {
-    font-size: 14px;
-    color: #262121;
+    font-size: 15px;
+    color: #60708d;
+    margin: 0;
+    line-height: 1.6;
 }
 
 /* STATS */
 .he-stats {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 12px;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
     margin-bottom: 24px;
 }
 
 .he-stat-card {
-    background: #f0f0f0;
-    border: 1px solid #e5e5e5;
-    border-radius: 9px;
-    padding: 14px 16px;
+    background: #fff;
+    border: 1px solid #e4ebf3;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 3px 16px rgba(31, 54, 82, .025);
     min-width: 0;
 }
 
 .he-stat-label {
     font-size: 14px;
-    color: #262121;
-    text-transform: uppercase;
-    letter-spacing: .07em;
+    color: #60708d;
     font-weight: 600;
     margin-bottom: 7px;
 }
 
 .he-stat-val {
-    font-size: 22px;
+    font-size: 30px;
     font-weight: 700;
-    color: #000;
+    color: #101b30;
     letter-spacing: -.5px;
 }
 
@@ -68,29 +67,29 @@
 }
 
 .he-stat-val--green {
-    color: #27ae60;
+    color: #157f7b;
 }
 
 .he-stat-val--muted {
-    color: #1d1d1d;
-    font-size: 15px;
+    color: #101b30;
+    font-size: 20px;
     margin-top: 4px;
 }
 
 .he-stat-sub {
     font-size: 13px;
-    color: #262121;
+    color: #60708d;
     margin-top: 3px;
 }
 
 /* UPLOAD ZONE */
 .he-upload-zone {
-    border: 1.5px dashed #e1e1e1;
-    border-radius: 10px;
-    padding: 28px 24px;
+    border: 1.5px dashed #9edbd6;
+    border-radius: 16px;
+    padding: 32px 24px;
     text-align: center;
     cursor: pointer;
-    background: transparent;
+    background: #fff;
     transition: all .2s;
     margin-bottom: 28px;
     box-sizing: border-box;
@@ -98,14 +97,14 @@
 
 .he-upload-zone:hover,
 .he-upload-zone--dragging {
-    border-color: #c0392b;
-    background: #f7ebeb;
+    border-color: #2fb8b1;
+    background: #e8f8f7;
 }
 
 .he-upload-icon {
-    width: 42px;
-    height: 42px;
-    background: #ebebeb;
+    width: 48px;
+    height: 48px;
+    background: #e8f8f7;
     border-radius: 10px;
     display: flex;
     align-items: center;
@@ -116,38 +115,38 @@
 .he-upload-icon svg {
     width: 20px;
     height: 20px;
+    stroke: #1a9d98;
 }
 
 .he-upload-title {
-    font-size: 14px;
-    font-weight: 500;
-    color: #333;
+    font-size: 18px;
+    font-weight: 600;
+    color: #101b30;
     margin-bottom: 5px;
 }
 
 .he-upload-sub {
-    font-size: 12px;
-    color: #262121;
+    font-size: 13px;
+    color: #60708d;
+    line-height: 1.6;
     margin-bottom: 14px;
 }
 
 .he-upload-btn {
     display: inline-block;
-    padding: 7px 18px;
-    background: #c0392b;
+    padding: 12px 20px;
+    background: #2fb8b1;
     color: #fff;
-    border-radius: 6px;
-    font-size: 12px;
-    font-weight: 500;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
 }
 
 /* SECTION TITLE */
 .he-section-title {
-    font-size: 14px;
-    color: #262121;
-    text-transform: uppercase;
-    letter-spacing: .08em;
-    font-weight: 600;
+    font-size: 18px;
+    color: #101b30;
+    font-weight: 700;
     margin-bottom: 12px;
 }
 
@@ -155,40 +154,42 @@
 .he-exam-list {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 12px;
 }
 
 .he-exam-empty {
     text-align: center;
-    padding: 40px 0;
-    color: #262121;
-    font-size: 16px;
+    padding: 40px 20px;
+    color: #60708d;
+    font-size: 14px;
+    background: #fff;
+    border: 1px dashed #dbe3ed;
+    border-radius: 16px;
 }
 
 .he-exam-card {
-    background: #f0f0f0;
-    border: 1px solid #e5e5e5;
-    border-radius: 9px;
-    padding: 14px 16px;
+    background: #fff;
+    border: 1px solid #e4ebf3;
+    border-radius: 14px;
+    padding: 20px;
     display: grid;
-    grid-template-columns: 34px 1fr auto;
+    grid-template-columns: 42px minmax(0, 1fr) auto;
     gap: 13px;
     align-items: center;
     transition: border-color .15s;
-    cursor: pointer;
     box-sizing: border-box;
 }
 
 .he-exam-card:hover {
-    border-color: #262121;
+    border-color: #bce9e5;
 }
 
 /* PDF ICON */
 .he-pdf-icon {
-    width: 34px;
-    height: 34px;
-    background: #ebebeb;
-    border-radius: 7px;
+    width: 42px;
+    height: 42px;
+    background: #e8f8f7;
+    border-radius: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -198,20 +199,22 @@
 .he-pdf-icon svg {
     width: 16px;
     height: 16px;
+    stroke: #1a9d98;
 }
 
 /* EXAM INFO */
 .he-exam-name {
-    font-size: 13px;
-    font-weight: 500;
-    color: #333;
+    font-size: 14px;
+    font-weight: 600;
+    color: #101b30;
     margin-bottom: 3px;
     overflow-wrap: anywhere;
 }
 
 .he-exam-meta {
-    font-size: 11px;
-    color: #262121;
+    font-size: 12px;
+    color: #60708d;
+    line-height: 1.6;
 }
 
 /* EXAM BADGES */
@@ -225,9 +228,9 @@
 
 /* RISK BADGES */
 .he-badge {
-    padding: 3px 9px;
-    border-radius: 4px;
-    font-size: 10px;
+    padding: 6px 10px;
+    border-radius: 20px;
+    font-size: 12px;
     font-weight: 600;
     border: 1px solid transparent;
     white-space: nowrap;
@@ -258,28 +261,35 @@
 }
 
 .he-badge--pdf {
-    background: #ebebeb;
-    border-color: #e1e1e1;
-    color: #535353;
+    background: #e8f8f7;
+    border-color: #bce9e5;
+    color: #157f7b;
     font-weight: 500;
 }
 
 /* REMOVE BUTTON */
 .he-btn-remove {
-    background: none;
-    border: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    background: transparent;
+    border: 1px solid transparent;
     cursor: pointer;
-    color: #262121;
+    color: #b42332;
     font-size: 14px;
-    line-height: 1;
-    padding: 2px 4px;
-    border-radius: 4px;
-    transition: color .15s;
+    line-height: 1.2;
+    font-weight: 600;
+    min-height: 38px;
+    padding: 9px 12px;
+    white-space: nowrap;
+    border-radius: 8px;
+    transition: background .15s, border-color .15s;
     font-family: inherit;
 }
 
 .he-btn-remove:hover {
-    color: #c0392b;
+    background: #fff0f1;
 }
 
 /* TOAST */
@@ -288,9 +298,11 @@
     bottom: 28px;
     right: 28px;
     z-index: 999;
-    background: #e9e9e9;
-    border: 1px solid #262121;
-    border-radius: 9px;
+    background: #fff;
+    border: 1px solid #e4ebf3;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(31, 54, 82, .12);
+    pointer-events: none;
     padding: 11px 18px;
     display: flex;
     align-items: center;
@@ -328,9 +340,10 @@
 /* Tablets / telas médias */
 @media (max-width: 900px) {
     .he-page {
-        padding: 24px 20px 0;
-        border-radius: 0;
+        padding: 12px 12px 96px;
     }
+
+    .he-page-header h1 { font-size: 27px; }
 
     .he-stats {
         grid-template-columns: repeat(2, 1fr);
@@ -340,11 +353,11 @@
 /* Mobile */
 @media (max-width: 600px) {
     .he-page {
-        padding: 18px 14px 0;
+        padding: 8px 0 100px;
     }
 
     .he-page-header h1 {
-        font-size: 18px;
+        font-size: 23px;
     }
 
     .he-page-header p {
@@ -366,7 +379,7 @@
        (ícone + nome/meta | badges + remover) em vez de
        espremer tudo em 3 colunas fixas */
     .he-exam-card {
-        grid-template-columns: 34px 1fr;
+        grid-template-columns: 42px minmax(0, 1fr);
         grid-template-rows: auto auto;
         row-gap: 10px;
     }
@@ -382,6 +395,11 @@
         bottom: 14px;
         max-width: none;
     }
+}
+
+.he-upload-zone:focus-visible, .he-btn-remove:focus-visible {
+    outline: 3px solid #2fb8b1;
+    outline-offset: 3px;
 }
 
 /* Telas bem pequenas */

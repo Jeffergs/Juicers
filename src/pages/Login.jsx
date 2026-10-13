@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import '../style/login.css'
-import { Link, useNavigate, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import logoIcon from '../assets/juicers.png'
 import OnboardingForm from '../components/OnboardingForm'
 import LoginPreview, { LoginFeatures, LoginPrivacyFooter } from '../components/LoginPreview'
@@ -14,9 +14,10 @@ const GOOGLE_LOGIN_ENABLED = Boolean(import.meta.env.VITE_GOOGLE_CLIENT_ID)
 export default function Login() {
     const navigate = useNavigate()
     const { token: conviteToken } = useParams()
+    const [searchParams] = useSearchParams()
     const { loginComToken, loginMock } = useAuth()
 
-    const [role, setRole] = useState('atleta')
+    const [role, setRole] = useState(() => searchParams.get('role') === 'medico' ? 'medico' : 'atleta')
     const [modoCadastro, setModoCadastro] = useState(false)
     const [modoReverificacao, setModoReverificacao] = useState(false)
     const [mostrarOnboarding, setMostrarOnboarding] = useState(false)

@@ -1,0 +1,170 @@
+.atleta-dashboard {
+    --ad-surface: #fff;
+    --ad-border: #e4ebf3;
+    --ad-text: #101b30;
+    --ad-muted: #60708d;
+    --ad-accent-soft: #e8f8f7;
+    --ad-accent-text: #157f7b;
+    --ad-card-radius: 16px;
+    --ad-heading-size: 18px;
+    --ad-heading-spacing: -.02em;
+    --ad-heading-case: none;
+    --ad-alert-padding: 20px;
+    color: var(--ad-text);
+    font-family: 'DM Sans', system-ui, sans-serif;
+    min-height: 0;
+    min-width: 0;
+}
+.atleta-dashboard .content {
+    width: 100%;
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 12px 12px 96px;
+    overflow: visible;
+    min-width: 0;
+}
+.atleta-dashboard .page-title {
+    margin: 0 0 6px;
+    font-size: 32px;
+    font-weight: 700;
+    letter-spacing: -.5px;
+    color: var(--ad-text);
+}
+.atleta-dashboard .ad-welcome {
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--ad-muted);
+}
+.atleta-dashboard .page-sub {
+    margin-top: 10px;
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--ad-muted);
+}
+.atleta-dashboard .ep-card {
+    background: var(--ad-surface);
+    border-color: var(--ad-border);
+    padding: 24px 26px;
+    box-shadow: 0 3px 16px rgba(31, 54, 82, .025);
+    color: var(--ad-text);
+    min-width: 0;
+}
+.atleta-dashboard .ep-title { font-size: 18px; color: var(--ad-text); }
+.atleta-dashboard .ep-sub { font-size: 13px; line-height: 1.6; color: var(--ad-muted); }
+.atleta-dashboard .ep-pill, .atleta-dashboard .ep-expand {
+    background: #fff;
+    border-color: #dbe3ed;
+    color: var(--ad-muted);
+    min-height: 36px;
+}
+.atleta-dashboard .ep-expand { width: 36px; }
+.atleta-dashboard .ep-pill:hover, .atleta-dashboard .ep-expand:hover { border-color: #2fb8b1; color: #157f7b; }
+.atleta-dashboard .ep-pill.is-on { background: #2fb8b1; border-color: #2fb8b1; color: #fff; }
+.atleta-dashboard .ep-item {
+    background: #fafbfd;
+    border-color: #dbe3ed;
+    color: var(--ad-text);
+    padding: 12px;
+    white-space: normal;
+    text-align: left;
+}
+.atleta-dashboard .ep-item:hover { border-color: #2fb8b1; }
+.atleta-dashboard .ep-item.is-on { background: #e8f8f7; border-color: #2fb8b1; color: #157f7b; }
+.atleta-dashboard .ep-pill:focus-visible,
+.atleta-dashboard .ep-expand:focus-visible,
+.atleta-dashboard .ep-item:focus-visible { outline-color: #2fb8b1; }
+.atleta-dashboard .ep-group-title,
+.atleta-dashboard .ep-item-value,
+.atleta-dashboard .ep-hero-label,
+.atleta-dashboard .ep-hero-value em,
+.atleta-dashboard .ep-delta-txt,
+.atleta-dashboard .ep-primeira,
+.atleta-dashboard .ep-ref,
+.atleta-dashboard .ep-legend { color: var(--ad-muted); }
+.atleta-dashboard .ep-group-title { font-size: 11px; margin: 8px 0 4px; }
+.atleta-dashboard .ep-chart-wrap, .atleta-dashboard .ep-stats {
+    background: #fafbfd;
+    border-color: #dbe3ed;
+    min-width: 0;
+}
+.atleta-dashboard .ep-stats-title { color: var(--ad-text); font-size: 14px; }
+.atleta-dashboard .ep-stats-sub,
+.atleta-dashboard .ep-stats-label,
+.atleta-dashboard .ep-stats-value em,
+.atleta-dashboard .ep-stats-bar-labels,
+.atleta-dashboard .ep-stats-bar-caption,
+.atleta-dashboard .ep-stats-row-icon,
+.atleta-dashboard .ep-stats-row-label { color: var(--ad-muted); }
+.atleta-dashboard .ep-stats-top { border-color: #dbe3ed; }
+.atleta-dashboard .ep-stats-top-row { flex-wrap: wrap; }
+.atleta-dashboard .ep-stats-icon { background: #e8f8f7; color: #1a9d98; }
+.atleta-dashboard .ep-stats-insight { background: #e8f8f7; border-color: #bce9e5; }
+.atleta-dashboard .ep-stats-insight strong { color: var(--ad-text); }
+.atleta-dashboard .ep-stats-insight p { color: var(--ad-muted); }
+.atleta-dashboard .ad-empty {
+    margin-top: 18px;
+    background: #fff;
+    border: 1px dashed #dbe3ed;
+    border-radius: 16px;
+    padding: 28px 20px;
+    text-align: center;
+    color: var(--ad-muted);
+    font-size: 14px;
+    line-height: 1.6;
+}
+.atleta-dashboard .ad-alerts {
+    --ad-surface: #fff;
+    --ad-border: #e4ebf3;
+    --ad-card-radius: 16px;
+    --ad-alert-padding: 16px 18px;
+    --ad-heading-size: 16px;
+    --ad-heading-spacing: .06em;
+    --ad-heading-case: uppercase;
+    --ad-accent-text: #101b30;
+    --ad-alert-count-bg: #f04747;
+    --ad-alert-columns: repeat(auto-fit, minmax(min(260px, 100%), 300px));
+}
+.atleta-dashboard .ad-alert-card {
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 3px 16px rgba(31, 54, 82, .025);
+}
+.atleta-dashboard .ad-alert-card::before {
+    content: '';
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 3px;
+    background: var(--alert-color);
+}
+@media (min-width: 901px) {
+    .atleta-dashboard .ep-body {
+        display: grid;
+        grid-template-columns: 180px minmax(0, 1fr) 260px;
+        height: auto;
+        align-items: stretch;
+    }
+    .atleta-dashboard .ep-nav { width: auto; height: auto; max-height: 620px; }
+    .atleta-dashboard .ep-chart-col { height: auto; min-height: 480px; }
+    .atleta-dashboard .ep-stats { width: auto; height: auto; max-height: 620px; }
+}
+@media (min-width: 901px) and (max-width: 1350px) {
+    .atleta-dashboard .ep-body { grid-template-columns: 180px minmax(0, 1fr); }
+    .atleta-dashboard .ep-stats { grid-column: 1 / -1; max-height: none; }
+}
+@media (max-width: 900px) {
+    .atleta-dashboard .page-title { font-size: 27px; }
+    .atleta-dashboard .ep-body { flex-direction: column; height: auto; }
+    .atleta-dashboard .ep-nav { width: 100%; height: auto; max-height: 240px; flex-direction: row; flex-wrap: wrap; gap: 12px; overflow-y: auto; }
+    .atleta-dashboard .ep-group { flex-direction: row; flex-wrap: wrap; align-items: center; }
+    .atleta-dashboard .ep-item { padding: 8px 12px; }
+    .atleta-dashboard .ep-chart-col { height: auto; min-height: 440px; flex: auto; }
+    .atleta-dashboard .ep-stats { width: 100%; height: auto; }
+}
+@media (max-width: 540px) {
+    .atleta-dashboard .content { padding: 8px 0 100px; }
+    .atleta-dashboard .page-title { font-size: 23px; }
+    .atleta-dashboard .ep-card { padding: 20px 18px; }
+    .atleta-dashboard .ep-hero-value { font-size: 32px; }
+    .atleta-dashboard .ep-chart-col { min-height: 400px; }
+}

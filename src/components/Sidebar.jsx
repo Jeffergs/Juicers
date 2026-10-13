@@ -65,9 +65,9 @@ const VARIANTS = {
     },
 }
 
-export default function Sidebar({ variant = 'atleta' }) {
+export default function Sidebar({ variant = 'atleta', showAccount = false }) {
     const [open, setOpen] = useState(false)
-    const { logout } = useAuth()
+    const { logout, usuario } = useAuth()
     const navigate = useNavigate()
 
     const { prefix, items } = VARIANTS[variant]
@@ -106,6 +106,15 @@ export default function Sidebar({ variant = 'atleta' }) {
                 </nav>
 
                 <div className={`${prefix}-footer`}>
+                    {variant === 'atleta' && showAccount && <NavLink to="/perfil/dados-da-conta" className="sa-account" onClick={() => setOpen(false)}>
+                        <span className="sa-account-avatar" aria-hidden="true">{(usuario?.name || 'Atleta').split(' ').filter(Boolean).slice(0, 2).map(part => part[0]).join('').toUpperCase()}</span>
+                        <span className="sa-account-name">{usuario?.name || 'Atleta'}</span>
+                    </NavLink>}
+                    {variant === 'medico' && <NavLink to="/medico/dados-da-conta" className="sm-account" onClick={() => setOpen(false)}>
+                        <span className="sm-account-avatar" aria-hidden="true">{(usuario?.name || 'Conta médica').split(' ').filter(Boolean).slice(0, 2).map(part => part[0]).join('').toUpperCase()}</span>
+                        <span className="sm-account-name">{usuario?.name || 'Conta médica'}</span>
+                        <span aria-hidden="true">›</span>
+                    </NavLink>}
                     <button className={`${prefix}-sair`} onClick={handleSair}>
                         <svg width="17" height="17" viewBox="0 0 17 17" fill="none">
                             <path d="M7 1.5H3a1.5 1.5 0 00-1.5 1.5v11A1.5 1.5 0 003 15.5h4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />

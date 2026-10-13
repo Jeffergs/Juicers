@@ -3,6 +3,7 @@ import Dashboard from '../components/perfilDoUsuario/Dashboard.jsx'
 import UploadZone from '../components/perfilDoUsuario/UploadZone.jsx'
 import { SectionLabel, NoteCard } from '../components/perfilDoUsuario/Primitives.jsx'
 import { STATUS } from '../theme.js'
+import '../style/patientDetail.css'
 
 const TABS = [
   { key: 'dashboard', label: 'Dashboard' },
@@ -171,7 +172,7 @@ export default function PatientDetail({
   }
 
   return (
-    <div className="jc-fade" style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
+    <div className="jc-fade jc-doctor-patient-detail" style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
       <button
         onClick={onBack}
         className="jc-btn-ghost teal"
@@ -183,7 +184,7 @@ export default function PatientDetail({
           background: 'transparent',
           border: '1px solid #d5d5d5',
           color: '#303030',
-          fontSize: 12.5,
+          fontSize: 'var(--ui-small, 12px)',
           fontWeight: 600,
           fontFamily: 'inherit',
           borderRadius: 8,
@@ -215,7 +216,7 @@ export default function PatientDetail({
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            fontSize: 16,
+            fontSize: 'var(--ui-body, 14px)',
             fontWeight: 700,
             flex: 'none',
           }}
@@ -224,18 +225,18 @@ export default function PatientDetail({
         </div>
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: 3, flex: 1, minWidth: 0 }}>
-          <span style={{ fontSize: 19, fontWeight: 700, color: '#0f0f0f', letterSpacing: '-.01em' }}>
+          <span className="jc-patient-page-title" style={{ fontSize: 19, fontWeight: 700, color: '#0f0f0f', letterSpacing: '-.01em' }}>
             {patient.name}
           </span>
 
-          <span style={{ fontSize: 12.5, color: '#777' }}>
+          <span style={{ fontSize: 'var(--ui-small, 12px)', color: '#777' }}>
             {meta}
           </span>
         </div>
 
         <span
           style={{
-            fontSize: 11.5,
+            fontSize: 'var(--ui-small, 12px)',
             fontWeight: 650,
             color: STATUS.color[pStatus],
             background: STATUS.bg[pStatus],
@@ -262,7 +263,7 @@ export default function PatientDetail({
                 border: 'none',
                 borderBottom: `2px solid ${on ? '#2fd6be' : 'transparent'}`,
                 color: on ? '#2fd6be' : '#656565',
-                fontSize: 13.5,
+                fontSize: 'var(--ui-body, 14px)',
                 fontWeight: 600,
                 fontFamily: 'inherit',
                 padding: '11px 16px',
@@ -304,7 +305,7 @@ export default function PatientDetail({
               gap: 14,
             }}
           >
-            <h2 style={{ margin: 0, fontSize: 15, fontWeight: 700 }}>
+            <h2 style={{ margin: 0, fontSize: 'var(--ui-body, 14px)', fontWeight: 700 }}>
               Nova Anotação Clínica
             </h2>
 
@@ -321,7 +322,7 @@ export default function PatientDetail({
                 borderRadius: 10,
                 padding: '13px 14px',
                 color: '#0f0f0f',
-                fontSize: 13.5,
+                fontSize: 'var(--ui-body, 14px)',
                 lineHeight: 1.55,
                 fontFamily: 'inherit',
                 outline: 'none',
@@ -329,7 +330,7 @@ export default function PatientDetail({
             />
 
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <span style={{ fontSize: 12, color: '#888' }}>
+              <span style={{ fontSize: 'var(--ui-small, 12px)', color: '#888' }}>
                 Consulta de {today}
               </span>
 
@@ -341,7 +342,7 @@ export default function PatientDetail({
                   background: '#2fd6be',
                   color: '#06201d',
                   border: 'none',
-                  fontSize: 12.5,
+                  fontSize: 'var(--ui-small, 12px)',
                   fontWeight: 700,
                   fontFamily: 'inherit',
                   borderRadius: 9,
@@ -378,7 +379,7 @@ export default function PatientDetail({
                     }}
                   >
                     <div style={{ display: 'flex', justifyContent: 'space-between', gap: 12 }}>
-                      <span style={{ fontSize: 12, color: '#888', fontWeight: 600 }}>
+                      <span style={{ fontSize: 'var(--ui-small, 12px)', color: '#888', fontWeight: 600 }}>
                         {formatDateBR(note.createdAt)}
                       </span>
 
@@ -391,7 +392,7 @@ export default function PatientDetail({
                               background: 'rgba(47,214,190,.12)',
                               border: '1px solid rgba(47,214,190,.35)',
                               color: '#2fd6be',
-                              fontSize: 11.5,
+                              fontSize: 'var(--ui-small, 12px)',
                               fontWeight: 700,
                               fontFamily: 'inherit',
                               borderRadius: 8,
@@ -409,7 +410,7 @@ export default function PatientDetail({
                               background: 'rgba(240,71,71,.12)',
                               border: '1px solid rgba(240,71,71,.35)',
                               color: '#f04747',
-                              fontSize: 11.5,
+                              fontSize: 'var(--ui-small, 12px)',
                               fontWeight: 700,
                               fontFamily: 'inherit',
                               borderRadius: 8,
@@ -437,7 +438,7 @@ export default function PatientDetail({
                             borderRadius: 10,
                             padding: '12px 13px',
                             color: '#0f0f0f',
-                            fontSize: 13,
+                            fontSize: 'var(--ui-body, 14px)',
                             lineHeight: 1.5,
                             fontFamily: 'inherit',
                             outline: 'none',
@@ -452,7 +453,7 @@ export default function PatientDetail({
                               background: 'transparent',
                               border: '1px solid #ccc',
                               color: '#555',
-                              fontSize: 12,
+                              fontSize: 'var(--ui-small, 12px)',
                               fontWeight: 700,
                               fontFamily: 'inherit',
                               borderRadius: 8,
@@ -470,7 +471,7 @@ export default function PatientDetail({
                               background: '#2fd6be',
                               border: 'none',
                               color: '#06201d',
-                              fontSize: 12,
+                              fontSize: 'var(--ui-small, 12px)',
                               fontWeight: 800,
                               fontFamily: 'inherit',
                               borderRadius: 8,
@@ -484,7 +485,7 @@ export default function PatientDetail({
                         </div>
                       </>
                     ) : (
-                      <p style={{ margin: 0, fontSize: 13, color: '#303030', lineHeight: 1.55 }}>
+                      <p style={{ margin: 0, fontSize: 'var(--ui-body, 14px)', color: '#303030', lineHeight: 1.55 }}>
                         {note.text}
                       </p>
                     )}
@@ -499,7 +500,7 @@ export default function PatientDetail({
                   borderRadius: 10,
                   padding: 16,
                   textAlign: 'center',
-                  fontSize: 12.5,
+                  fontSize: 'var(--ui-small, 12px)',
                   color: '#888',
                 }}
               >
@@ -525,13 +526,13 @@ export default function PatientDetail({
           }}
         >
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-            <h2 style={{ margin: 0, fontSize: 15, fontWeight: 700 }}>
+            <h2 style={{ margin: 0, fontSize: 'var(--ui-body, 14px)', fontWeight: 700 }}>
               Próximos Exames Sugeridos
             </h2>
 
             <span
               style={{
-                fontSize: 11,
+                fontSize: 'var(--ui-small, 12px)',
                 fontWeight: 650,
                 color: '#2fd6be',
                 background: 'rgba(47,214,190,.12)',
@@ -543,7 +544,7 @@ export default function PatientDetail({
             </span>
           </div>
 
-          <p style={{ margin: 0, fontSize: 12.5, color: '#818181', lineHeight: 1.45 }}>
+          <p style={{ margin: 0, fontSize: 'var(--ui-small, 12px)', color: '#818181', lineHeight: 1.45 }}>
             Recomendados com base no ciclo e nos alertas ativos do paciente. Marque para solicitar.
           </p>
 
@@ -561,7 +562,7 @@ export default function PatientDetail({
                     alignItems: 'flex-start',
                     gap: 11,
                     cursor: loading ? 'not-allowed' : 'pointer',
-                    fontSize: 13,
+                    fontSize: 'var(--ui-body, 14px)',
                     color: '#303030',
                     padding: '8px 0',
                     lineHeight: 1.4,
@@ -603,7 +604,7 @@ export default function PatientDetail({
           >
             <span
               style={{
-                fontSize: 11,
+                fontSize: 'var(--ui-small, 12px)',
                 fontWeight: 700,
                 color: '#777',
                 textTransform: 'uppercase',
@@ -637,7 +638,7 @@ export default function PatientDetail({
                   borderRadius: 9,
                   padding: '10px 12px',
                   color: '#0f0f0f',
-                  fontSize: 13,
+                  fontSize: 'var(--ui-body, 14px)',
                   fontFamily: 'inherit',
                   outline: 'none',
                 }}
@@ -650,7 +651,7 @@ export default function PatientDetail({
                   background: '#2fd6be',
                   color: '#06201d',
                   border: 'none',
-                  fontSize: 12.5,
+                  fontSize: 'var(--ui-small, 12px)',
                   fontWeight: 800,
                   fontFamily: 'inherit',
                   borderRadius: 9,
@@ -667,7 +668,7 @@ export default function PatientDetail({
               <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginTop: 6 }}>
                 <span
                   style={{
-                    fontSize: 11,
+                    fontSize: 'var(--ui-small, 12px)',
                     color: '#888',
                     fontWeight: 700,
                     textTransform: 'uppercase',
@@ -710,7 +711,7 @@ export default function PatientDetail({
                         ✓
                       </span>
 
-                      <span style={{ flex: 1, color: '#171717', fontSize: 13 }}>
+                      <span style={{ flex: 1, color: '#171717', fontSize: 'var(--ui-body, 14px)' }}>
                         {exam.label}
                       </span>
 
@@ -721,7 +722,7 @@ export default function PatientDetail({
                           background: 'rgba(240,71,71,.12)',
                           border: '1px solid rgba(240,71,71,.35)',
                           color: '#f04747',
-                          fontSize: 11.5,
+                          fontSize: 'var(--ui-small, 12px)',
                           fontWeight: 700,
                           fontFamily: 'inherit',
                           borderRadius: 8,
@@ -757,7 +758,7 @@ export default function PatientDetail({
             <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
               <span style={{ color: '#2fd6be', fontSize: 20 }}>↥</span>
 
-              <h2 style={{ margin: 0, fontSize: 15, fontWeight: 700 }}>
+              <h2 style={{ margin: 0, fontSize: 'var(--ui-body, 14px)', fontWeight: 700 }}>
                 Importar Novo Exame
               </h2>
             </div>
@@ -780,7 +781,7 @@ export default function PatientDetail({
                   borderRadius: 10,
                   padding: 16,
                   textAlign: 'center',
-                  fontSize: 12.5,
+                  fontSize: 'var(--ui-small, 12px)',
                   color: '#888',
                 }}
               >
@@ -807,22 +808,22 @@ export default function PatientDetail({
                   }}
                 >
                   <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 4 }}>
-                    <span style={{ fontSize: 13.5, fontWeight: 700, color: '#0f0f0f' }}>
+                    <span style={{ fontSize: 'var(--ui-body, 14px)', fontWeight: 700, color: '#0f0f0f' }}>
                       {exam.name}
                     </span>
 
-                    <span style={{ fontSize: 12, color: '#777' }}>
+                    <span style={{ fontSize: 'var(--ui-small, 12px)', color: '#777' }}>
                       Data do exame: {exam.date} · Fonte: {exam.source === 'pdf' ? 'PDF' : 'Manual'}
                     </span>
 
-                    <span style={{ fontSize: 11.5, color: '#888' }}>
+                    <span style={{ fontSize: 'var(--ui-small, 12px)', color: '#888' }}>
                       Marcadores extraídos: {Object.keys(exam.markers).length}
                     </span>
                   </div>
 
                   <span
                     style={{
-                      fontSize: 11,
+                      fontSize: 'var(--ui-small, 12px)',
                       fontWeight: 700,
                       color,
                       background: `${color}22`,
@@ -842,7 +843,7 @@ export default function PatientDetail({
                       background: 'rgba(240,71,71,.12)',
                       border: '1px solid rgba(240,71,71,.35)',
                       color: '#f04747',
-                      fontSize: 12,
+                      fontSize: 'var(--ui-small, 12px)',
                       fontWeight: 700,
                       fontFamily: 'inherit',
                       borderRadius: 8,
@@ -862,3 +863,4 @@ export default function PatientDetail({
     </div>
   )
 }
+

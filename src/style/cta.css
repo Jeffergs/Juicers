@@ -72,3 +72,17 @@
     }
 }
 @media (max-width:620px){ .juicer .cta-card{padding:38px 26px} .juicer .cta-actions{min-width:0} }
+.juicer .cta { padding: 72px 0; }
+.juicer .cta-card { background: transparent; border: 0; border-radius: 0; padding: 16px 0; }
+.juicer .cta-inner { display: flex; flex-direction: column; gap: 28px; text-align: center; }
+.juicer .cta-card h2 { font-size: clamp(24px, 3vw, 34px); max-width: none; }
+.juicer .cta-card p { color: #60708d; font-size: 16px; line-height: 1.7; max-width: none; margin-top: 16px; }
+.juicer .cta-actions { display: flex; flex-direction: row; justify-content: center; flex-wrap: wrap; gap: 16px; min-width: 0; width: auto; }
+.juicer .cta-actions .btn-j { width: auto; min-width: 180px; border-radius: 8px; padding: 14px 24px; font-size: 14px; }
+.juicer .cta-actions .btn-primary-j { background: #2fb8b1; color: #fff; border-color: #2fb8b1; }
+.juicer .cta-actions .btn-ghost-j { color: #101b30; background: transparent; border-color: #bfcbd9; }
+@media (max-width: 560px) {
+    .juicer .cta { padding: 48px 0; }
+    .juicer .cta-actions { width: 100%; }
+    .juicer .cta-actions .btn-j { width: 100%; }
+}

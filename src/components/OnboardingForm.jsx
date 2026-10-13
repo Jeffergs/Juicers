@@ -21,6 +21,10 @@ function separarNome(nomeCompleto) {
     return { nome, sobrenome }
 }
 
+function Obrigatorio() {
+    return <span className="ob-required" title="Campo obrigatório">*</span>
+}
+
 export default function OnboardingForm({
     nomeCompleto = '',
     emailUsuario = '',
@@ -358,9 +362,9 @@ export default function OnboardingForm({
                 </div>
 
                 <div className="ob-footer">
-                    Seus dados são usados apenas para<br />
-                    monitoramento de saúde pessoal.<br />
-                    Nunca compartilhamos com terceiros.
+                    Seus dados são usados apenas para monitoramento de saúde pessoal.
+                    {' '}Apenas você e, caso haja um médico vinculado à sua conta, esse médico terão acesso aos seus dados.
+                    {' '}Não compartilhamos com outros terceiros.
                 </div>
             </div>
 
@@ -379,6 +383,8 @@ export default function OnboardingForm({
                         </div>
                     )}
 
+                    <p className="ob-required-hint"><Obrigatorio /> Campos obrigatórios</p>
+
                     {etapa === 1 && (
                         <div>
                             <div className="ob-tag">Etapa 1 de 3</div>
@@ -393,7 +399,7 @@ export default function OnboardingForm({
 
                             <div className="ob-row">
                                 <div className={`ob-field ${errors.nome ? 'ob-field-error' : ''}`}>
-                                    <label>Nome</label>
+                                    <label>Nome <Obrigatorio /></label>
                                     <input
                                         type="text"
                                         placeholder="Seu nome"
@@ -404,7 +410,7 @@ export default function OnboardingForm({
                                 </div>
 
                                 <div className={`ob-field ${errors.sobrenome ? 'ob-field-error' : ''}`}>
-                                    <label>Sobrenome</label>
+                                    <label>Sobrenome <Obrigatorio /></label>
                                     <input
                                         type="text"
                                         placeholder="Sobrenome"
@@ -417,7 +423,7 @@ export default function OnboardingForm({
 
                             <div className="ob-row">
                                 <div className={`ob-field ${errors.idade ? 'ob-field-error' : ''}`}>
-                                    <label>Idade</label>
+                                    <label>Idade <Obrigatorio /></label>
                                     <input
                                         type="number"
                                         placeholder="28"
@@ -428,7 +434,7 @@ export default function OnboardingForm({
                                 </div>
 
                                 <div className={`ob-field ${errors.sexo ? 'ob-field-error' : ''}`}>
-                                    <label>Sexo biológico</label>
+                                    <label>Sexo biológico <Obrigatorio /></label>
                                     <select
                                         value={form.sexo}
                                         onChange={e => update('sexo', e.target.value)}
@@ -443,7 +449,7 @@ export default function OnboardingForm({
 
                             <div className="ob-row">
                                 <div className={`ob-field ${errors.peso ? 'ob-field-error' : ''}`}>
-                                    <label>Peso (kg)</label>
+                                    <label>Peso (kg) <Obrigatorio /></label>
                                     <input
                                         type="number"
                                         placeholder="85"
@@ -454,7 +460,7 @@ export default function OnboardingForm({
                                 </div>
 
                                 <div className={`ob-field ${errors.altura ? 'ob-field-error' : ''}`}>
-                                    <label>Altura (cm)</label>
+                                    <label>Altura (cm) <Obrigatorio /></label>
                                     <input
                                         type="number"
                                         placeholder="178"
@@ -490,7 +496,7 @@ export default function OnboardingForm({
                             </p>
 
                             <div className={`ob-field ${errors.cicloAtivo ? 'ob-field-error' : ''}`}>
-                                <label>Está em ciclo atualmente?</label>
+                                <label>Está em ciclo atualmente? <Obrigatorio /></label>
 
                                 <div className="ob-radio-group">
                                     {[
@@ -520,7 +526,7 @@ export default function OnboardingForm({
                             {form.cicloAtivo !== 'nunca' && (
                                 <>
                                     <div className={`ob-field ${errors.compostos ? 'ob-field-error' : ''}`}>
-                                        <label>Compostos utilizados</label>
+                                        <label>Compostos utilizados <Obrigatorio /></label>
 
                                         <div className="ob-compost-block">
                                             {sugestoesDisponiveis.length > 0 && (
@@ -569,12 +575,14 @@ export default function OnboardingForm({
                                                             <input
                                                                 type="number"
                                                                 placeholder="mg"
+                                                                aria-label={`Dosagem semanal de ${c.nome}`}
+                                                                aria-required="true"
                                                                 value={c.dosagem}
                                                                 onChange={e =>
                                                                     atualizarDosagemComposto(c.nome, e.target.value)
                                                                 }
                                                             />
-                                                            <span>mg/sem</span>
+                                                            <span>mg/sem <Obrigatorio /></span>
                                                         </div>
 
                                                         <button
@@ -594,7 +602,7 @@ export default function OnboardingForm({
                                     </div>
 
                                     <div className={`ob-field ${errors.tempoUso ? 'ob-field-error' : ''}`}>
-                                        <label>Tempo de uso</label>
+                                        <label>Tempo de uso <Obrigatorio /></label>
 
                                         <select
                                             value={form.tempoUso}
@@ -637,7 +645,7 @@ export default function OnboardingForm({
                             </p>
 
                             <div className={`ob-field ${errors.fezeExames ? 'ob-field-error' : ''}`}>
-                                <label>Já fez exames laboratoriais?</label>
+                                <label>Já fez exames laboratoriais? <Obrigatorio /></label>
 
                                 <div className="ob-radio-group">
                                     {[
@@ -666,7 +674,7 @@ export default function OnboardingForm({
 
                             {form.fezeExames !== 'nunca' && (
                                 <div className={`ob-field ${errors.dataUltimoExame ? 'ob-field-error' : ''}`}>
-                                    <label>Data do último exame</label>
+                                    <label>Data do último exame <Obrigatorio /></label>
 
                                     <input
                                         type="date"
@@ -679,7 +687,7 @@ export default function OnboardingForm({
                             )}
 
                             <div className={`ob-field ${errors.condicoes ? 'ob-field-error' : ''}`}>
-                                <label>Condições pré-existentes</label>
+                                <label>Condições pré-existentes <Obrigatorio /></label>
 
                                 <div className="ob-check-group">
                                     {CONDICOES.map(c => (

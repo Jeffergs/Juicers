@@ -1,105 +1,82 @@
+import { Link } from 'react-router-dom'
 import '../style/footer.css'
 import logoIcon from '../assets/juicers.png'
 import { useTranslation } from '../context/LanguageContext'
 
 const T = {
     pt: {
-        tagline: "A Juicers é uma ferramenta consultiva de apoio para usuários e profissionais. Acompanhe o histórico de exames, visualize a evolução dos indicadores ao longo do tempo, identifique tendências de risco mais cedo e tome decisões mais conscientes com base em dados organizados.",
-        navTitle: "Navegação",
-        navLinks: [
-            { label: "Menu", href: "/" },
-            { label: "Sobre o Projeto", href: "#sobre-pagina" },
-            { label: "Entrar", href: "/login" },
-        ],
-        legalTitle: "Legal",
-        legalLinks: ["Termos de Uso", "Privacidade", "Fontes"],
-        rights: "Todos os direitos reservados.",
-        disclaimer: "Este site é informativo e não substitui orientação médica profissional.",
+        tagline: 'Seus exames e indicadores organizados para acompanhar sua saúde ao longo do tempo.',
+        navigation: 'Navegação', tools: 'Ferramentas', account: 'Sua conta',
+        navigationLinks: ['Início', 'Sobre o projeto', 'Como funciona', 'Planos'],
+        toolLinks: ['Simulador', 'Mapa corporal', 'Referências', 'Feedback'],
+        athlete: 'Entrar como atleta', doctor: 'Entrar como médico', start: 'Começar acompanhamento',
+        disclaimer: 'A Juicers informa e acompanha. Não substitui orientação médica profissional.',
+        rights: 'Todos os direitos reservados.', privacy: 'Privacidade', terms: 'Termos de uso', top: 'Voltar ao topo',
+        unavailable: 'Em breve',
     },
     en: {
-        tagline: "Juicers is a consultative support tool for users and professionals. Track exam history, view indicator trends over time, spot risk patterns earlier and make more informed decisions based on organized data.",
-        navTitle: "Navigation",
-        navLinks: [
-            { label: "Menu", href: "/" },
-            { label: "About the Project", href: "#sobre-pagina" },
-            { label: "Sign in", href: "/login" },
-        ],
-        legalTitle: "Legal",
-        legalLinks: ["Terms of Use", "Privacy", "Sources"],
-        rights: "All rights reserved.",
-        disclaimer: "This site is informational and does not replace professional medical guidance.",
+        tagline: 'Your exams and indicators organized to track your health over time.',
+        navigation: 'Navigation', tools: 'Tools', account: 'Your account',
+        navigationLinks: ['Home', 'About the project', 'How it works', 'Plans'],
+        toolLinks: ['Simulator', 'Body map', 'References', 'Feedback'],
+        athlete: 'Sign in as an athlete', doctor: 'Sign in as a doctor', start: 'Start tracking',
+        disclaimer: 'Juicers provides information and tracking. It does not replace professional medical guidance.',
+        rights: 'All rights reserved.', privacy: 'Privacy', terms: 'Terms of use', top: 'Back to top',
+        unavailable: 'Coming soon',
     },
 }
+const navigationTargets = ['/#inicio', '/#sobre', '/#sol', '/#precos']
+const toolTargets = ['/simulador', '/mapa-corporal', '/referencias', 'https://forms.gle/Px1jDZzcVkgYH9zD9']
 
 export default function Footer() {
     const t = useTranslation(T, 'Footer.T')
-
     return (
         <footer className="footer">
-            <div className="footer_top">
-
-                {/* Brand */}
-                <div className="footer_brand">
-                    <a className="logo" href="/">
-                        <img src={logoIcon} alt="Logo" className="logo-icon" />
-                    </a>
-                    <p className="footer_tagline">
-                        {t.tagline}
-                    </p>
-
-                    {/* Redes sociais */}
-                    <div className="footer_sociais">
-                        <a
-                            className="footer_social_link"
-                            href="#"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            aria-label="Instagram"
-                        >
-                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.366.062 2.633.334 3.608 1.308.975.975 1.246 2.242 1.308 3.608.058 1.266.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.062 1.366-.334 2.633-1.308 3.608-.975.975-2.242 1.246-3.608 1.308-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-1.366-.062-2.633-.334-3.608-1.308-.975-.975-1.246-2.242-1.308-3.608C2.175 15.584 2.163 15.204 2.163 12s.012-3.584.07-4.85c.062-1.366.334-2.633 1.308-3.608.975-.975 2.242-1.246 3.608-1.308 1.266-.058 1.646-.07 4.85-.07zm0-2.163c-3.259 0-3.667.014-4.947.072-1.613.074-3.067.48-4.172 1.585C1.776 2.762 1.37 4.216 1.296 5.829 1.238 7.109 1.224 7.517 1.224 12c0 4.483.014 4.891.072 6.171.074 1.613.48 3.067 1.585 4.172 1.105 1.105 2.559 1.511 4.172 1.585C8.333 23.986 8.741 24 12 24s3.667-.014 4.947-.072c1.613-.074 3.067-.48 4.172-1.585 1.105-1.105 1.511-2.559 1.585-4.172.058-1.28.072-1.688.072-6.171 0-4.483-.014-4.891-.072-6.171-.074-1.613-.48-3.067-1.585-4.172C19.014.494 17.56.088 15.947.014 14.667-.042 14.259-.056 12-.056h.056zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zm0 10.162a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z" />
-                            </svg>
-                        </a>
-                        <a
-                            className="footer_social_link"
-                            href="#"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            aria-label="LinkedIn"
-                        >
-                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
-                            </svg>
-                        </a>
+            <div className="footer_container">
+                <div className="footer_top">
+                    <div className="footer_brand">
+                        <Link className="footer_logo" to="/" aria-label="Juicers">
+                            <img src={logoIcon} alt="Juicers" />
+                        </Link>
+                        <p className="footer_tagline">{t.tagline}</p>
+                        <div className="footer_sociais">
+                            <button className="footer_social_link" type="button" disabled title={`Instagram — ${t.unavailable}`} aria-label={`Instagram — ${t.unavailable}`}>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" /><circle cx="12" cy="12" r="4" /><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" /></svg>
+                            </button>
+                            <button className="footer_social_link" type="button" disabled title={`LinkedIn — ${t.unavailable}`} aria-label={`LinkedIn — ${t.unavailable}`}>
+                                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4 9h4v12H4zM6 3a2 2 0 1 0 0 4 2 2 0 0 0 0-4M10 9h4v1.6c.8-1.2 1.8-1.8 3.2-1.8 3 0 3.8 2 3.8 4.7V21h-4v-6.6c0-1.6-.4-2.4-1.5-2.4-1.2 0-1.5 1-1.5 2.4V21h-4z" /></svg>
+                            </button>
+                        </div>
+                    </div>
+                    <nav className="footer_nav" aria-label={t.navigation}>
+                        <h2>{t.navigation}</h2>
+                        <ul>{t.navigationLinks.map((label, i) => <li key={navigationTargets[i]}><Link to={navigationTargets[i]}>{label}</Link></li>)}</ul>
+                    </nav>
+                    <nav className="footer_nav" aria-label={t.tools}>
+                        <h2>{t.tools}</h2>
+                        <ul>{t.toolLinks.map((label, i) => <li key={toolTargets[i]}>{i === 3 ? <a href={toolTargets[i]} target="_blank" rel="noopener noreferrer">{label}</a> : <Link to={toolTargets[i]}>{label}</Link>}</li>)}</ul>
+                    </nav>
+                    <nav className="footer_nav" aria-label={t.account}>
+                        <h2>{t.account}</h2>
+                        <ul>
+                            <li><Link to="/login?role=atleta">{t.athlete}</Link></li>
+                            <li><Link to="/login?role=medico">{t.doctor}</Link></li>
+                        </ul>
+                        <Link className="footer_start" to="/login">{t.start} <span aria-hidden="true">→</span></Link>
+                    </nav>
+                </div>
+                <div className="footer_disclaimer">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="M12 11v6M12 7v1" /></svg>
+                    <p>{t.disclaimer}</p>
+                </div>
+                <div className="footer_bottom">
+                    <p>© {new Date().getFullYear()} Juicers. {t.rights}</p>
+                    <div className="footer_bottom_links">
+                        <button type="button" disabled title={t.unavailable}>{t.privacy}</button>
+                        <button type="button" disabled title={t.unavailable}>{t.terms}</button>
+                        <button type="button" onClick={() => window.scrollTo({ top: 0, behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' })}>{t.top} <span aria-hidden="true">↑</span></button>
                     </div>
                 </div>
-
-                {/* Navegação */}
-                <div className="footer_nav">
-                    <p className="footer_nav_titulo">{t.navTitle}</p>
-                    <ul>
-                        {t.navLinks.map((l) => (
-                            <li key={l.label}><a href={l.href}>{l.label}</a></li>
-                        ))}
-                    </ul>
-                </div>
-
-                {/* Legal */}
-                <div className="footer_nav">
-                    <p className="footer_nav_titulo">{t.legalTitle}</p>
-                    <ul>
-                        {t.legalLinks.map((l) => (
-                            <li key={l}><a href="#">{l}</a></li>
-                        ))}
-                    </ul>
-                </div>
-            </div>
-
-            <div className="footer_bottom">
-                <p>© {new Date().getFullYear()} Juicer. {t.rights}</p>
-                <p className="footer_disclaimer">
-                    {t.disclaimer}
-                </p>
             </div>
         </footer>
     )

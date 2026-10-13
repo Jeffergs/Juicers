@@ -200,7 +200,7 @@ export default function IndicatorStats({ marker }) {
         <div className="ep-stats-top-row">
           <span className="ep-stats-label">Valor atual</span>
           <span className="ep-stats-pill" style={{ color: STATUS_COLOR[pillTone], background: STATUS_BG[pillTone] }}>
-            <IconAlert /> {stats.posicaoLabel}
+            {pillTone !== 'ok' && <IconAlert />} {stats.posicaoLabel}
           </span>
         </div>
         <div className="ep-stats-value" style={{ color: STATUS_COLOR[pillTone] }}>
@@ -264,7 +264,7 @@ export default function IndicatorStats({ marker }) {
           <span className="ep-stats-row-icon"><IconBars /></span>
           <span className="ep-stats-row-label">Nível de evidência:</span>
           <span className="ep-stats-pill ep-stats-pill--sm" style={{ color: STATUS_COLOR[stats.evidencia.tone], background: STATUS_BG[stats.evidencia.tone] }}>
-            <IconAlert /> {stats.evidencia.label}
+            {stats.evidencia.tone !== 'ok' && <IconAlert />} {stats.evidencia.label}
           </span>
         </li>
       </ul>

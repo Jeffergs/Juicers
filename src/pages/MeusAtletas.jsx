@@ -4,7 +4,6 @@ import PatientsList from '../screens/PatientsList.jsx'
 import InviteModal from '../components/perfilDoUsuario/InviteModal.jsx'
 import Toast from '../components/perfilDoUsuario/Toast.jsx'
 import { getDoctorPatients, getDoctorPatientExams, removeDoctorPatient } from '../services/api'
-import { useAuth } from '../context/AuthContext.jsx'
 import '../style/meusAtletas.css'
 
 function getInitials(name = '') {
@@ -20,19 +19,21 @@ function getInitials(name = '') {
 function formatDate(dateString) {
   if (!dateString) return 'Sem exame'
 
-  const date = new Date(dateString)
+  // Keep dates that were already formatted by older versions of the API.
+  if (!/^\d{4}-\d{2}-\d{2}/.test(dateString)) return dateString
+  const date = new Date(`${dateString.slice(0, 10)}T12:00:00`)
 
   if (Number.isNaN(date.getTime())) {
     return dateString
   }
 
-  return dateString
+  return date.toLocaleDateString('pt-BR', { day: '2-digit', month: 'short', year: 'numeric' })
 }
 
 // Compostos podem vir como string[] (formato antigo) ou como
 // {name, weeklyDosage}[] (formato atual, com dosagem por item).
 function formatCompounds(substances = []) {
-  if (!substances.length) return ['Sem compostos informados']
+  if (!Array.isArray(substances) || !substances.length) return ['Nenhuma substância informada']
 
   return substances.map(s => {
     if (typeof s === 'string') return s
@@ -259,7 +260,6 @@ function sortPatientsByRisk(patients = []) {
 
 export default function MeusAtletas() {
   const navigate = useNavigate()
-  const { usuario } = useAuth()
 
   const [patients, setPatients] = useState([])
   const [search, setSearch] = useState('')
@@ -336,7 +336,6 @@ export default function MeusAtletas() {
     <>
       {removeError && <p role="alert" className="ma-remove-error">{removeError}</p>}
       <PatientsList
-        greeting={`Olá, ${usuario?.name || 'Doutor(a)'}`}
         patients={patients}
         search={search}
         onSearch={(e) => setSearch(e.target.value)}

@@ -56,8 +56,20 @@ export default function Navbar() {
     const mobileRef = useRef(null)
 
     useEffect(() => {
+        const onKeyDown = (event) => {
+            if (event.key === 'Escape') {
+                setMenuOpen(false)
+                setMobileOpen(false)
+            }
+        }
+        document.addEventListener('keydown', onKeyDown)
+        return () => document.removeEventListener('keydown', onKeyDown)
+    }, [])
+
+    useEffect(() => {
         const onScroll = () => setScrolled(window.scrollY > 40)
 
+        onScroll()
         window.addEventListener('scroll', onScroll, { passive: true })
 
         return () => window.removeEventListener('scroll', onScroll)
@@ -158,12 +170,13 @@ export default function Navbar() {
                         className={`hamburger-btn${mobileOpen ? ' open' : ''}`}
                         onClick={() => setMobileOpen(!mobileOpen)}
                         aria-expanded={mobileOpen}
-                        aria-label="Menu"
+                        aria-controls="mobile-navigation"
+                        aria-label={mobileOpen ? 'Fechar menu' : 'Abrir menu'}
                     >
                         <span /><span /><span />
                     </button>
 
-                    <div className={`mobile-panel${mobileOpen ? ' open' : ''}`}>
+                    <div id="mobile-navigation" className={`mobile-panel${mobileOpen ? ' open' : ''}`}>
                         {menuLinks.map(l => (
                             <Link key={l.href} to={`/${l.href}`} onClick={closeMobile}>{l.label}</Link>
                         ))}
