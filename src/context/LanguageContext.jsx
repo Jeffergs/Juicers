@@ -7,6 +7,7 @@ export function LanguageProvider({ children }) {
 
     useEffect(() => {
         localStorage.setItem('juicers-lang', lang)
+        document.documentElement.lang = lang === 'en' ? 'en' : 'pt-BR'
     }, [lang])
 
     return (

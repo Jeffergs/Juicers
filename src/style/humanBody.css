@@ -7,14 +7,14 @@
 
 .hbd-root {
     /* Theme tokens */
-    --hbd-bg: #f5f5f5;
+    --hbd-bg: #e9ecf1;
     --hbd-surface: rgba(255, 255, 255, 0.85);
-    --hbd-text: #1a1a1a;
-    --hbd-text-dim: #5c5c5c;
-    --hbd-text-faint: #adadad;
-    --hbd-border: rgba(0, 0, 0, 0.07);
-    --hbd-border-faint: rgba(0, 0, 0, 0.05);
-    --hbd-accent: #E6A817;
+    --hbd-text: #0b0e13;
+    --hbd-text-dim: #4d5765;
+    --hbd-text-faint: #8a95a4;
+    --hbd-border: #cad1dc;
+    --hbd-border-faint: #dde1e9;
+    --hbd-accent: #1b6f64;
     --hbd-stroke: rgba(0, 0, 0, 0.32);
 
     display: flex;
@@ -51,7 +51,7 @@
 }
 
 .hbd-root ::selection {
-    background: rgba(220, 38, 38, 0.3);
+    background: rgba(47, 214, 190, 0.3);
     
 }
 
@@ -168,7 +168,7 @@
     position: absolute;
     inset: 0;
     background:
-        radial-gradient(ellipse 60% 50% at 50% 45%, rgba(220, 38, 38, 0.06), transparent 70%),
+        radial-gradient(ellipse 60% 50% at 50% 45%, rgba(47, 214, 190, 0.06), transparent 70%),
         radial-gradient(ellipse 80% 60% at 50% 50%, rgba(0, 0, 0, 0.015), transparent 70%);
     pointer-events: none;
 }
@@ -201,7 +201,7 @@
 }
 
 .hbd-dot-pulse {
-    fill: rgba(220, 38, 38, 0.30);
+    fill: rgba(47, 214, 190, 0.30);
     transform-origin: center;
     transform-box: fill-box;
     animation: hbd-pulse 2.4s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
@@ -212,7 +212,7 @@
 }
 
 .hbd-dot-halo {
-    fill: rgba(220, 38, 38, 0.20);
+    fill: rgba(47, 214, 190, 0.20);
 }
 
 .hbd-dot-core {
@@ -254,7 +254,7 @@
     backdrop-filter: blur(8px);
     border: 1px solid var(--hbd-border);
     border-radius: 16px;
-    box-shadow: 0 30px 80px -30px rgba(220, 38, 38, 0.18);
+    box-shadow: 0 30px 80px -30px rgba(47, 214, 190, 0.18);
     animation: hbd-slide-in 0.36s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
@@ -295,7 +295,7 @@
 }
 
 .hbd-card-close:hover {
-    color: #000;
+    color: #0b0e13;
     background: rgba(0, 0, 0, 0.06);
 }
 
@@ -305,7 +305,7 @@
     font-weight: 600;
     letter-spacing: -0.02em;
     line-height: 1.1;
-    color: #000;
+    color: #0b0e13;
 }
 
 @container hbd (min-width: 700px) {

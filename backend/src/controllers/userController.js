@@ -1,5 +1,5 @@
 import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
+import { clearSession, issueSession, normalizeEmail, validEmail, validPassword } from '../utils/session.js';
 import { OAuth2Client } from "google-auth-library";
 import User from "../models/User.js";
 import Doctor from "../models/Doctor.js";
@@ -20,19 +20,20 @@ function findUserByEmailCaseInsensitive(email) {
 
 export const createUser = async (req, res) => {
   try {
-    const { name, email, password, role = "patient", doctorVerification } = req.body;
+    const { name, password, role = "patient", doctorVerification } = req.body;
+    const email = normalizeEmail(req.body.email);
 
     if (!["patient", "doctor"].includes(role)) {
       return res.status(400).json({ message: "Perfil de usuário inválido" });
     }
 
-    if (!name || !email || !password) {
+    if (typeof name !== 'string' || !name.trim() || name.trim().length > 120 || !validEmail(email) || !validPassword(password)) {
       return res.status(400).json({
-        message: "Nome, e-mail e senha são obrigatórios",
+        message: "Informe nome, e-mail válido e senha de 8 caracteres ou mais (até 72 bytes).",
       });
     }
 
-    const existingUser = await User.findOne({ email });
+    const existingUser = await findUserByEmailCaseInsensitive(email);
 
     if (existingUser) {
       return res.status(400).json({
@@ -48,7 +49,7 @@ export const createUser = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const user = await User.create({
-      name,
+      name: name.trim(),
       email,
       password: hashedPassword,
       role,
@@ -84,15 +85,16 @@ export const createUser = async (req, res) => {
 
 export const loginUser = async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { password } = req.body;
+    const email = normalizeEmail(req.body.email);
 
-    if (!email || !password) {
+    if (!validEmail(email) || typeof password !== 'string' || !password || Buffer.byteLength(password, 'utf8') > 72) {
       return res.status(400).json({
         message: "E-mail e senha são obrigatórios",
       });
     }
 
-    const user = await User.findOne({ email });
+    const user = await findUserByEmailCaseInsensitive(email);
 
     if (!user) {
       return res.status(401).json({
@@ -131,20 +133,11 @@ export const loginUser = async (req, res) => {
       }
     }
 
-    const token = jwt.sign(
-      {
-        id: user._id,
-        role: user.role,
-      },
-      process.env.JWT_SECRET,
-      {
-        expiresIn: "7d",
-      }
-    );
+    issueSession(res, user);
 
     return res.status(200).json({
       message: "Login realizado com sucesso",
-      token,
+
       user: {
         id: user._id,
         name: user.name,
@@ -269,16 +262,12 @@ export const loginWithGoogle = async (req, res) => {
       });
     }
 
-    const token = jwt.sign(
-      { id: user._id, role: user.role },
-      process.env.JWT_SECRET,
-      { expiresIn: "7d" }
-    );
+    issueSession(res, user);
     const patientProfileExists = await Patient.exists({ userId: user._id });
 
     return res.status(200).json({
       message: "Login com Google realizado com sucesso.",
-      token,
+
       needsOnboarding: !patientProfileExists,
       user: {
         id: user._id,
@@ -302,15 +291,16 @@ export const loginWithGoogle = async (req, res) => {
 
 export const reverifyDoctor = async (req, res) => {
   try {
-    const { email, password, doctorVerification } = req.body;
+    const { password, doctorVerification } = req.body;
+    const email = normalizeEmail(req.body.email);
 
-    if (!email || !password) {
+    if (!validEmail(email) || typeof password !== 'string' || !password || Buffer.byteLength(password, 'utf8') > 72) {
       return res.status(400).json({
         message: "E-mail e senha são obrigatórios",
       });
     }
 
-    const user = await User.findOne({ email });
+    const user = await findUserByEmailCaseInsensitive(email);
     if (!user || user.role !== "doctor" || !(await bcrypt.compare(password, user.password))) {
       return res.status(401).json({ message: "E-mail ou senha inválidos" });
     }
@@ -331,15 +321,11 @@ export const reverifyDoctor = async (req, res) => {
       }
     );
 
-    const token = jwt.sign(
-      { id: user._id, role: user.role },
-      process.env.JWT_SECRET,
-      { expiresIn: "7d" }
-    );
+    issueSession(res, user);
 
     return res.status(200).json({
       message: "CRM validado e perfil médico reativado.",
-      token,
+
       user: {
         id: user._id,
         name: user.name,
@@ -372,19 +358,16 @@ export const updateUserProfile = async (req, res) => {
     }
 
     if (email !== undefined) {
-      if (typeof email !== "string" || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) {
+      if (!validEmail(normalizeEmail(email))) {
         return res.status(400).json({
           message: "Informe um e-mail válido",
         });
       }
 
       updates.email = email.trim().toLowerCase();
-      const existingUser = await User.findOne({
-        email: updates.email,
-        _id: { $ne: userId },
-      });
+      const existingUser = await findUserByEmailCaseInsensitive(updates.email);
 
-      if (existingUser) {
+      if (existingUser && String(existingUser._id) !== String(userId)) {
         return res.status(409).json({
           message: "Este e-mail já está cadastrado",
         });
@@ -434,15 +417,15 @@ export const changePassword = async (req, res) => {
     const userId = req.user.id;
     const { currentPassword, newPassword } = req.body;
 
-    if (!currentPassword || !newPassword) {
+    if (typeof currentPassword !== 'string' || !currentPassword || Buffer.byteLength(currentPassword, 'utf8') > 72 || !newPassword) {
       return res.status(400).json({
         message: "Informe a senha atual e a nova senha",
       });
     }
 
-    if (typeof newPassword !== "string" || newPassword.length < 6) {
+    if (!validPassword(newPassword)) {
       return res.status(400).json({
-        message: "A nova senha deve ter pelo menos 6 caracteres",
+        message: "A nova senha deve ter pelo menos 8 caracteres e até 72 bytes.",
       });
     }
 
@@ -465,10 +448,10 @@ export const changePassword = async (req, res) => {
       return res.status(401).json({ message: "A senha atual está incorreta" });
     }
 
-    user.password = await bcrypt.hash(newPassword, 10);
-    await user.save();
+    await User.updateOne({ _id: userId, password: user.password }, { $set: { password: await bcrypt.hash(newPassword, 10) }, $inc: { sessionVersion: 1 } });
+    clearSession(res);
 
-    return res.status(200).json({ message: "Senha alterada com sucesso" });
+    return res.status(200).json({ message: "Senha alterada com sucesso. Entre novamente.", sessionExpired: true });
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }

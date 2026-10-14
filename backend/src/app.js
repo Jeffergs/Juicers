@@ -5,6 +5,7 @@ import userRoutes from "./routes/userRoutes.js";
 import patientRoutes from "./routes/patientRoutes.js";
 import examRoutes from "./routes/examRoutes.js";
 import doctorRoutes from "./routes/doctorRoutes.js";
+import { requestOrigin } from './middlewares/requestOrigin.js';
 
 const app = express();
 
@@ -16,6 +17,7 @@ app.use(
   })
 );
 app.use(express.json());
+app.use(requestOrigin);
 
 app.get("/", (_req, res) => {
   res.json({ message: "API Juicers funcionando" });

@@ -1,5 +1,6 @@
 import Exam from "../models/Exam.js";
 import Patient from "../models/Patient.js";
+import { validateExamPayload } from '../utils/examValidation.js';
 
 export const createExam = async (req, res) => {
   try {
@@ -13,15 +14,12 @@ export const createExam = async (req, res) => {
       });
     }
 
-    const { examDate, markers, riskLevel, alerts, source } = req.body;
+    const payload = validateExamPayload(req.body);
 
     const exam = await Exam.create({
       patientId: patient._id,
-      examDate,
-      markers,
-      riskLevel,
-      alerts,
-      source,
+      ...payload,
+      source: 'manual',
     });
 
     return res.status(201).json({
@@ -29,7 +27,7 @@ export const createExam = async (req, res) => {
       exam,
     });
   } catch (error) {
-    return res.status(500).json({
+    return res.status(error.status || (['ValidationError', 'CastError'].includes(error.name) ? 400 : 500)).json({
       message: error.message,
     });
   }
@@ -55,7 +53,7 @@ export const getMyExams = async (req, res) => {
       exams,
     });
   } catch (error) {
-    return res.status(500).json({
+    return res.status(error.status || (['ValidationError', 'CastError'].includes(error.name) ? 400 : 500)).json({
       message: error.message,
     });
   }
@@ -89,7 +87,7 @@ export const getExamById = async (req, res) => {
       exam,
     });
   } catch (error) {
-    return res.status(500).json({
+    return res.status(error.status || (['ValidationError', 'CastError'].includes(error.name) ? 400 : 500)).json({
       message: error.message,
     });
   }
@@ -108,7 +106,7 @@ export const updateExam = async (req, res) => {
       });
     }
 
-    const { examDate, markers, riskLevel, alerts, source } = req.body;
+    const payload = validateExamPayload(req.body);
 
     const exam = await Exam.findOneAndUpdate(
       {
@@ -116,11 +114,7 @@ export const updateExam = async (req, res) => {
         patientId: patient._id,
       },
       {
-        examDate,
-        markers,
-        riskLevel,
-        alerts,
-        source,
+        ...payload,
       },
       {
         returnDocument: "after",
@@ -139,7 +133,7 @@ export const updateExam = async (req, res) => {
       exam,
     });
   } catch (error) {
-    return res.status(500).json({
+    return res.status(error.status || (['ValidationError', 'CastError'].includes(error.name) ? 400 : 500)).json({
       message: error.message,
     });
   }
@@ -173,7 +167,7 @@ export const deleteExam = async (req, res) => {
       message: "Exame deletado com sucesso",
     });
   } catch (error) {
-    return res.status(500).json({
+    return res.status(error.status || (['ValidationError', 'CastError'].includes(error.name) ? 400 : 500)).json({
       message: error.message,
     });
   }

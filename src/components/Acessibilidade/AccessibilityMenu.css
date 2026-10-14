@@ -7,7 +7,15 @@
   flex-direction: column;
   align-items: flex-end;
   gap: 10px;
+  transition: right 180ms ease;
 }
+
+.accessibility-menu__options { display: flex; flex-direction: column; align-items: flex-end; gap: 10px; }
+.accessibility-menu__options[hidden] { display: none; }
+.accessibility-menu__retract { display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-height: 44px; padding: 5px 10px; border: 1px solid #d3e4e1; border-radius: 8px; background: #fff; color: #157f7b; font: inherit; font-size: 12px; cursor: pointer; box-shadow: 0 2px 6px #101b3010; }
+.accessibility-menu__retract span { font-size: 20px; }
+.accessibility-menu--retracted { right: 0; }
+.accessibility-menu--retracted .accessibility-menu__trigger { width: 44px; height: 52px; border-radius: 12px 0 0 12px; border: 1px solid #badbd5; border-right: 0; background: #e8f5e9; color: #157f7b; }
 
 .accessibility-menu__item {
   display: flex;
@@ -52,6 +60,7 @@
   background: #e8f5e9;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
   cursor: pointer;
+  transition: width 180ms ease, height 180ms ease, border-radius 180ms ease;
 }
 
 .accessibility-menu__icon {
@@ -71,16 +80,20 @@
 }
 
 .accessibility-menu__trigger:focus-visible,
+.accessibility-menu__retract:focus-visible,
 .accessibility-menu__option:focus-visible {
   outline: 3px solid #1957d2;
   outline-offset: 3px;
 }
+
+@media (prefers-reduced-motion: reduce) { .accessibility-menu, .accessibility-menu__trigger { transition: none; } }
 
 @media (max-width: 600px) {
   .accessibility-menu {
     right: 12px;
     bottom: 12px;
   }
+  .accessibility-menu--retracted { right: 0; }
 
   .accessibility-menu__trigger {
     width: 52px;

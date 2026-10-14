@@ -1,7 +1,9 @@
 import mongoose from "mongoose";
+import { validateExamDate, validateMarkers, classifyMarkers } from '../utils/examValidation.js';
 
 const examSchema = new mongoose.Schema(
   {
+    rulesVersion: { type: String },
     patientId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Patient",
@@ -44,5 +46,11 @@ const examSchema = new mongoose.Schema(
     timestamps: true,
   }
 );
+
+examSchema.pre('validate', function () {
+  this.examDate = validateExamDate(this.examDate);
+  this.markers = validateMarkers(this.markers);
+  Object.assign(this, classifyMarkers(this.markers));
+});
 
 export default mongoose.model("Exam", examSchema);

@@ -97,27 +97,6 @@ export const getMyPatientProfile = async (req, res) => {
   }
 };
 
-export const deleteMyPatientProfile = async (req, res) => {
-  try {
-    const userId = req.user.id;
-
-    const patient = await Patient.findOneAndDelete({ userId });
-
-    if (!patient) {
-      return res.status(404).json({
-        message: "Perfil de paciente não encontrado",
-      });
-    }
-
-    return res.status(200).json({
-      message: "Perfil de paciente deletado com sucesso",
-    });
-  } catch (error) {
-    return res.status(500).json({
-      message: error.message,
-    });
-  }
-};
 export const getMyFollowup = async (req, res) => {
   try {
     const userId = req.user.id;

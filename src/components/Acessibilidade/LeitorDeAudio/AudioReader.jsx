@@ -1,7 +1,15 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import "./AudioReader.css";
+import { useLanguage, useTranslation } from '../../../context/LanguageContext';
+
+const T = {
+  pt: { title: 'Leitor de Tela', expand: 'Expandir', minimize: 'Minimizar', close: 'Fechar leitor', play: 'Ouvir página', resume: 'Continuar', pause: 'Pausar', stop: 'Parar' },
+  en: { title: 'Screen Reader', expand: 'Expand', minimize: 'Minimize', close: 'Close reader', play: 'Listen to page', resume: 'Resume', pause: 'Pause', stop: 'Stop' },
+};
 
 const AudioReader = ({ onClose }) => {
+  const { lang } = useLanguage();
+  const t = useTranslation(T, 'AudioReader.T');
   const [isReading, setIsReading] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
   const [isMinimized, setIsMinimized] = useState(false);
@@ -91,16 +99,15 @@ const AudioReader = ({ onClose }) => {
     lastCharIndexRef.current = -1;
 
     const utterance = new SpeechSynthesisUtterance(fullText);
-    utterance.lang = "pt-BR";
+    utterance.lang = lang === 'en' ? 'en-US' : 'pt-BR';
     utterance.rate = 1;
     utterance.pitch = 1;
 
     const loadVoices = () => {
       const voices = window.speechSynthesis.getVoices();
-      const ptVoice = voices.find(
-        (v) => v.lang === "pt-BR" || v.lang === "pt_BR" || v.lang.startsWith("pt")
-      );
-      if (ptVoice) utterance.voice = ptVoice;
+      const voice = voices.find(v => v.lang.replace('_', '-') === utterance.lang)
+        || voices.find(v => v.lang.startsWith(lang === 'en' ? 'en' : 'pt'));
+      if (voice) utterance.voice = voice;
     };
     loadVoices();
     window.speechSynthesis.onvoiceschanged = loadVoices;
@@ -131,7 +138,7 @@ const AudioReader = ({ onClose }) => {
     setIsReading(true);
     setIsPaused(false);
     setProgress(0);
-  }, [buildTextAndMap, applyHighlight, removeHighlight]);
+  }, [buildTextAndMap, applyHighlight, removeHighlight, lang]);
 
   const pauseResume = useCallback(() => {
     if (isPaused) {
@@ -175,14 +182,14 @@ const AudioReader = ({ onClose }) => {
               </svg>
             )}
           </span>
-          <span>Leitor de Tela</span>
+          <span>{t.title}</span>
         </div>
 
         <div style={{ display: "flex", gap: "4px" }}>
           <button
             className="ar-minimize-btn"
             onClick={() => setIsMinimized(!isMinimized)}
-            title={isMinimized ? "Expandir" : "Minimizar"}
+            title={isMinimized ? t.expand : t.minimize}
           >
             {isMinimized ? "▲" : "▼"}
           </button>
@@ -191,7 +198,7 @@ const AudioReader = ({ onClose }) => {
             <button
               className="ar-minimize-btn"
               onClick={() => { stop(); onClose(); }}
-              title="Fechar leitor"
+              title={t.close}
             >
               ✕
             </button>
@@ -212,7 +219,7 @@ const AudioReader = ({ onClose }) => {
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
                   <path d="M8 5v14l11-7z" fill="currentColor" />
                 </svg>
-                Ouvir página
+                {t.play}
               </button>
             ) : (
               <>
@@ -222,7 +229,7 @@ const AudioReader = ({ onClose }) => {
                       <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
                         <path d="M8 5v14l11-7z" fill="currentColor" />
                       </svg>
-                      Continuar
+                      {t.resume}
                     </>
                   ) : (
                     <>
@@ -230,7 +237,7 @@ const AudioReader = ({ onClose }) => {
                         <rect x="6" y="4" width="4" height="16" fill="currentColor" />
                         <rect x="14" y="4" width="4" height="16" fill="currentColor" />
                       </svg>
-                      Pausar
+                      {t.pause}
                     </>
                   )}
                 </button>
@@ -238,7 +245,7 @@ const AudioReader = ({ onClose }) => {
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
                     <rect x="4" y="4" width="16" height="16" fill="currentColor" />
                   </svg>
-                  Parar
+                  {t.stop}
                 </button>
               </>
             )}

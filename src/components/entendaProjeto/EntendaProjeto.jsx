@@ -6,11 +6,13 @@ const T = {
     eyebrow: "Conheça o projeto",
     h2: "Entenda mais sobre o Juicers",
     p: "Um vídeo rápido explicando por que a Juicers existe e como ele ajuda no seu acompanhamento de saúde.",
+    videoTitle: 'Juicers — Vídeo de apresentação',
   },
   en: {
     eyebrow: "Get to know the project",
     h2: "Learn more about our project.",
     p: "A quick video explaining why Juicers exists and how it helps with your health tracking.",
+    videoTitle: 'Juicers — Project introduction video',
   },
 };
 
@@ -29,7 +31,7 @@ export default function EntendaProjeto() {
           <div className="video-embed">
             <iframe
               src="https://www.youtube.com/embed/7a0OCLeTvXU?start=12"
-              title="Juicers - Vídeo pitch"
+              title={t.videoTitle}
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
               allowFullScreen
             />

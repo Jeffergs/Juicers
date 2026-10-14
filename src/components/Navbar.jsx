@@ -43,12 +43,14 @@ const NAV_LINKS = {
 }
 
 const ENTRAR = { pt: 'Entrar', en: 'Sign in' }
+const MENU_UI = { pt: { open: 'Abrir menu', close: 'Fechar menu' }, en: { open: 'Open menu', close: 'Close menu' } }
 
 export default function Navbar() {
     const { lang, setLang } = useLanguage()
     const menuLinks = useTranslation(MENU_LINKS, 'Navbar.MENU_LINKS')
     const navLinks = useTranslation(NAV_LINKS, 'Navbar.NAV_LINKS')
     const entrar = useTranslation(ENTRAR, 'Navbar.ENTRAR')
+    const menuUi = useTranslation(MENU_UI, 'Navbar.MENU_UI')
     const [menuOpen, setMenuOpen] = useState(false)
     const [mobileOpen, setMobileOpen] = useState(false)
     const [scrolled, setScrolled] = useState(false)
@@ -171,7 +173,7 @@ export default function Navbar() {
                         onClick={() => setMobileOpen(!mobileOpen)}
                         aria-expanded={mobileOpen}
                         aria-controls="mobile-navigation"
-                        aria-label={mobileOpen ? 'Fechar menu' : 'Abrir menu'}
+                        aria-label={mobileOpen ? menuUi.close : menuUi.open}
                     >
                         <span /><span /><span />
                     </button>

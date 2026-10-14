@@ -38,7 +38,7 @@ export default function OQueAcompanhar() {
   return (
     <section id="monitorar" className="section" style={{ background: "var(--j-surface)" }}>
       <div className="wrap">
-        <div className="sec-head reveal">
+        <div className="sec-head">
           <span className="eyebrow">{t.eyebrow}</span>
           <h2>{t.h2}</h2>
           <p>{t.p}</p>
@@ -47,7 +47,7 @@ export default function OQueAcompanhar() {
           {t.cards.map(({ t: title, p, track }, i) => {
             const Ico = ICONS[i];
             return (
-              <div className="mon reveal" key={title}>
+              <div className="mon" key={i}>
                 <div className="mon-head"><div className="mon-ico"><Ico /></div><h3>{title}</h3></div>
                 <p>{p}</p>
                 <div className="mon-track"><span>📋</span><div>{t.trackLabel} {track}</div></div>

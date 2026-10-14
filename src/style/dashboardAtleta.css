@@ -144,13 +144,13 @@
         height: auto;
         align-items: stretch;
     }
-    .atleta-dashboard .ep-nav { width: auto; height: auto; max-height: 620px; }
+    .atleta-dashboard .ep-nav { width: auto; height: auto; min-height: 0; max-height: none; contain: size; overflow-y: auto; }
     .atleta-dashboard .ep-chart-col { height: auto; min-height: 480px; }
-    .atleta-dashboard .ep-stats { width: auto; height: auto; max-height: 620px; }
+    .atleta-dashboard .ep-stats { width: auto; height: auto; min-height: 0; max-height: none; contain: size; overflow-y: auto; }
 }
 @media (min-width: 901px) and (max-width: 1350px) {
     .atleta-dashboard .ep-body { grid-template-columns: 180px minmax(0, 1fr); }
-    .atleta-dashboard .ep-stats { grid-column: 1 / -1; max-height: none; }
+    .atleta-dashboard .ep-stats { grid-column: 1 / -1; max-height: none; contain: none; }
 }
 @media (max-width: 900px) {
     .atleta-dashboard .page-title { font-size: 27px; }

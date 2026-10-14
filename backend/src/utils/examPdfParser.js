@@ -1,3 +1,4 @@
+import { classifyMarkers } from './examValidation.js';
 function normalizeText(text = "") {
   return text
     .normalize("NFD")
@@ -115,49 +116,7 @@ function extractHemogram(text) {
   };
 }
 
-function getRiskAndAlerts(markers) {
-  const alerts = [];
-  let riskLevel = "normal";
 
-  const attention = (message) => {
-    if (riskLevel === "normal") riskLevel = "attention";
-    alerts.push(message);
-  };
-
-  const high = (message) => {
-    riskLevel = "high";
-    alerts.push(message);
-  };
-
-  if (markers.hdl < 30) high("HDL muito baixo");
-  else if (markers.hdl < 40) attention("HDL abaixo do ideal");
-
-  if (markers.ldl >= 190) high("LDL muito elevado");
-  else if (markers.ldl >= 130) attention("LDL acima do ideal");
-
-  if (markers.nonHdl >= 160) high("Colesterol não-HDL elevado");
-  else if (markers.nonHdl >= 130) attention("Colesterol não-HDL acima do ideal");
-
-  if (markers.triglycerides >= 200) high("Triglicerídeos elevados");
-  else if (markers.triglycerides >= 150) attention("Triglicerídeos acima do ideal");
-
-  if (markers.creatinine >= 1.6) high("Creatinina elevada");
-  else if (markers.creatinine > 1.3) attention("Creatinina acima do ideal");
-
-  if (markers.glucose >= 126) high("Glicose em faixa de risco");
-  else if (markers.glucose >= 100) attention("Glicose acima do ideal");
-
-  if (markers.hba1c >= 6.5) high("Hemoglobina glicada em faixa de risco");
-  else if (markers.hba1c >= 5.7) attention("Hemoglobina glicada acima do ideal");
-
-  if (markers.hematocrit >= 55) high("Hematócrito elevado");
-  else if (markers.hematocrit > 52.4) attention("Hematócrito acima do ideal");
-
-  if (markers.hemoglobin >= 18.5) high("Hemoglobina elevada");
-  else if (markers.hemoglobin > 17.8) attention("Hemoglobina acima do ideal");
-
-  return { riskLevel, alerts };
-}
 
 /* ------------------------------------------------------------------------
  * Extração genérica por nome do marcador.
@@ -398,7 +357,7 @@ export function parseExamPdfText(rawText = "") {
     markers[chave] = valor;
   }
 
-  const { riskLevel, alerts } = getRiskAndAlerts(markers);
+  const { riskLevel, alerts } = classifyMarkers(markers);
 
   return {
     examDate: findAnyDate(text),

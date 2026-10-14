@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useTranslation } from '../../context/LanguageContext';
 import "../../style/planos.css";
 
 // ─── Dados ────────────────────────────────────────────────────────────────────
@@ -133,6 +134,34 @@ const PLANOS = {
 
 // ─── Ícone de check ───────────────────────────────────────────────────────────
 
+const EN_PLANS = {
+  starter: { nome: 'Starter', periodo: '/month', descricao: 'For independent professionals getting started', recursos: ['Up to 20 patients', 'AI-powered lab test interpretation', 'Lab test history', 'Basic dashboard'], cta: 'Start for free' },
+  profissional: { nome: 'Professional', periodo: '/month', descricao: 'For professionals growing their patient base', badge: 'Most popular', recursos: ['Up to 100 patients', 'Automated reports', 'Compare lab tests over time', 'Alerts for significant changes'], cta: 'Subscribe now' },
+  clinica: { nome: 'Clinic', periodo: '/month', descricao: 'For clinics and multidisciplinary teams', recursos: ['Unlimited patients', 'Multiple professionals', 'White label (clinic logo)', 'Export reports as PDF'], cta: 'Talk to the team' },
+  premium: { nome: 'Individual Premium', periodo: '/month', descricao: 'Track your own health with confidence and precision', badge: 'All included', recursos: ['Unlimited lab tests', 'Complete history', 'Progress charts', 'Personalized alerts'], cta: 'Subscribe to Premium' },
+  avulso: { nome: 'Single test', unidade: '1 test', precoPorExame: 'R$ 9.90 / test', descricao: 'No subscription, no commitment', recursos: ['1 interpreted lab test', 'Results in minutes', 'Credit never expires'], cta: 'Buy' },
+  pacote5: { nome: '5-test bundle', unidade: '5 tests', precoPorExame: 'R$ 5.98 / test', descricao: 'Save 40% per test', badge: 'Best value', recursos: ['5 interpreted lab tests', 'Valid for 6 months', 'Results in minutes'], cta: 'Buy bundle', economia: 'You save R$ 19.60' },
+  pacote20: { nome: '20-test bundle', unidade: '20 tests', precoPorExame: 'R$ 3.99 / test', descricao: 'Save 60% per test', recursos: ['20 interpreted lab tests', 'Valid for 12 months', 'Results in minutes'], cta: 'Buy bundle', economia: 'You save R$ 118.10' },
+};
+
+const T = {
+  pt: {
+    abas: ABAS, planos: PLANOS,
+    eyebrow: 'Planos & Preços', heading: 'Seus exames, finalmente', accent: 'interpretados com precisão',
+    subtitle: 'Para médicos, personal trainers e usuários que levam a sério o que os números dizem.',
+    tabsLabel: 'Tipos de plano', upTo: 'até', forUnits: 'para',
+    secure: 'Pagamento seguro', cancel: 'Cancele quando quiser', support: 'Suporte 7 dias por semana',
+  },
+  en: {
+    abas: [{ id: 'profissionais', label: 'Doctors & Personal Trainers' }, { id: 'individual', label: 'Individual User' }, { id: 'creditos', label: 'Pay per Test' }],
+    planos: Object.fromEntries(Object.entries(PLANOS).map(([key, plans]) => [key, plans.map(plan => ({ ...plan, ...EN_PLANS[plan.id], preco: plan.preco.replace(',', '.'), ...(plan.precoMax ? { precoMax: plan.precoMax.replace(',', '.') } : {}) }))])),
+    eyebrow: 'Plans & Pricing', heading: 'Your lab tests, finally', accent: 'interpreted with precision',
+    subtitle: 'For doctors, personal trainers and users who take their results seriously.',
+    tabsLabel: 'Plan types', upTo: 'up to', forUnits: 'for',
+    secure: 'Secure payment', cancel: 'Cancel anytime', support: 'Support 7 days a week',
+  },
+};
+
 function IconeCheck() {
   return (
     <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
@@ -150,7 +179,7 @@ function IconeCheck() {
 
 // ─── Card de plano ────────────────────────────────────────────────────────────
 
-function CardPlano({ plano, isCreditos }) {
+function CardPlano({ plano, isCreditos, t }) {
   return (
     <div className={`planos-card${plano.destaque ? " planos-card--destaque" : ""}`}>
       {plano.badge && <div className="planos-badge">{plano.badge}</div>}
@@ -166,10 +195,10 @@ function CardPlano({ plano, isCreditos }) {
         </div>
 
         {plano.precoMax && (
-          <div className="planos-preco-nota">até R$ {plano.precoMax}{plano.periodo}</div>
+          <div className="planos-preco-nota">{t.upTo} R$ {plano.precoMax}{plano.periodo}</div>
         )}
         {isCreditos && plano.unidade && (
-          <div className="planos-preco-nota">para {plano.unidade} · {plano.precoPorExame}</div>
+          <div className="planos-preco-nota">{t.forUnits} {plano.unidade} · {plano.precoPorExame}</div>
         )}
         {plano.economia && (
           <span className="planos-economia">{plano.economia}</span>
@@ -197,8 +226,9 @@ function CardPlano({ plano, isCreditos }) {
 // ─── Seção principal ──────────────────────────────────────────────────────────
 
 export default function Planos() {
+  const t = useTranslation(T, 'Planos.T');
   const [abaAtiva, setAbaAtiva] = useState("profissionais");
-  const planos      = PLANOS[abaAtiva];
+  const planos      = t.planos[abaAtiva];
   const isCreditos  = abaAtiva === "creditos";
   const isUnico     = planos.length === 1;
 
@@ -210,20 +240,19 @@ export default function Planos() {
       <div className="planos-container">
 
         <header className="planos-header">
-          <span className="planos-eyebrow">Planos &amp; Preços</span>
+          <span className="planos-eyebrow">{t.eyebrow}</span>
           <h2 className="planos-titulo">
-            Seus exames, finalmente
+            {t.heading}
             <br />
-            <span className="planos-titulo-destaque">interpretados com precisão</span>
+            <span className="planos-titulo-destaque">{t.accent}</span>
           </h2>
           <p className="planos-subtitulo">
-            Para médicos, personal trainers e usuários que levam a sério
-            o que os números dizem.
+            {t.subtitle}
           </p>
         </header>
 
-        <nav className="planos-abas" role="tablist" aria-label="Tipos de plano">
-          {ABAS.map((aba) => (
+        <nav className="planos-abas" role="tablist" aria-label={t.tabsLabel}>
+          {t.abas.map((aba) => (
             <button
               key={aba.id}
               role="tab"
@@ -242,16 +271,16 @@ export default function Planos() {
           className={`planos-grid${isUnico ? " planos-grid--unico" : " planos-grid--triplo"}`}
         >
           {planos.map((plano) => (
-            <CardPlano key={plano.id} plano={plano} isCreditos={isCreditos} />
+            <CardPlano key={plano.id} plano={plano} isCreditos={isCreditos} t={t} />
           ))}
         </div>
 
         <footer className="planos-rodape">
-          <span>🔒 Pagamento seguro</span>
+          <span>🔒 {t.secure}</span>
           <span className="planos-sep" aria-hidden="true" />
-          <span>Cancele quando quiser</span>
+          <span>{t.cancel}</span>
           <span className="planos-sep" aria-hidden="true" />
-          <span>Suporte 7 dias por semana</span>
+          <span>{t.support}</span>
         </footer>
 
       </div>
