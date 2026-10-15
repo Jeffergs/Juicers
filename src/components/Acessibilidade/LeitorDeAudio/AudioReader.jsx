@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import "./AudioReader.css";
-import { useLanguage, useTranslation } from '../../../context/LanguageContext';
+import { useLanguage, useTranslation } from '../../../context/language';
 
 const T = {
   pt: { title: 'Leitor de Tela', expand: 'Expandir', minimize: 'Minimizar', close: 'Fechar leitor', play: 'Ouvir página', resume: 'Continuar', pause: 'Pausar', stop: 'Parar' },

@@ -1,10 +1,48 @@
 /* Spacing for the athlete detail page opened by the doctor. */
 .jc-doctor-patient-detail {
+    --ad-surface: #fff;
+    --ad-field: #fafbfd;
+    --ad-border: #e4ebf3;
+    --ad-text: #101b30;
+    --ad-muted: #60708d;
+    --ad-accent-soft: #e8f8f7;
+    --ad-accent-text: #157f7b;
+    --ad-card-radius: 16px;
+    color: var(--ad-text);
+    background: #f4f7fb;
+    font-family: 'DM Sans', system-ui, sans-serif;
     box-sizing: border-box;
     width: 100%;
     min-width: 0;
     padding: 32px clamp(20px, 3vw, 44px) 96px;
 }
+
+.jc-doctor-patient-detail .jc-section-label { color: var(--ad-muted); }
+.jc-doctor-patient-detail input::placeholder,
+.jc-doctor-patient-detail textarea::placeholder { color: var(--ad-muted); }
+.jc-doctor-patient-detail button:focus-visible,
+.jc-doctor-patient-detail input:focus-visible,
+.jc-doctor-patient-detail textarea:focus-visible {
+    outline: 2px solid var(--ad-accent-text) !important;
+    outline-offset: 3px;
+}
+
+/* Shared dashboard components inherit the patient screen palette here. */
+.jc-doctor-patient-detail .ep-card { background: var(--ad-surface); border-color: var(--ad-border); color: var(--ad-text); }
+.jc-doctor-patient-detail .ep-title,
+.jc-doctor-patient-detail .ep-stats-title { color: var(--ad-text); }
+.jc-doctor-patient-detail :is(.ep-sub, .ep-group-title, .ep-item-value, .ep-hero-label, .ep-hero-value em, .ep-delta-txt, .ep-primeira, .ep-ref, .ep-legend, .ep-stats-sub, .ep-stats-label, .ep-stats-value em, .ep-stats-bar-labels, .ep-stats-bar-caption, .ep-stats-row-icon, .ep-stats-row-label) { color: var(--ad-muted); }
+.jc-doctor-patient-detail :is(.ep-pill, .ep-expand) { background: var(--ad-surface); border-color: var(--ad-border); color: var(--ad-muted); }
+.jc-doctor-patient-detail .ep-pill.is-on { background: var(--ad-accent-text); border-color: var(--ad-accent-text); color: #fff; }
+.jc-doctor-patient-detail :is(.ep-item, .ep-chart-wrap, .ep-stats) { background: var(--ad-field); border-color: var(--ad-border); }
+.jc-doctor-patient-detail .ep-item { color: var(--ad-text); }
+.jc-doctor-patient-detail .ep-item.is-on { background: var(--ad-accent-soft); border-color: var(--ad-accent-text); color: var(--ad-accent-text); }
+.jc-doctor-patient-detail :is(.ep-pill, .ep-expand, .ep-item):hover { border-color: var(--ad-accent-text); }
+.jc-doctor-patient-detail .ep-stats-top { border-color: var(--ad-border); }
+.jc-doctor-patient-detail .ep-stats-icon { background: var(--ad-accent-soft); color: var(--ad-accent-text); }
+.jc-doctor-patient-detail .ep-stats-insight { background: var(--ad-accent-soft); border-color: #bce9e5; }
+.jc-doctor-patient-detail .ep-stats-insight strong { color: var(--ad-text); }
+.jc-doctor-patient-detail .ep-stats-insight p { color: var(--ad-muted); }
 
 .jc-doctor-patient-detail > * {
     min-width: 0;

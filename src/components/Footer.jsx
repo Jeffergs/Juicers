@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import '../style/footer.css'
-import logoIcon from '../assets/juicers.png'
-import { useTranslation } from '../context/LanguageContext'
+import logoIcon from '../assets/juicers-optimized.png'
+import { useTranslation } from '../context/language'
 
 const T = {
     pt: {

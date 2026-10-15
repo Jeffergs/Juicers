@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react'
 import { getMyPatientProfile, savePatientProfile, updateUserProfile } from '../services/api'
-import { useAuth } from '../context/AuthContext'
+import { useAuth } from '../context/auth'
 import '../style/dadosContaMedico.css'
 import '../style/dadosContaAtleta.css'
+import AccountDataActions from './AccountDataActions'
 
 
 const COMPOSTOS = [
@@ -54,7 +55,7 @@ function RadioGroup({ options, value, onChange }) {
             {options.map(o => {
                 const sel = value === o.val
                 return (
-                    <div
+                    <button type="button" aria-pressed={sel}
                         key={o.val}
                         className={`dc-radio-opt${sel ? ' dc-radio-opt--sel' : ''}`}
                         onClick={() => onChange(o.val)}
@@ -63,7 +64,7 @@ function RadioGroup({ options, value, onChange }) {
                             {sel && <div className="dc-radio-inner" />}
                         </div>
                         <span className="dc-radio-text">{o.label}</span>
-                    </div>
+                    </button>
                 )
             })}
         </div>
@@ -78,14 +79,14 @@ function CheckGroup({ options, value, onChange }) {
             {options.map(c => {
                 const sel = value.includes(c)
                 return (
-                    <div
+                    <button type="button" aria-pressed={sel}
                         key={c}
                         className={`dc-check-opt${sel ? ' dc-check-opt--sel' : ''}`}
                         onClick={() => toggle(c)}
                     >
                         <div className="dc-check-box">{sel && '✓'}</div>
                         <span className="dc-check-text">{c}</span>
-                    </div>
+                    </button>
                 )
             })}
         </div>
@@ -145,7 +146,6 @@ export default function DadosContaAtleta({ embedded = false }) {
                 setForm(dadosBanco)
                 setSaved(dadosBanco)
                 setProfileLoaded(true)
-                localStorage.setItem('dadosContaCicloRisco', JSON.stringify(dadosBanco))
             } catch (error) {
                 setSaveError(error.message || 'Não foi possível carregar seus dados. Recarregue a página.')
             } finally {
@@ -252,8 +252,6 @@ export default function DadosContaAtleta({ embedded = false }) {
                     year: 'numeric',
                 }),
             }
-
-            localStorage.setItem('dadosContaCicloRisco', JSON.stringify(dadosAtualizados))
 
             setForm(dadosAtualizados)
             setSaved(dadosAtualizados)
@@ -532,6 +530,7 @@ export default function DadosContaAtleta({ embedded = false }) {
                 </div>
             </div>
 
+            <AccountDataActions />
             <Toast msg={toast.msg} show={toast.show} warn={toast.warn} />
         </div>
     )

@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react'
 import '../style/login.css'
 import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom'
-import logoIcon from '../assets/juicers.png'
+import logoIcon from '../assets/juicers-optimized.png'
 import OnboardingForm from '../components/OnboardingForm'
 import LoginPreview, { LoginFeatures, LoginPrivacyFooter } from '../components/LoginPreview'
 import { acceptDoctorInvite, getInviteByToken, loginUser, loginWithGoogle, registerUser, reverifyDoctorAccount } from '../services/api'
-import { useAuth } from '../context/AuthContext'
+import { useAuth } from '../context/auth'
 import GoogleLoginButton from '../components/GoogleLoginButton'
 
 const API_URL = import.meta.env.DEV ? '/api' : `${window.location.origin}/api`
@@ -15,16 +15,16 @@ export default function Login() {
     const navigate = useNavigate()
     const { token: conviteToken } = useParams()
     const [searchParams] = useSearchParams()
-    const { loginComToken, loginMock } = useAuth()
+    const { loginComToken } = useAuth()
 
-    const [role, setRole] = useState(() => searchParams.get('role') === 'medico' ? 'medico' : 'atleta')
-    const [modoCadastro, setModoCadastro] = useState(false)
+    const [role, setRole] = useState(() => !conviteToken && searchParams.get('role') === 'medico' ? 'medico' : 'atleta')
+    const [modoCadastro, setModoCadastro] = useState(Boolean(conviteToken))
     const [modoReverificacao, setModoReverificacao] = useState(false)
     const [mostrarOnboarding, setMostrarOnboarding] = useState(false)
     const [carregando, setCarregando] = useState(false)
     const [erroLogin, setErroLogin] = useState(false)
     const [erroGoogle, setErroGoogle] = useState('')
-    const [conviteCarregando, setConviteCarregando] = useState(false)
+    const [conviteCarregando, setConviteCarregando] = useState(Boolean(conviteToken))
     const [conviteErro, setConviteErro] = useState('')
 
     const [nomeCadastro, setNomeCadastro] = useState('')
@@ -37,17 +37,11 @@ export default function Login() {
     const [cpf, setCpf] = useState('')
     const [dataNascimento, setDataNascimento] = useState('')
 
-    const destinoMock = role === 'medico' ? '/medico' : '/perfil'
 
     useEffect(() => {
         if (!conviteToken) return undefined
 
         let mounted = true
-        setRole('atleta')
-        setModoCadastro(true)
-        setMostrarOnboarding(false)
-        setConviteCarregando(true)
-        setConviteErro('')
 
         getInviteByToken(conviteToken)
             .then(({ invite }) => {
@@ -113,10 +107,7 @@ export default function Login() {
         }
     }
 
-    function salvarSessao(token, user) {
-        localStorage.setItem('tokenJuicers', token)
-        localStorage.setItem('userJuicers', JSON.stringify(user))
-    }
+
 
     function getRoleApi() {
         if (conviteToken) return 'patient'
@@ -158,38 +149,8 @@ export default function Login() {
         const online = await backendOnline()
 
         if (!online) {
-            if (conviteToken) {
-                alert('Não foi possível validar o convite. Verifique sua conexão e tente novamente.')
-                setCarregando(false)
-                return
-            }
-
-            if (role === 'medico') {
-                alert('Não é possível validar seu CRM enquanto o serviço de autenticação está indisponível. Tente novamente mais tarde.')
-                setCarregando(false)
-                return
-            }
-
-            const fakeUser = {
-                id: Date.now(),
-                name: nomeCadastro,
-                email,
-                role: getRoleApi(),
-            }
-
-            const fakeToken = `mock-token-${Date.now()}`
-
-            salvarSessao(fakeToken, fakeUser)
-            loginComToken(fakeToken, fakeUser, role)
+            alert('Serviço de autenticação indisponível. Tente novamente mais tarde.')
             setCarregando(false)
-
-            if (fakeUser.role === 'doctor') {
-                navigate('/medico')
-                return
-            }
-
-            setMostrarOnboarding(true)
-            setModoCadastro(false)
             return
         }
 
@@ -209,7 +170,6 @@ export default function Login() {
                 password: senha,
             })
 
-            salvarSessao(loginResponse.token, loginResponse.user)
 
             loginComToken(
                 loginResponse.token,
@@ -250,7 +210,6 @@ export default function Login() {
                 },
             })
 
-            salvarSessao(data.token, data.user)
             loginComToken(data.token, data.user, 'medico')
             navigate('/medico')
         } catch (error) {
@@ -270,7 +229,6 @@ export default function Login() {
                 inviteToken: conviteToken,
             })
 
-            salvarSessao(data.token, data.user)
             loginComToken(data.token, data.user, 'atleta')
             setNomeCadastro(data.user.name || '')
             setEmail(data.user.email || '')
@@ -302,15 +260,8 @@ export default function Login() {
         const online = await backendOnline()
 
         if (!online) {
-            const resultado = loginMock(email, senha, role)
+            alert('Serviço de autenticação indisponível. Tente novamente mais tarde.')
             setCarregando(false)
-
-            if (resultado.ok) {
-                navigate(destinoMock)
-            } else {
-                setErroLogin(true)
-            }
-
             return
         }
 
@@ -320,7 +271,6 @@ export default function Login() {
                 password: senha,
             })
 
-            salvarSessao(data.token, data.user)
 
             loginComToken(
                 data.token,
@@ -451,12 +401,10 @@ export default function Login() {
 
                     {erroLogin && (
                         <div className="login_offline_banner">
-                            Credenciais não encontradas. Use as contas de teste:
-                            <span className="login_offline_hint">
-                                atleta@juicers.com · medico@juicers.com · senha: 123456
-                            </span>
+                            E-mail ou senha incorretos. Confira seus dados e tente novamente.
                         </div>
                     )}
+                    {searchParams.get('session') && <p role="status" className="login_offline_banner">{searchParams.get('session') === 'password-changed' ? 'Senha alterada. Entre novamente com sua nova senha.' : 'Sua sessão expirou. Entre novamente.'}</p>}
 
                     {!modoCadastro ? (
                         <>

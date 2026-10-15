@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useAuth } from '../context/AuthContext'
+import { useAuth } from '../context/auth'
 import { changePassword, getMyDoctorProfile, updateUserProfile } from '../services/api'
 import '../style/dadosContaMedico.css'
 
@@ -150,8 +150,8 @@ export default function DadosContaMedico() {
             return
         }
 
-        if (novaSenha.length < 6) {
-            showToast('A senha deve ter pelo menos 6 caracteres.', true)
+        if (novaSenha.length < 8) {
+            showToast('A senha deve ter pelo menos 8 caracteres.', true)
             return
         }
 

@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 
 const doctorInviteSchema = new mongoose.Schema(
   {
+    patientUserId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     doctorId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Doctor",
@@ -45,4 +46,5 @@ const doctorInviteSchema = new mongoose.Schema(
   }
 );
 
+doctorInviteSchema.index({ patientUserId: 1 });
 export default mongoose.model("DoctorInvite", doctorInviteSchema);

@@ -6,6 +6,7 @@ import { SectionLabel, NoteCard } from '../components/perfilDoUsuario/Primitives
 import { STATUS } from '../theme.js'
 import '../style/patientDetail.css'
 import DoctorFollowupInbox from '../components/DoctorFollowupInbox.jsx'
+import ExamFileActions from '../components/ExamFileActions.jsx'
 
 const TABS = [
   { key: 'dashboard', label: 'Dashboard' },
@@ -190,8 +191,8 @@ export default function PatientDetail({
           alignItems: 'center',
           gap: 7,
           background: 'transparent',
-          border: '1px solid #d5d5d5',
-          color: '#303030',
+          border: '1px solid var(--ad-border)',
+          color: 'var(--ad-text)',
           fontSize: 'var(--ui-small, 12px)',
           fontWeight: 600,
           fontFamily: 'inherit',
@@ -205,8 +206,8 @@ export default function PatientDetail({
 
       <section
         style={{
-          background: '#ebebeb',
-          border: '1px solid #d5d5d5',
+          background: 'var(--ad-surface)',
+          border: '1px solid var(--ad-border)',
           borderRadius: 14,
           padding: '18px 22px',
           display: 'flex',
@@ -219,8 +220,8 @@ export default function PatientDetail({
             width: 50,
             height: 50,
             borderRadius: '50%',
-            background: 'rgba(47,214,190,.14)',
-            color: '#2fd6be',
+            background: 'var(--ad-accent-soft)',
+            color: 'var(--ad-accent-text)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
@@ -233,11 +234,11 @@ export default function PatientDetail({
         </div>
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: 3, flex: 1, minWidth: 0 }}>
-          <span className="jc-patient-page-title" style={{ fontSize: 19, fontWeight: 700, color: '#0f0f0f', letterSpacing: '-.01em' }}>
+          <span className="jc-patient-page-title" style={{ fontSize: 19, fontWeight: 700, color: 'var(--ad-text)', letterSpacing: '-.01em' }}>
             {patient.name}
           </span>
 
-          <span style={{ fontSize: 'var(--ui-small, 12px)', color: '#777' }}>
+          <span style={{ fontSize: 'var(--ui-small, 12px)', color: 'var(--ad-muted)' }}>
             {meta}
           </span>
         </div>
@@ -258,7 +259,7 @@ export default function PatientDetail({
         </span>
       </section>
 
-      <div style={{ display: 'flex', gap: 2, borderBottom: '1px solid #dcdcdc', flexWrap: 'wrap' }}>
+      <div style={{ display: 'flex', gap: 2, borderBottom: '1px solid var(--ad-border)', flexWrap: 'wrap' }}>
         {TABS.map((t) => {
           const on = tab === t.key
 
@@ -269,8 +270,8 @@ export default function PatientDetail({
               style={{
                 background: 'transparent',
                 border: 'none',
-                borderBottom: `2px solid ${on ? '#2fd6be' : 'transparent'}`,
-                color: on ? '#2fd6be' : '#656565',
+                borderBottom: `2px solid ${on ? 'var(--ad-accent-text)' : 'transparent'}`,
+                color: on ? 'var(--ad-accent-text)' : 'var(--ad-muted)',
                 fontSize: 'var(--ui-body, 14px)',
                 fontWeight: 600,
                 fontFamily: 'inherit',
@@ -289,7 +290,7 @@ export default function PatientDetail({
       {tab === 'dashboard' && (
         <div className="jc-fade-fast">
           <Dashboard
-            accent="#2fd6be"
+            accent="var(--ad-accent-text)"
             hideHeader
             summary={data.summary}
             alerts={data.alerts}
@@ -307,8 +308,8 @@ export default function PatientDetail({
         <div className="jc-fade-fast" style={{ display: 'flex', flexDirection: 'column', gap: 18, maxWidth: 780 }}>
           <section
             style={{
-              background: '#ebebeb',
-              border: '1px solid #d5d5d5',
+              background: 'var(--ad-surface)',
+              border: '1px solid var(--ad-border)',
               borderRadius: 14,
               padding: '22px 24px',
               display: 'flex',
@@ -328,11 +329,11 @@ export default function PatientDetail({
               style={{
                 minHeight: 140,
                 resize: 'vertical',
-                background: '#f0f0f0',
-                border: '1px solid #d5d5d5',
+                background: 'var(--ad-field)',
+                border: '1px solid var(--ad-border)',
                 borderRadius: 10,
                 padding: '13px 14px',
-                color: '#0f0f0f',
+                color: 'var(--ad-text)',
                 fontSize: 'var(--ui-body, 14px)',
                 lineHeight: 1.55,
                 fontFamily: 'inherit',
@@ -341,7 +342,7 @@ export default function PatientDetail({
             />
 
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <span style={{ fontSize: 'var(--ui-small, 12px)', color: '#888' }}>
+              <span style={{ fontSize: 'var(--ui-small, 12px)', color: 'var(--ad-muted)' }}>
                 Consulta de {today}
               </span>
 
@@ -350,8 +351,8 @@ export default function PatientDetail({
                 disabled={salvandoNota}
                 className="jc-btn-teal"
                 style={{
-                  background: '#2fd6be',
-                  color: '#06201d',
+                  background: 'var(--ad-accent-text)',
+                  color: '#fff',
                   border: 'none',
                   fontSize: 'var(--ui-small, 12px)',
                   fontWeight: 700,
@@ -380,8 +381,8 @@ export default function PatientDetail({
                   <div
                     key={note._id}
                     style={{
-                      background: '#ebebeb',
-                      border: '1px solid #d5d5d5',
+                      background: 'var(--ad-surface)',
+                      border: '1px solid var(--ad-border)',
                       borderRadius: 10,
                       padding: 16,
                       display: 'flex',
@@ -390,7 +391,7 @@ export default function PatientDetail({
                     }}
                   >
                     <div style={{ display: 'flex', justifyContent: 'space-between', gap: 12 }}>
-                      <span style={{ fontSize: 'var(--ui-small, 12px)', color: '#888', fontWeight: 600 }}>
+                      <span style={{ fontSize: 'var(--ui-small, 12px)', color: 'var(--ad-muted)', fontWeight: 600 }}>
                         {formatDateBR(note.createdAt)}
                         {note.readAt && ` · Leitura confirmada em ${formatDateBR(note.readAt)}`}
                       </span>
@@ -401,9 +402,9 @@ export default function PatientDetail({
                             onClick={() => startEditNote(note)}
                             disabled={isDeleting}
                             style={{
-                              background: 'rgba(47,214,190,.12)',
-                              border: '1px solid rgba(47,214,190,.35)',
-                              color: '#2fd6be',
+                              background: 'var(--ad-accent-soft)',
+                              border: '1px solid #bce9e5',
+                              color: 'var(--ad-accent-text)',
                               fontSize: 'var(--ui-small, 12px)',
                               fontWeight: 700,
                               fontFamily: 'inherit',
@@ -445,11 +446,11 @@ export default function PatientDetail({
                           style={{
                             minHeight: 110,
                             resize: 'vertical',
-                            background: '#f0f0f0',
-                            border: '1px solid #d5d5d5',
+                            background: 'var(--ad-field)',
+                            border: '1px solid var(--ad-border)',
                             borderRadius: 10,
                             padding: '12px 13px',
-                            color: '#0f0f0f',
+                            color: 'var(--ad-text)',
                             fontSize: 'var(--ui-body, 14px)',
                             lineHeight: 1.5,
                             fontFamily: 'inherit',
@@ -463,8 +464,8 @@ export default function PatientDetail({
                             disabled={isSaving}
                             style={{
                               background: 'transparent',
-                              border: '1px solid #ccc',
-                              color: '#555',
+                              border: '1px solid var(--ad-border)',
+                              color: 'var(--ad-muted)',
                               fontSize: 'var(--ui-small, 12px)',
                               fontWeight: 700,
                               fontFamily: 'inherit',
@@ -480,9 +481,9 @@ export default function PatientDetail({
                             onClick={() => saveEditNote(note._id)}
                             disabled={isSaving || !textoEdicao.trim()}
                             style={{
-                              background: '#2fd6be',
+                              background: 'var(--ad-accent-text)',
                               border: 'none',
-                              color: '#06201d',
+                              color: '#fff',
                               fontSize: 'var(--ui-small, 12px)',
                               fontWeight: 800,
                               fontFamily: 'inherit',
@@ -497,7 +498,7 @@ export default function PatientDetail({
                         </div>
                       </>
                     ) : (
-                      <p style={{ margin: 0, fontSize: 'var(--ui-body, 14px)', color: '#303030', lineHeight: 1.55 }}>
+                      <p style={{ margin: 0, fontSize: 'var(--ui-body, 14px)', color: 'var(--ad-text)', lineHeight: 1.55 }}>
                         {note.text}
                       </p>
                     )}
@@ -507,13 +508,13 @@ export default function PatientDetail({
             ) : (
               <div
                 style={{
-                  background: '#ebebeb',
-                  border: '1px solid #d5d5d5',
+                  background: 'var(--ad-surface)',
+                  border: '1px solid var(--ad-border)',
                   borderRadius: 10,
                   padding: 16,
                   textAlign: 'center',
                   fontSize: 'var(--ui-small, 12px)',
-                  color: '#888',
+                  color: 'var(--ad-muted)',
                 }}
               >
                 Nenhuma anotação registrada ainda.
@@ -527,8 +528,8 @@ export default function PatientDetail({
         <section
           className="jc-fade-fast"
           style={{
-            background: '#ebebeb',
-            border: '1px solid #d5d5d5',
+            background: 'var(--ad-surface)',
+            border: '1px solid var(--ad-border)',
             borderRadius: 14,
             padding: '22px 24px',
             display: 'flex',
@@ -546,8 +547,8 @@ export default function PatientDetail({
               style={{
                 fontSize: 'var(--ui-small, 12px)',
                 fontWeight: 650,
-                color: '#2fd6be',
-                background: 'rgba(47,214,190,.12)',
+                color: 'var(--ad-accent-text)',
+                background: 'var(--ad-accent-soft)',
                 borderRadius: 20,
                 padding: '3px 10px',
               }}
@@ -556,7 +557,7 @@ export default function PatientDetail({
             </span>
           </div>
 
-          <p style={{ margin: 0, fontSize: 'var(--ui-small, 12px)', color: '#818181', lineHeight: 1.45 }}>
+          <p style={{ margin: 0, fontSize: 'var(--ui-small, 12px)', color: 'var(--ad-muted)', lineHeight: 1.45 }}>
             Recomendados com base no ciclo e nos alertas ativos do paciente. Marque para solicitar.
           </p>
 
@@ -575,7 +576,7 @@ export default function PatientDetail({
                     gap: 11,
                     cursor: loading ? 'not-allowed' : 'pointer',
                     fontSize: 'var(--ui-body, 14px)',
-                    color: '#303030',
+                    color: 'var(--ad-text)',
                     padding: '8px 0',
                     lineHeight: 1.4,
                     opacity: loading ? 0.7 : 1,
@@ -586,8 +587,8 @@ export default function PatientDetail({
                       width: 19,
                       height: 19,
                       borderRadius: 5,
-                      border: `1.5px solid ${on ? '#2fd6be' : '#c5c5c5'}`,
-                      background: on ? '#2fd6be' : 'transparent',
+                      border: `1.5px solid ${on ? 'var(--ad-accent-text)' : 'var(--ad-border)'}`,
+                      background: on ? 'var(--ad-accent-text)' : 'transparent',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
@@ -595,7 +596,7 @@ export default function PatientDetail({
                       marginTop: 1,
                     }}
                   >
-                    {on && <span style={{ color: '#06201d', fontWeight: 900 }}>✓</span>}
+                    {on && <span style={{ color: '#fff', fontWeight: 900 }}>✓</span>}
                   </span>
 
                   {label}
@@ -607,7 +608,7 @@ export default function PatientDetail({
           <div
             style={{
               marginTop: 12,
-              borderTop: '1px solid #dbdbdb',
+              borderTop: '1px solid var(--ad-border)',
               paddingTop: 16,
               display: 'flex',
               flexDirection: 'column',
@@ -618,7 +619,7 @@ export default function PatientDetail({
               style={{
                 fontSize: 'var(--ui-small, 12px)',
                 fontWeight: 700,
-                color: '#777',
+                color: 'var(--ad-muted)',
                 textTransform: 'uppercase',
                 letterSpacing: '.08em',
               }}
@@ -645,11 +646,11 @@ export default function PatientDetail({
                 style={{
                   flex: 1,
                   minWidth: 240,
-                  background: '#f0f0f0',
-                  border: '1px solid #d5d5d5',
+                  background: 'var(--ad-field)',
+                  border: '1px solid var(--ad-border)',
                   borderRadius: 9,
                   padding: '10px 12px',
-                  color: '#0f0f0f',
+                  color: 'var(--ad-text)',
                   fontSize: 'var(--ui-body, 14px)',
                   fontFamily: 'inherit',
                   outline: 'none',
@@ -660,8 +661,8 @@ export default function PatientDetail({
                 onClick={handleAddOutroExame}
                 disabled={!outroExame.trim() || acaoExame === outroExame.trim()}
                 style={{
-                  background: '#2fd6be',
-                  color: '#06201d',
+                  background: 'var(--ad-accent-text)',
+                  color: '#fff',
                   border: 'none',
                   fontSize: 'var(--ui-small, 12px)',
                   fontWeight: 800,
@@ -681,7 +682,7 @@ export default function PatientDetail({
                 <span
                   style={{
                     fontSize: 'var(--ui-small, 12px)',
-                    color: '#888',
+                    color: 'var(--ad-muted)',
                     fontWeight: 700,
                     textTransform: 'uppercase',
                     letterSpacing: '.06em',
@@ -700,8 +701,8 @@ export default function PatientDetail({
                         display: 'flex',
                         alignItems: 'center',
                         gap: 10,
-                        background: '#efefef',
-                        border: '1px solid #d5d5d5',
+                        background: 'var(--ad-field)',
+                        border: '1px solid var(--ad-border)',
                         borderRadius: 9,
                         padding: '10px 12px',
                       }}
@@ -711,11 +712,11 @@ export default function PatientDetail({
                           width: 19,
                           height: 19,
                           borderRadius: 5,
-                          background: '#2fd6be',
+                          background: 'var(--ad-accent-text)',
                           display: 'flex',
                           alignItems: 'center',
                           justifyContent: 'center',
-                          color: '#06201d',
+                          color: '#fff',
                           fontWeight: 900,
                           flex: 'none',
                         }}
@@ -723,7 +724,7 @@ export default function PatientDetail({
                         ✓
                       </span>
 
-                      <span style={{ flex: 1, color: '#171717', fontSize: 'var(--ui-body, 14px)' }}>
+                      <span style={{ flex: 1, color: 'var(--ad-text)', fontSize: 'var(--ui-body, 14px)' }}>
                         {exam.label}
                       </span>
 
@@ -758,8 +759,8 @@ export default function PatientDetail({
         <div className="jc-fade-fast" style={{ display: 'flex', flexDirection: 'column', gap: 20, maxWidth: 880 }}>
           <section
             style={{
-              background: '#ebebeb',
-              border: '1px solid #d5d5d5',
+              background: 'var(--ad-surface)',
+              border: '1px solid var(--ad-border)',
               borderRadius: 14,
               padding: '22px 24px',
               display: 'flex',
@@ -768,7 +769,7 @@ export default function PatientDetail({
             }}
           >
             <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-              <span style={{ color: '#2fd6be', fontSize: 20 }}>↥</span>
+              <span style={{ color: 'var(--ad-accent-text)', fontSize: 20 }}>↥</span>
 
               <h2 style={{ margin: 0, fontSize: 'var(--ui-body, 14px)', fontWeight: 700 }}>
                 Importar Novo Exame
@@ -776,7 +777,7 @@ export default function PatientDetail({
             </div>
 
             <UploadZone
-              accent="#2fd6be"
+              accent="var(--ad-accent-text)"
               label={`Importar exame para ${patient.name.split(' ')[0]}`}
               onUpload={onUpload}
             />
@@ -788,13 +789,13 @@ export default function PatientDetail({
             {importedExams.length === 0 && (
               <div
                 style={{
-                  background: '#ebebeb',
-                  border: '1px solid #d5d5d5',
+                  background: 'var(--ad-surface)',
+                  border: '1px solid var(--ad-border)',
                   borderRadius: 10,
                   padding: 16,
                   textAlign: 'center',
                   fontSize: 'var(--ui-small, 12px)',
-                  color: '#888',
+                  color: 'var(--ad-muted)',
                 }}
               >
                 Nenhum exame importado ainda.
@@ -809,8 +810,8 @@ export default function PatientDetail({
                 <div
                   key={exam.id}
                   style={{
-                    background: '#ebebeb',
-                    border: '1px solid #d5d5d5',
+                    background: 'var(--ad-surface)',
+                    border: '1px solid var(--ad-border)',
                     borderLeft: `3px solid ${color}`,
                     borderRadius: 10,
                     padding: '14px 16px',
@@ -820,17 +821,18 @@ export default function PatientDetail({
                   }}
                 >
                   <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 4 }}>
-                    <span style={{ fontSize: 'var(--ui-body, 14px)', fontWeight: 700, color: '#0f0f0f' }}>
+                    <span style={{ fontSize: 'var(--ui-body, 14px)', fontWeight: 700, color: 'var(--ad-text)' }}>
                       {exam.name}
                     </span>
 
-                    <span style={{ fontSize: 'var(--ui-small, 12px)', color: '#777' }}>
+                    <span style={{ fontSize: 'var(--ui-small, 12px)', color: 'var(--ad-muted)' }}>
                       Data do exame: {exam.date} · Fonte: {exam.source === 'pdf' ? 'PDF' : 'Manual'}
                     </span>
 
-                    <span style={{ fontSize: 'var(--ui-small, 12px)', color: '#888' }}>
+                    <span style={{ fontSize: 'var(--ui-small, 12px)', color: 'var(--ad-muted)' }}>
                       Marcadores extraídos: {Object.keys(exam.markers).length}
                     </span>
+                    <ExamFileActions examId={exam.id} patientId={patient.id} fileName={exam.name} available={exam.hasOriginalPdf} />
                   </div>
 
                   <span

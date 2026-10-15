@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { getMyExams, getMyPatientProfile } from '../services/api'
 import { buildDashboardData, formatExamDate } from '../data/markers.js'
+import { useAuth } from '../context/auth'
 
 const TODAY = new Date()
     .toLocaleDateString('pt-BR', {
@@ -89,13 +90,18 @@ function montarDadosClinicosPorExames(exames = []) {
 }
 
 export function useClinicalState() {
+    const { usuario } = useAuth()
+    const userId = usuario?.id
     const [data, setData] = useState(EMPTY_DATA)
     const [account, setAccount] = useState(EMPTY_ACCOUNT)
     const [medico, setMedico] = useState(EMPTY_MEDICO)
     const [clinical, setClinical] = useState({})
 
     useEffect(() => {
+        let active = true
         async function carregarDadosClinicos() {
+            setData(EMPTY_DATA); setAccount(EMPTY_ACCOUNT); setClinical({})
+            if (!userId || usuario?.role !== 'atleta') return
             try {
                 const [perfilResponse, examesResponse] = await Promise.all([
                     getMyPatientProfile(),
@@ -103,6 +109,7 @@ export function useClinicalState() {
                 ])
 
                 const paciente = perfilResponse.patient
+                if (!active) return
                 const exames = examesResponse.exams || []
 
                 const dadosConvertidos = montarDadosClinicosPorExames(exames)
@@ -142,6 +149,7 @@ export function useClinicalState() {
                     },
                 })
             } catch (error) {
+                if (!active) return
                 console.error('Erro ao carregar dados clínicos:', error)
 
                 setData(EMPTY_DATA)
@@ -151,7 +159,8 @@ export function useClinicalState() {
         }
 
         carregarDadosClinicos()
-    }, [])
+        return () => { active = false }
+    }, [userId, usuario?.role])
 
     const updAccount = useCallback((k, v) => {
         setAccount((a) => ({

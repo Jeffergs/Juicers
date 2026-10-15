@@ -26,4 +26,5 @@ const clinicalNoteSchema = new mongoose.Schema(
   }
 );
 
+clinicalNoteSchema.index({ doctorId: 1, patientId: 1, createdAt: -1 });
 export default mongoose.model("ClinicalNote", clinicalNoteSchema);

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useTranslation } from "../context/LanguageContext";
+import { useTranslation } from "../context/language";
 import "../style/simulador.css";
 
 function calculateRiskScore({ age, sex, frequency, months, route, stacking }) {

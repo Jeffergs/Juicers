@@ -1,11 +1,23 @@
 const API_URL = import.meta.env.DEV ? '/api' : `${window.location.origin}/api`
-
-function getToken() {
-    return localStorage.getItem('tokenJuicers')
+import { hasSession, notifySession, sessionRevision } from './session'
+const revisions = new WeakMap()
+async function apiFetch(url, options = {}) {
+    const revision = sessionRevision()
+    const controller = new AbortController()
+    const timeout = window.setTimeout(() => controller.abort(), options.body instanceof FormData ? 90000 : 20000)
+    try {
+        const response = await fetch(url, { ...options, credentials: 'same-origin', signal: options.signal || controller.signal })
+        revisions.set(response, revision)
+        return response
+    } catch (error) {
+        throw new Error(error.name === 'AbortError' ? 'O serviço demorou a responder. Atualize os dados antes de tentar novamente.' : 'Não foi possível conectar ao servidor. Confira sua conexão e tente novamente.')
+    } finally { window.clearTimeout(timeout) }
 }
+
 
 async function handleResponse(response, defaultMessage) {
     const data = await response.json().catch(() => ({}))
+    if (revisions.get(response) === sessionRevision() && (data.code === 'SESSION_EXPIRED' || (data.code === 'AUTH_REQUIRED' && hasSession()) || data.sessionExpired)) notifySession(data.sessionExpired ? 'password-changed' : 'expired')
 
     if (!response.ok) {
         const error = new Error(data.message || defaultMessage)
@@ -18,25 +30,42 @@ async function handleResponse(response, defaultMessage) {
     return data
 }
 
-function authHeaders() {
-    const token = getToken()
+export const DATA_EVENT = 'juicers-data-updated'
+export function notifyDataChanged() { window.dispatchEvent(new Event(DATA_EVENT)) }
+export async function fetchExamPdf(examId, patientId) {
+    const path = patientId ? `/doctors/patients/${encodeURIComponent(patientId)}/exams/${encodeURIComponent(examId)}/file` : `/exams/${encodeURIComponent(examId)}/file`
+    const response = await apiFetch(`${API_URL}${path}`)
+    if (!response.ok) await handleResponse(response, 'Não foi possível carregar o PDF.')
+    if (revisions.get(response) !== sessionRevision()) throw new Error('Sua sessão mudou. Abra o exame novamente após entrar.')
+    if (!response.headers.get('content-type')?.includes('application/pdf')) throw new Error('O servidor não retornou um PDF válido.')
+    const blob = await response.blob()
+    if (revisions.get(response) !== sessionRevision()) throw new Error('Sua sessão mudou. Abra o exame novamente após entrar.')
+    return blob
+}
+export async function uploadPatientExamPdf(file) {
+    const body = new FormData(); body.append('examPdf', file)
+    const data = await handleResponse(await apiFetch(`${API_URL}/exams/upload`, { method: 'POST', body }), 'Não foi possível importar o PDF.')
+    notifyDataChanged()
+    return data
+}
 
-    return {
-        Authorization: `Bearer ${token}`,
-    }
+function authHeaders() {
+    return {}
 }
 
 function jsonAuthHeaders() {
-    const token = getToken()
-
     return {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
     }
 }
 
+export async function getSession() { return handleResponse(await apiFetch(`${API_URL}/users/profile`), 'Não foi possível validar sua sessão.') }
+export async function endSession() { return handleResponse(await apiFetch(`${API_URL}/users/logout`, { method: 'POST' }), 'Não foi possível encerrar a sessão.') }
+export async function exportAccountData() { return handleResponse(await apiFetch(`${API_URL}/users/me/data`), 'Não foi possível exportar seus dados.') }
+export async function deleteAccount(payload) { return handleResponse(await apiFetch(`${API_URL}/users/me`, { method: 'DELETE', headers: jsonAuthHeaders(), body: JSON.stringify(payload) }), 'Não foi possível excluir a conta.') }
+
 export async function registerUser({ name, email, password, role = 'patient', doctorVerification }) {
-    const response = await fetch(`${API_URL}/users`, {
+    const response = await apiFetch(`${API_URL}/users`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -48,7 +77,7 @@ export async function registerUser({ name, email, password, role = 'patient', do
 }
 
 export async function loginUser({ email, password }) {
-    const response = await fetch(`${API_URL}/users/login`, {
+    const response = await apiFetch(`${API_URL}/users/login`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -60,7 +89,7 @@ export async function loginUser({ email, password }) {
 }
 
 export async function loginWithGoogle({ credential, inviteToken }) {
-    const response = await fetch(`${API_URL}/users/google`, {
+    const response = await apiFetch(`${API_URL}/users/google`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -72,7 +101,7 @@ export async function loginWithGoogle({ credential, inviteToken }) {
 }
 
 export async function savePatientProfile(patientData) {
-    const response = await fetch(`${API_URL}/patients`, {
+    const response = await apiFetch(`${API_URL}/patients`, {
         method: 'POST',
         headers: jsonAuthHeaders(),
         body: JSON.stringify(patientData),
@@ -82,7 +111,7 @@ export async function savePatientProfile(patientData) {
 }
 
 export async function getMyPatientProfile() {
-    const response = await fetch(`${API_URL}/patients/me`, {
+    const response = await apiFetch(`${API_URL}/patients/me`, {
         method: 'GET',
         headers: authHeaders(),
     })
@@ -91,7 +120,7 @@ export async function getMyPatientProfile() {
 }
 
 export async function updateUserProfile(userData) {
-    const response = await fetch(`${API_URL}/users/profile`, {
+    const response = await apiFetch(`${API_URL}/users/profile`, {
         method: 'PUT',
         headers: jsonAuthHeaders(),
         body: JSON.stringify(userData),
@@ -101,7 +130,7 @@ export async function updateUserProfile(userData) {
 }
 
 export async function changePassword({ currentPassword, newPassword }) {
-    const response = await fetch(`${API_URL}/users/password`, {
+    const response = await apiFetch(`${API_URL}/users/password`, {
         method: 'PUT',
         headers: jsonAuthHeaders(),
         body: JSON.stringify({ currentPassword, newPassword }),
@@ -110,8 +139,11 @@ export async function changePassword({ currentPassword, newPassword }) {
     return handleResponse(response, 'Erro ao alterar senha.')
 }
 
-export async function getMyExams() {
-    const response = await fetch(`${API_URL}/exams`, {
+export async function getMyExams({ limit, cursor } = {}) {
+    const query = new URLSearchParams()
+    if (limit) query.set('limit', String(limit))
+    if (cursor) query.set('cursor', cursor)
+    const response = await apiFetch(`${API_URL}/exams${query.size ? `?${query}` : ''}`, {
         method: 'GET',
         headers: authHeaders(),
     })
@@ -120,7 +152,7 @@ export async function getMyExams() {
 }
 
 export async function createExam(examData) {
-    const response = await fetch(`${API_URL}/exams`, {
+    const response = await apiFetch(`${API_URL}/exams`, {
         method: 'POST',
         headers: jsonAuthHeaders(),
         body: JSON.stringify(examData),
@@ -130,16 +162,16 @@ export async function createExam(examData) {
 }
 
 export async function deleteExam(id) {
-    const response = await fetch(`${API_URL}/exams/${id}`, {
+    const response = await apiFetch(`${API_URL}/exams/${id}`, {
         method: 'DELETE',
         headers: authHeaders(),
     })
 
-    return handleResponse(response, 'Erro ao deletar exame.')
+    const data = await handleResponse(response, 'Erro ao deletar exame.'); notifyDataChanged(); return data
 }
 
 export async function createDoctorInvite({ patientName, patientEmail }) {
-    const response = await fetch(`${API_URL}/doctors/invites`, {
+    const response = await apiFetch(`${API_URL}/doctors/invites`, {
         method: 'POST',
         headers: jsonAuthHeaders(),
         body: JSON.stringify({ patientName, patientEmail }),
@@ -148,8 +180,8 @@ export async function createDoctorInvite({ patientName, patientEmail }) {
     return handleResponse(response, 'Erro ao criar convite.')
 }
 
-export async function getDoctorPatients() {
-    const response = await fetch(`${API_URL}/doctors/patients`, {
+export async function getDoctorPatients({ summary = true } = {}) {
+    const response = await apiFetch(`${API_URL}/doctors/patients${summary ? '?summary=1' : ''}`, {
         method: 'GET',
         headers: authHeaders(),
     })
@@ -158,7 +190,7 @@ export async function getDoctorPatients() {
 }
 
 export async function getDoctorPatientById(id) {
-    const response = await fetch(`${API_URL}/doctors/patients/${id}`, {
+    const response = await apiFetch(`${API_URL}/doctors/patients/${id}`, {
         method: 'GET',
         headers: authHeaders(),
     })
@@ -167,7 +199,7 @@ export async function getDoctorPatientById(id) {
 }
 
 export async function removeDoctorPatient(id) {
-    const response = await fetch(`${API_URL}/doctors/patients/${id}`, {
+    const response = await apiFetch(`${API_URL}/doctors/patients/${id}`, {
         method: 'DELETE',
         headers: authHeaders(),
     })
@@ -176,7 +208,7 @@ export async function removeDoctorPatient(id) {
 }
 
 export async function getDoctorPatientExams(id) {
-    const response = await fetch(`${API_URL}/doctors/patients/${id}/exams`, {
+    const response = await apiFetch(`${API_URL}/doctors/patients/${id}/exams`, {
         method: 'GET',
         headers: authHeaders(),
     })
@@ -188,7 +220,7 @@ export async function uploadDoctorPatientExamPdf(id, file) {
     const formData = new FormData()
     formData.append('examPdf', file)
 
-    const response = await fetch(`${API_URL}/doctors/patients/${id}/exams/upload`, {
+    const response = await apiFetch(`${API_URL}/doctors/patients/${id}/exams/upload`, {
         method: 'POST',
         headers: authHeaders(),
         body: formData,
@@ -198,13 +230,13 @@ export async function uploadDoctorPatientExamPdf(id, file) {
 }
 
 export async function getInviteByToken(inviteToken) {
-    const response = await fetch(`${API_URL}/doctors/invites/${inviteToken}`)
+    const response = await apiFetch(`${API_URL}/doctors/invites/${inviteToken}`)
 
     return handleResponse(response, 'Erro ao buscar convite.')
 }
 
 export async function acceptDoctorInvite(inviteToken) {
-    const response = await fetch(`${API_URL}/doctors/invites/${inviteToken}/accept`, {
+    const response = await apiFetch(`${API_URL}/doctors/invites/${inviteToken}/accept`, {
         method: 'POST',
         headers: authHeaders(),
     })
@@ -213,7 +245,7 @@ export async function acceptDoctorInvite(inviteToken) {
 }
 
 export async function getMyFollowup() {
-    const response = await fetch(`${API_URL}/patients/me/followup`, {
+    const response = await apiFetch(`${API_URL}/patients/me/followup`, {
         method: 'GET',
         headers: authHeaders(),
     })
@@ -222,13 +254,13 @@ export async function getMyFollowup() {
 }
 
 export async function sendFollowupInteraction(payload) {
-    return handleResponse(await fetch(`${API_URL}/patients/me/followup/interactions`, {
+    return handleResponse(await apiFetch(`${API_URL}/patients/me/followup/interactions`, {
         method: 'POST', headers: jsonAuthHeaders(), body: JSON.stringify(payload),
     }), 'Erro ao enviar mensagem.')
 }
 
 export async function respondToPatientFollowup(patientId, itemId, payload) {
-    return handleResponse(await fetch(`${API_URL}/doctors/patients/${patientId}/followup/${itemId}`, {
+    return handleResponse(await apiFetch(`${API_URL}/doctors/patients/${patientId}/followup/${itemId}`, {
         method: 'POST', headers: jsonAuthHeaders(), body: JSON.stringify(payload),
     }), 'Erro ao atualizar acompanhamento.')
 }
@@ -236,13 +268,15 @@ export async function respondToPatientFollowup(patientId, itemId, payload) {
 export async function submitFollowupResult(id, file) {
     const body = new FormData()
     body.append('examPdf', file)
-    return handleResponse(await fetch(`${API_URL}/patients/me/followup/requests/${id}/result`, {
+    const data = await handleResponse(await apiFetch(`${API_URL}/patients/me/followup/requests/${id}/result`, {
         method: 'POST', headers: authHeaders(), body,
     }), 'Erro ao enviar resultado.')
+    notifyDataChanged()
+    return data
 }
 
 export async function getDoctorPatientFollowup(patientId) {
-    const response = await fetch(`${API_URL}/doctors/patients/${patientId}/followup`, {
+    const response = await apiFetch(`${API_URL}/doctors/patients/${patientId}/followup`, {
         method: 'GET',
         headers: authHeaders(),
     })
@@ -251,7 +285,7 @@ export async function getDoctorPatientFollowup(patientId) {
 }
 
 export async function createDoctorPatientNote(patientId, text) {
-    const response = await fetch(`${API_URL}/doctors/patients/${patientId}/notes`, {
+    const response = await apiFetch(`${API_URL}/doctors/patients/${patientId}/notes`, {
         method: 'POST',
         headers: jsonAuthHeaders(),
         body: JSON.stringify({ text }),
@@ -261,7 +295,7 @@ export async function createDoctorPatientNote(patientId, text) {
 }
 
 export async function toggleDoctorPatientRequestedExam(patientId, label) {
-    const response = await fetch(`${API_URL}/doctors/patients/${patientId}/requested-exams`, {
+    const response = await apiFetch(`${API_URL}/doctors/patients/${patientId}/requested-exams`, {
         method: 'POST',
         headers: jsonAuthHeaders(),
         body: JSON.stringify({ label }),
@@ -271,7 +305,7 @@ export async function toggleDoctorPatientRequestedExam(patientId, label) {
 }
 
 export async function deleteDoctorPatientExam(patientId, examId) {
-    const response = await fetch(`${API_URL}/doctors/patients/${patientId}/exams/${examId}`, {
+    const response = await apiFetch(`${API_URL}/doctors/patients/${patientId}/exams/${examId}`, {
         method: 'DELETE',
         headers: authHeaders(),
     })
@@ -280,7 +314,7 @@ export async function deleteDoctorPatientExam(patientId, examId) {
 }
 
 export async function getMyDoctorProfile() {
-    const response = await fetch(`${API_URL}/doctors/me`, {
+    const response = await apiFetch(`${API_URL}/doctors/me`, {
         method: 'GET',
         headers: authHeaders(),
     })
@@ -289,7 +323,7 @@ export async function getMyDoctorProfile() {
 }
 
 export async function updateDoctorPatientNote(noteId, text) {
-    const response = await fetch(`${API_URL}/doctors/notes/${noteId}`, {
+    const response = await apiFetch(`${API_URL}/doctors/notes/${noteId}`, {
         method: 'PUT',
         headers: jsonAuthHeaders(),
         body: JSON.stringify({ text }),
@@ -299,7 +333,7 @@ export async function updateDoctorPatientNote(noteId, text) {
 }
 
 export async function deleteDoctorPatientNote(noteId) {
-    const response = await fetch(`${API_URL}/doctors/notes/${noteId}`, {
+    const response = await apiFetch(`${API_URL}/doctors/notes/${noteId}`, {
         method: 'DELETE',
         headers: authHeaders(),
     })
@@ -308,7 +342,7 @@ export async function deleteDoctorPatientNote(noteId) {
 }
 
 export async function reverifyDoctorAccount({ email, password, doctorVerification }) {
-    const response = await fetch(`${API_URL}/users/verify-doctor`, {
+    const response = await apiFetch(`${API_URL}/users/verify-doctor`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

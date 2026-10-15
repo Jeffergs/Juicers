@@ -199,6 +199,9 @@
 .hbd-dot:hover {
     transform: scale(1.12);
 }
+.hbd-dot:focus-visible .hbd-dot-halo { stroke: var(--hbd-accent); stroke-width: 2; }
+.hbd-card-close:focus-visible, .hbd-pager-btn:focus-visible { outline: 2px solid var(--hbd-accent); outline-offset: 3px; }
+@media (prefers-reduced-motion: reduce) { .hbd-root * { animation: none !important; transition: none !important; } }
 
 .hbd-dot-pulse {
     fill: rgba(47, 214, 190, 0.30);

@@ -1,0 +1,11 @@
+.account-data-actions { margin: 24px 0; padding: 24px; background: #fff; border: 1px solid #d9e3ef; border-radius: 16px; color: #14203a; }
+.account-data-actions h2 { font-size: 20px; }
+.account-data-actions p { font-size: 14px; line-height: 1.6; }
+.account-data-actions form { display: flex; flex-wrap: wrap; gap: 16px; align-items: end; margin: 24px 0; padding: 20px 0; border-top: 1px solid #d9e3ef; }
+.account-data-actions form p { width: 100%; margin: 0; }
+.account-data-actions label { display: flex; flex-direction: column; gap: 8px; font-size: 14px; }
+.account-data-actions input { border: 1px solid #c5d3e4; border-radius: 8px; padding: 10px; max-width: 100%; }
+.account-data-actions button { border: 1px solid #087d7d; background: #edfafa; color: #076a6a; border-radius: 8px; padding: 10px 14px; cursor: pointer; }
+.account-data-actions button:disabled { opacity: .5; cursor: default; }
+.account-data-actions .account-data-danger { color: #a62020; border-color: #d78b8b; background: #fff5f5; }
+.account-data-actions :focus-visible { outline: 2px solid #087d7d; outline-offset: 3px; }

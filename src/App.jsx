@@ -9,21 +9,10 @@ import MedicoLayout from './layout/MedicoLayout'
 
 /* páginas públicas */
 import Home from './pages/Home'
-import Login from './pages/Login'
-import MapaCorporal from './pages/MapaCorporal'
-import Simulador from './pages/Simulador'
-import Referencias from "./pages/Referencias";
 
 /* páginas do atleta */
-import PerfilAtleta from './pages/PerfilAtleta'
-import DadosConta from './components/DadosContaAtleta'
-import HistoricoExames from './components/HistoricoExames'
-import Acompanhamento from './pages/Acompanhamento'
 
 /* páginas do médico */
-import MeusAtletas from './pages/MeusAtletas'
-import PerfilAtletaMedico from './pages/PerfilAtletaMedico'
-import DadosContaMedico from './components/DadosContaMedico'
 
 /* acessibilidade */
 import Navbar from './components/Navbar'
@@ -35,6 +24,17 @@ import './style/accountTypography.css'
 
 const Privacidade = lazy(() => import('./pages/Privacidade'))
 const Termos = lazy(() => import('./pages/Termos'))
+const Login = lazy(() => import('./pages/Login'))
+const MapaCorporal = lazy(() => import('./pages/MapaCorporal'))
+const Simulador = lazy(() => import('./pages/Simulador'))
+const Referencias = lazy(() => import('./pages/Referencias'))
+const PerfilAtleta = lazy(() => import('./pages/PerfilAtleta'))
+const DadosConta = lazy(() => import('./components/DadosContaAtleta'))
+const HistoricoExames = lazy(() => import('./components/HistoricoExames'))
+const Acompanhamento = lazy(() => import('./pages/Acompanhamento'))
+const MeusAtletas = lazy(() => import('./pages/MeusAtletas'))
+const PerfilAtletaMedico = lazy(() => import('./pages/PerfilAtletaMedico'))
+const DadosContaMedico = lazy(() => import('./components/DadosContaMedico'))
 
 export default function App() {
     const [mostrarLeitor, setMostrarLeitor] = useState(false)
@@ -42,7 +42,7 @@ export default function App() {
     return (
         <AuthProvider>
             <ClinicalProvider>
-                <Routes>
+                <Suspense fallback={<p role="status">Carregando página…</p>}><Routes>
 
                 {/* Rotas públicas com Navbar + Footer */}
                 <Route element={<><Navbar /><Outlet /><Footer /></>}>
@@ -84,7 +84,7 @@ export default function App() {
                     {/* Fallback */}
                     <Route path="*" element={<Navigate to="/login" replace />} />
 
-                </Routes>
+                </Routes></Suspense>
 
                 <AccessibilityMenu onOpenAudioReader={() => setMostrarLeitor(true)} />
                 {mostrarLeitor && <LeitorDeAudio onClose={() => setMostrarLeitor(false)} />}

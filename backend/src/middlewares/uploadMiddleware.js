@@ -17,3 +17,10 @@ export const uploadPdf = multer({
     fileSize: 5 * 1024 * 1024,
   },
 });
+
+export function singleExamPdf(req, res, next) {
+  uploadPdf.single('examPdf')(req, res, error => {
+    if (error) return res.status(400).json({ message: error.code === 'LIMIT_FILE_SIZE' ? 'O PDF deve ter até 5 MB.' : 'Envie apenas um arquivo PDF válido.' });
+    return next();
+  });
+}

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useTranslation } from '../../context/LanguageContext';
+import { useTranslation } from '../../context/language';
 import "../../style/planos.css";
 
 // ─── Dados ────────────────────────────────────────────────────────────────────
@@ -21,7 +21,7 @@ const PLANOS = {
       descricao: "Para profissionais autônomos dando os primeiros passos",
       recursos: [
         "Até 20 pacientes",
-        "Interpretação de exames por IA",
+        "Organização dos indicadores dos exames",
         "Histórico dos exames",
         "Dashboard básico",
       ],
@@ -148,17 +148,17 @@ const T = {
   pt: {
     abas: ABAS, planos: PLANOS,
     eyebrow: 'Planos & Preços', heading: 'Seus exames, finalmente', accent: 'interpretados com precisão',
-    subtitle: 'Para médicos, personal trainers e usuários que levam a sério o que os números dizem.',
+    subtitle: 'Valores e recursos propostos para os futuros planos. Entre em contato para saber sobre disponibilidade.',
     tabsLabel: 'Tipos de plano', upTo: 'até', forUnits: 'para',
-    secure: 'Pagamento seguro', cancel: 'Cancele quando quiser', support: 'Suporte 7 dias por semana',
+    inquiry: 'Solicitar informações', secure: 'Planos em preparação', cancel: 'Sem cobrança nesta página', support: 'Fale com a equipe por e-mail',
   },
   en: {
     abas: [{ id: 'profissionais', label: 'Doctors & Personal Trainers' }, { id: 'individual', label: 'Individual User' }, { id: 'creditos', label: 'Pay per Test' }],
     planos: Object.fromEntries(Object.entries(PLANOS).map(([key, plans]) => [key, plans.map(plan => ({ ...plan, ...EN_PLANS[plan.id], preco: plan.preco.replace(',', '.'), ...(plan.precoMax ? { precoMax: plan.precoMax.replace(',', '.') } : {}) }))])),
     eyebrow: 'Plans & Pricing', heading: 'Your lab tests, finally', accent: 'interpreted with precision',
-    subtitle: 'For doctors, personal trainers and users who take their results seriously.',
+    subtitle: 'Proposed prices and features for future plans. Contact us for availability.',
     tabsLabel: 'Plan types', upTo: 'up to', forUnits: 'for',
-    secure: 'Secure payment', cancel: 'Cancel anytime', support: 'Support 7 days a week',
+    inquiry: 'Request information', secure: 'Plans in preparation', cancel: 'No payment on this page', support: 'Contact the team by email',
   },
 };
 
@@ -216,9 +216,9 @@ function CardPlano({ plano, isCreditos, t }) {
         ))}
       </ul>
 
-      <button className={`planos-cta${plano.destaque ? " planos-cta--primario" : " planos-cta--fantasma"}`}>
-        {plano.cta}
-      </button>
+      <a href={`mailto:sophiacoelho40@gmail.com?subject=${encodeURIComponent(`Juicers — ${plano.nome}`)}`} className={`planos-cta${plano.destaque ? " planos-cta--primario" : " planos-cta--fantasma"}`}>
+        {t.inquiry}
+      </a>
     </div>
   );
 }

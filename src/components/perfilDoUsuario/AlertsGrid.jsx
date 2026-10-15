@@ -21,7 +21,7 @@ export default function AlertsGrid({ alerts = [] }) {
           style={{
             fontSize: 11,
             fontWeight: 700,
-            color: 'var(--ad-accent-text, #0d0d0d)',
+            color: alerts.length > 0 ? '#fff' : 'var(--ad-accent-text, #0d0d0d)',
             background: alerts.length > 0 ? 'var(--ad-alert-count-bg, #f04747)' : 'var(--ad-accent-soft, #e8f8f7)',
             borderRadius: 20,
             minWidth: 20,

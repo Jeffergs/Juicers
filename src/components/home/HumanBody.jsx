@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import '../../style/humanBody.css'
-import TituloSubtitulo from "../TituloSubtitulo";
-import { useTranslation } from "../../context/LanguageContext";
+import { useTranslation } from "../../context/language";
 
 const HEAD =
   "M15.92 68.5l8.8 12.546 3.97 13.984-9.254-7.38-4.622-15.848zm27.1 0l-8.8 12.546-3.976 13.988 9.254-7.38 4.622-15.848zm6.11-27.775l.108-11.775-21.16-14.742L8.123 26.133 8.09 40.19l-3.24.215 1.462 9.732 5.208 1.81 2.36 11.63 9.72 11.018 10.856-.324 9.56-10.37 1.918-11.952 5.207-1.81 1.342-9.517zm-43.085-1.84l-.257-13.82L28.226 11.9l23.618 15.755-.216 10.37 4.976-17.085L42.556 2.376 25.49 0 10.803 3.673.002 24.415z";
@@ -183,6 +182,10 @@ export default function BodyRiskMap({ className = "", style }) {
                     className="hbd-dot"
                     onClick={() => setSelectedId(c.id)}
                     aria-label={c.title}
+                    role="button"
+                    tabIndex={0}
+                    aria-pressed={active}
+                    onKeyDown={event => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); setSelectedId(c.id) } }}
                   >
                     <circle
                       cx={c.cx} cy={c.cy} r="6"

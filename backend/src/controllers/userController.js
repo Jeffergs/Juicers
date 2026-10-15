@@ -77,6 +77,7 @@ export const createUser = async (req, res) => {
     if (error instanceof CfmVerificationError) {
       return res.status(error.status).json({ message: error.message });
     }
+    if (error.code === 11000) return res.status(409).json({ message: 'Este e-mail já está cadastrado.' });
     return res.status(500).json({
       message: error.message,
     });
@@ -380,6 +381,12 @@ export const updateUserProfile = async (req, res) => {
       });
     }
 
+    if (updates.email) {
+      const current = await User.findById(userId).select('email');
+      if (!current) return res.status(404).json({ message: 'Usuário não encontrado' });
+      const escapedEmail = current.email.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      await DoctorInvite.updateMany({ patientEmail: new RegExp(`^${escapedEmail}$`, 'i') }, { $set: { patientUserId: userId } });
+    }
     const user = await User.findByIdAndUpdate(
       userId,
       updates,
@@ -397,7 +404,7 @@ export const updateUserProfile = async (req, res) => {
 
     return res.status(200).json({
       message: "Usuário atualizado com sucesso",
-      user,
+      user: { id: user._id, name: user.name, email: user.email, role: user.role },
     });
   } catch (error) {
     if (error.code === 11000 && error.keyPattern?.email) {
@@ -448,7 +455,8 @@ export const changePassword = async (req, res) => {
       return res.status(401).json({ message: "A senha atual está incorreta" });
     }
 
-    await User.updateOne({ _id: userId, password: user.password }, { $set: { password: await bcrypt.hash(newPassword, 10) }, $inc: { sessionVersion: 1 } });
+    const changed = await User.updateOne({ _id: userId, password: user.password }, { $set: { password: await bcrypt.hash(newPassword, 10) }, $inc: { sessionVersion: 1 } });
+    if (!changed.matchedCount) return res.status(409).json({ message: 'A senha mudou durante a operação. Entre novamente.' });
     clearSession(res);
 
     return res.status(200).json({ message: "Senha alterada com sucesso. Entre novamente.", sessionExpired: true });

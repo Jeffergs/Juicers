@@ -9,7 +9,7 @@ import FollowupInteraction from '../models/FollowupInteraction.js';
 import DoctorInvite from '../models/DoctorInvite.js';
 import { clearSession } from '../utils/session.js';
 
-const emailScope = email => ({ patientEmail: new RegExp(`^${email.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}$`, 'i') });
+const emailScope = (email, userId) => ({ $or: [{ patientUserId: userId }, { patientEmail: new RegExp(`^${email.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}$`, 'i') }] });
 
 export async function exportPatientData(req, res) {
   if (req.user.role !== 'patient') return res.status(403).json({ message: 'Operação disponível para a conta do paciente.' });
@@ -21,7 +21,7 @@ export async function exportPatientData(req, res) {
     if (patient) {
       for (const [key, Model] of [['exams', Exam], ['notes', ClinicalNote], ['requestedExams', RequestedExam], ['interactions', FollowupInteraction]]) data[key] = await Model.find({ patientId: patient._id }).lean();
     }
-    data.invites = await DoctorInvite.find(emailScope(user.email)).select('doctorId patientName patientEmail status expiresAt acceptedAt createdAt').lean();
+    data.invites = await DoctorInvite.find(emailScope(user.email, req.user.id)).select('doctorId patientName patientEmail status expiresAt acceptedAt createdAt').lean();
     res.setHeader('Content-Disposition', 'attachment; filename="juicers-meus-dados.json"');
     return res.json(data);
   } catch { return res.status(500).json({ message: 'Não foi possível exportar os dados.' }); }
@@ -49,7 +49,7 @@ export async function deletePatientAccount(req, res) {
         for (const Model of [Exam, ClinicalNote, RequestedExam, FollowupInteraction]) await Model.deleteMany({ patientId: patient._id }, { session });
         await Patient.deleteOne({ _id: patient._id, userId: req.user.id }, { session });
       }
-      await DoctorInvite.deleteMany(emailScope(currentUser.email), { session });
+      await DoctorInvite.deleteMany(emailScope(currentUser.email, req.user.id), { session });
       await User.deleteOne({ _id: req.user.id }, { session });
     });
     clearSession(res);

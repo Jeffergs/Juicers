@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom'
 import PatientDetail from '../screens/PatientDetail.jsx'
 import MarkerModal from '../components/perfilDoUsuario/MarkerModal.jsx'
 import { buildDashboardData, formatExamDate } from '../data/markers.js'
-import { useClinical } from '../context/ClinicalContext.jsx'
+import { useClinical } from '../context/clinical.js'
 import {
   getDoctorPatientById,
   getDoctorPatientExams,
@@ -66,6 +66,7 @@ function formatImportedExams(exams = []) {
       date: formatDateBR(exam.examDate),
       rawDate: exam.examDate,
       source: exam.source,
+      hasOriginalPdf: exam.hasOriginalPdf,
       riskLevel: exam.riskLevel,
       alerts: exam.alerts || [],
       markers: exam.markers || {},

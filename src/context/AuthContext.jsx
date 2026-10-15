@@ -1,89 +1,51 @@
-import { createContext, useContext, useState } from 'react'
+import { useEffect, useState } from 'react'
+import { endSession, getSession } from '../services/api'
+import { clearLegacyData, notifySession, rememberSession, SESSION_EVENT } from '../services/session'
 
-const AuthContext = createContext(null)
-
-const MOCK_USERS = [
-    { id: 1, email: 'atleta@juicers.com', password: '123456', role: 'atleta', name: 'Lucas Ferreira' },
-    { id: 2, email: 'medico@juicers.com', password: '123456', role: 'medico', name: 'Dr. Rafael Lima' },
-]
-
-function mapRole(backendRole) {
-    if (backendRole === 'doctor') return 'medico'
-    if (backendRole === 'patient') return 'atleta'
-    return backendRole
-}
-
-function carregarSessao() {
-    try {
-        const token = localStorage.getItem('tokenJuicers')
-        const user = localStorage.getItem('usuarioLogadoJuicers')
-        const role = localStorage.getItem('roleJuicers')
-        if (!token || !user) return null
-        const parsed = JSON.parse(user)
-        // role do localStorage tem prioridade — vem POR ÚLTIMO para não ser sobrescrito
-        const resolvedRole = role || mapRole(parsed.role) || 'atleta'
-        return { token, ...parsed, role: resolvedRole }
-    } catch {
-        return null
-    }
-}
-
+import { AuthContext } from './auth.js'
+function mapRole(role) { return role === 'doctor' ? 'medico' : role === 'patient' ? 'atleta' : role }
 export function AuthProvider({ children }) {
-    const [usuario, setUsuario] = useState(carregarSessao)
-
-    const loginComToken = (token, user, roleEscolhido) => {
-        const role = user?.role ? mapRole(user.role) : roleEscolhido
-        localStorage.setItem('tokenJuicers', token)
-        localStorage.setItem('usuarioLogadoJuicers', JSON.stringify(user))
-        localStorage.setItem('roleJuicers', role)
-        // role vem por último para não ser sobrescrito pelo spread
-        setUsuario({ token, ...user, role })
-    }
-
-    const loginMock = (email, senha, roleEscolhido) => {
-        const encontrado = MOCK_USERS.find(
-            u => u.email === email && u.password === senha && u.role === roleEscolhido
-        )
-        if (!encontrado) return { ok: false, erro: 'E-mail, senha ou perfil incorretos.' }
-
-        const fakeToken = `mock-token-${encontrado.id}`
-        const user = { id: encontrado.id, name: encontrado.name, email: encontrado.email }
-        localStorage.setItem('tokenJuicers', fakeToken)
-        localStorage.setItem('usuarioLogadoJuicers', JSON.stringify(user))
-        localStorage.setItem('roleJuicers', encontrado.role)
-        setUsuario({ token: fakeToken, ...user, role: encontrado.role })
-        return { ok: true }
-    }
-
-    const atualizarUsuario = (dadosAtualizados) => {
-        const role = mapRole(dadosAtualizados?.role) || usuario?.role
-        const usuarioAtualizado = {
-            ...usuario,
-            ...dadosAtualizados,
-            role,
-            token: usuario?.token,
+    const [usuario, setUsuario] = useState(null)
+    const [loading, setLoading] = useState(true)
+    const [sessionReason, setSessionReason] = useState('')
+    const [sessionError, setSessionError] = useState('')
+    useEffect(() => {
+        let active = true
+        let version = 0
+        let timer
+        clearLegacyData()
+        const receive = (event) => {
+            version += 1
+            window.clearTimeout(timer)
+            setUsuario(event.detail.user ? { ...event.detail.user, role: mapRole(event.detail.user.role) } : null)
+            setSessionReason(event.detail.reason)
+            setLoading(false)
+            if (event.detail.reason === 'login') refresh()
         }
-        const { token, ...usuarioPersistido } = usuarioAtualizado
-
-        localStorage.setItem('usuarioLogadoJuicers', JSON.stringify(usuarioPersistido))
-        localStorage.setItem('roleJuicers', role)
-        setUsuario(usuarioAtualizado)
+        window.addEventListener(SESSION_EVENT, receive)
+        const refresh = async () => {
+            const current = version
+            try {
+                const data = await getSession()
+                if (active && current === version) {
+                    setUsuario({ ...data.user, role: mapRole(data.user.role) }); setSessionError('')
+                    rememberSession()
+                    window.clearTimeout(timer)
+                    if (data.expiresAt) timer = window.setTimeout(() => notifySession('expired'), Math.max(0, data.expiresAt - Date.now()))
+                }
+            } catch (error) {
+                if (active && current === version && error.status !== 401) setSessionError('Não foi possível validar sua sessão. Tente recarregar a página.')
+            } finally { if (active) setLoading(false) }
+        }
+        refresh()
+        window.addEventListener('focus', refresh)
+        return () => { active = false; window.clearTimeout(timer); window.removeEventListener(SESSION_EVENT, receive); window.removeEventListener('focus', refresh) }
+    }, [])
+    const loginComToken = (_token, user) => { setSessionError(''); notifySession('login', user) }
+    const atualizarUsuario = (data) => setUsuario(current => ({ ...current, ...data, role: mapRole(data.role || current.role) }))
+    const logout = async () => {
+        await endSession()
+        notifySession('logout')
     }
-
-    const logout = () => {
-        localStorage.removeItem('tokenJuicers')
-        localStorage.removeItem('usuarioLogadoJuicers')
-        localStorage.removeItem('roleJuicers')
-        setUsuario(null)
-    }
-
-    return (
-        <AuthContext.Provider value={{ usuario, loginComToken, loginMock, atualizarUsuario, logout }}>
-            {children}
-        </AuthContext.Provider>
-    )
-}
-
-export function useAuth() {
-    return useContext(AuthContext)
+    return <AuthContext.Provider value={{ usuario, loading, sessionReason, sessionError, loginComToken, atualizarUsuario, logout }}>{children}</AuthContext.Provider>
 }

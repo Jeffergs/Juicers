@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { getMyFollowup } from '../services/api'
+import { DATA_EVENT, getMyFollowup } from '../services/api'
 import { PatientFollowupContext } from './patientFollowup'
 
 const EMPTY = { doctor: null, notes: [], requestedExams: [], interactions: [] }
@@ -36,12 +36,14 @@ export function PatientFollowupProvider({ children, fetchFollowup = getMyFollowu
         Promise.resolve().then(reload)
         const timer = window.setInterval(reload, 15000)
         window.addEventListener('focus', reload)
+        window.addEventListener(DATA_EVENT, reload)
         document.addEventListener('visibilitychange', reload)
         return () => {
             active.current = false
             requestVersion.current = null
             window.clearInterval(timer)
             window.removeEventListener('focus', reload)
+            window.removeEventListener(DATA_EVENT, reload)
             document.removeEventListener('visibilitychange', reload)
         }
     }, [refresh])

@@ -7,6 +7,8 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
+    "test": "node --test backend/test/*.test.js backend/src/controllers/*.test.js",
+    "check": "npm run lint && npm test && npm run build",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -22,6 +24,7 @@
     "multer": "^2.2.0",
     "nodemailer": "^10.0.16",
     "pdf-parse": "^1.1.1",
+    "pdfjs-dist": "^6.4.299",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
     "react-is": "^19.2.5",

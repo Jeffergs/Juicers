@@ -1,23 +1,29 @@
-import React, { useState } from 'react'
+import { useUiText } from '../../context/uiText'
+import { useRef, useState } from 'react'
 
 export default function UploadZone({
   accent = '#e6a817',
   label = 'Importar exame (PDF)',
   onUpload,
 }) {
+  const ui = useUiText()
+
   const [drag, setDrag] = useState(false)
   const [fileName, setFileName] = useState('')
   const [loading, setLoading] = useState(false)
   const [erro, setErro] = useState('')
   const [success, setSuccess] = useState('')
+  const inputRef = useRef(null)
 
   const handleFile = async (file) => {
+    if (loading) return
     if (!file) return
 
     if (file.type !== 'application/pdf') {
       setErro('Selecione um arquivo PDF.')
       return
     }
+    if (file.size > 5 * 1024 * 1024) { setErro('O PDF deve ter até 5 MB.'); return }
 
     try {
       setLoading(true)
@@ -34,6 +40,7 @@ export default function UploadZone({
       setErro(error.message || 'Erro ao importar PDF.')
     } finally {
       setLoading(false)
+      if (inputRef.current) inputRef.current.value = ''
     }
   }
 
@@ -55,8 +62,8 @@ export default function UploadZone({
         handleFile(file)
       }}
       style={{
-        border: `2px dashed ${drag ? accent : '#ccc'}`,
-        background: drag ? 'rgba(0, 0, 0, .025)' : '#ebebeb',
+        border: `2px dashed ${drag ? accent : 'var(--ad-border, #ccc)'}`,
+        background: drag ? 'var(--ad-accent-soft, rgba(0, 0, 0, .025))' : 'var(--ad-field, #ebebeb)',
         borderRadius: 14,
         padding: '30px 24px',
         display: 'flex',
@@ -83,15 +90,18 @@ export default function UploadZone({
         <path d="M4 16v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3" />
       </svg>
 
-      <p style={{ margin: 0, fontSize: 'var(--ui-body, 14px)', fontWeight: 650, color: '#171717' }}>
+      <p style={{ margin: 0, fontSize: 'var(--ui-body, 14px)', fontWeight: 650, color: 'var(--ad-text, #171717)' }}>
         {label}
       </p>
 
-      <p style={{ margin: 0, fontSize: 'var(--ui-small, 12px)', color: '#818181' }}>
-        Arraste o arquivo PDF aqui, ou
+      <p style={{ margin: 0, fontSize: 'var(--ui-small, 12px)', color: 'var(--ad-muted, #818181)' }}>
+        {ui("Arraste o arquivo PDF aqui, ou")}
       </p>
 
-      <label
+      <button
+        type="button"
+        disabled={loading}
+        onClick={() => inputRef.current?.click()}
         style={{
           marginTop: 4,
           display: 'inline-flex',
@@ -107,16 +117,17 @@ export default function UploadZone({
           opacity: loading ? 0.65 : 1,
         }}
       >
-        {loading ? 'Importando...' : 'Selecionar arquivo'}
+        {loading ? ui("Importando...") : ui("Selecionar arquivo")}
 
+      </button>
         <input
+          ref={inputRef}
           type="file"
           accept="application/pdf"
           disabled={loading}
           onChange={(e) => handleFile(e.target.files[0])}
           style={{ display: 'none' }}
         />
-      </label>
 
       {fileName && (
         <div
@@ -134,13 +145,13 @@ export default function UploadZone({
       )}
 
       {success && (
-        <div style={{ fontSize: 'var(--ui-small, 12px)', color: '#3fb950', marginTop: 4 }}>
+        <div role="status" style={{ fontSize: 'var(--ui-small, 12px)', color: '#187035', marginTop: 4 }}>
           {success}
         </div>
       )}
 
       {erro && (
-        <div style={{ fontSize: 'var(--ui-small, 12px)', color: '#f04747', marginTop: 4 }}>
+        <div role="alert" style={{ fontSize: 'var(--ui-small, 12px)', color: '#b72b2b', marginTop: 4 }}>
           {erro}
         </div>
       )}

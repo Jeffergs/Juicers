@@ -1,6 +1,6 @@
 import HumanBody from "../components/home/HumanBody"
 import TituloSubtitulo from "../components/TituloSubtitulo"
-import { useTranslation } from "../context/LanguageContext"
+import { useTranslation } from "../context/language"
 import '../style/MapaCorporal.css'
 
 const T = {

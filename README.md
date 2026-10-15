@@ -51,13 +51,13 @@ src/
 │   ├── sobreProjeto/        # Contextualização, time e stacks
 │   ├── Acessibilidade/      # Menu e botões de acessibilidade
 │   ├── LeitorDeAudio/       # Leitor de áudio (screen reader próprio)
-│   ├── DadosConta.jsx       # Formulário de dados pessoais (persiste em localStorage)
+│   ├── DadosContaAtleta.jsx # Formulário de dados pessoais autenticado
 │   ├── HistoricoExames.jsx  # Listagem cronológica de exames
 │   └── OnboardingForm.jsx   # Formulário de onboarding inicial
 └── style/                   # Arquivos CSS individuais por componente
 ```
 
-**Persistência:** os dados da conta do usuário são salvos no `localStorage` com a chave `dadosContaCicloRisco` e carregados dinamicamente na página de perfil.
+**Persistência:** contas, perfis, exames e comunicação são armazenados no MongoDB. O frontend mantém a sessão em cookie HttpOnly emitido pela API e os dados carregados em memória. Dados clínicos e tokens não são persistidos no localStorage. PDFs importados a partir desta versão são guardados no próprio documento do exame, com projeção desabilitada nas consultas comuns, e servidos apenas por rotas autenticadas e restritas ao paciente ou médico atualmente vinculado. São excluídos junto com o exame ou a conta.
 
 ---
 
@@ -100,6 +100,26 @@ npm run dev
 ```
 
 A aplicação sobe em `http://localhost:5173` por padrão.
+
+Em outro terminal, execute `npm install` e `npm run dev` na pasta `backend`, com as variáveis configuradas conforme descrito abaixo. O Vite encaminha `/api` para o backend local.
+
+## Verificação e operação
+
+Execute `npm run check` na raiz para rodar lint, testes e build. O workflow `.github/workflows/checks.yml` executa a mesma verificação em pushes e pull requests. Os testes usam fixtures e mocks: não excluem contas nem alteram os pacientes do Atlas.
+
+Sessões duram até sete dias. Logout e troca de senha revogam sessões anteriores. A mudança para cookies exige novo login em clientes que usavam tokens no localStorage. Em produção, mantenha HTTPS e `NODE_ENV=production`, `JWT_SECRET` e `FRONTEND_URL` corretamente configurados.
+
+Na tela de dados da conta, o paciente pode exportar seus dados ou excluir a conta e os registros vinculados. A exclusão exige confirmação e autenticação recente ou senha. Exclusões e alterações relacionadas usam transações; o banco precisa ser um replica set, como o Atlas. Se a transação falhar, a API retorna erro sem confirmar uma gravação parcial.
+
+Uploads aceitam PDFs de até 5 MB com texto extraível, data válida e indicadores reconhecidos. PDFs digitalizados sem texto não passam pela importação. Datas, unidades e valores são validados no servidor; as classificações usam as faixas configuradas na plataforma e não substituem avaliação clínica. Reenvios do mesmo PDF para o mesmo paciente reaproveitam o exame existente.
+
+O histórico oferece visualização e download do PDF original. Exames antigos sem arquivo guardado precisam de reenvio. Quando existe o hash do upload anterior, o reenvio anexa o PDF ao mesmo exame. O JSON de exportação contém os dados dos exames, sem os arquivos binários; os PDFs podem ser baixados individualmente no histórico. No Atlas Free, esses arquivos consomem a capacidade de armazenamento do cluster; monitore o espaço disponível.
+
+### Backup — pendência de infraestrutura
+
+Na conferência de 14/10/2026, o cluster Juicers estava no Atlas Free, AWS São Paulo (`sa-east-1`), sem backup automático ativo. A responsável decidiu manter o plano gratuito por enquanto; a proposta de upgrade foi descartada sem alterar o cluster. Caso seja reavaliada, a opção Flex inclui snapshots diários, mantidos por oito dias, com primeiro snapshot em até 24 horas, e requer aprovação de custo e da janela de indisponibilidade.
+
+Após habilitar backup, atualize a política de privacidade com a retenção real. Para validar restauração, use um cluster isolado, verifique integridade e contagens sem expor dados, e reaplique exclusões ocorridas após o snapshot antes de usar uma restauração em produção. A restauração ainda não foi testada. Nunca restaure por cima do cluster ativo sem uma janela e um plano de retorno definidos.
 
 ---
 

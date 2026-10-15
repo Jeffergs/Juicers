@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { acceptDoctorInvite, savePatientProfile } from '../services/api'
 import '../style/onboarding.css'
-import logoIcon from '../assets/juicers.png'
+import logoIcon from '../assets/juicers-optimized.png'
 
 const COMPOSTOS = [
     'Testosterona Enantato', 'Testosterona Cipionato', 'Trembolona',
@@ -27,7 +27,6 @@ function Obrigatorio() {
 
 export default function OnboardingForm({
     nomeCompleto = '',
-    emailUsuario = '',
     conviteToken = '',
     onBack,
     onFinish,
@@ -269,32 +268,6 @@ export default function OnboardingForm({
                 await acceptDoctorInvite(conviteToken)
             }
 
-            const dadosFormatados = {
-                nome: form.nome,
-                sobrenome: form.sobrenome,
-                idade: form.idade,
-                sexo: form.sexo,
-                peso: form.peso,
-                altura: form.altura,
-                cicloAtivo: form.cicloAtivo,
-                compostos: form.compostos,
-                dosagem: dosagemSemanalTotal,
-                tempoUso: form.tempoUso,
-                fezeExames: form.fezeExames,
-                dataUltimoExame: form.dataUltimoExame,
-                condicoes: form.condicoes,
-                email: emailUsuario,
-                ultimaAtualizacao: new Date().toLocaleDateString('pt-BR', {
-                    day: '2-digit',
-                    month: 'long',
-                    year: 'numeric',
-                }),
-            }
-
-            localStorage.setItem(
-                'dadosContaCicloRisco',
-                JSON.stringify(dadosFormatados)
-            )
 
             onFinish()
         } catch (error) {

@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import PatientsList from '../screens/PatientsList.jsx'
 import InviteModal from '../components/perfilDoUsuario/InviteModal.jsx'
 import Toast from '../components/perfilDoUsuario/Toast.jsx'
-import { getDoctorPatients, getDoctorPatientExams, removeDoctorPatient } from '../services/api'
+import { getDoctorPatients, removeDoctorPatient } from '../services/api'
 import '../style/meusAtletas.css'
 
 function getInitials(name = '') {
@@ -220,7 +220,8 @@ function getPatientStatusFromExams(exams = []) {
 
 function formatPatient(patient, exams = []) {
   const name = patient.userId?.name || 'Paciente sem nome'
-  const examInfo = getPatientStatusFromExams(exams)
+  const summary = patient.examSummary
+  const examInfo = summary ? { ...summary, alerts: summary.highAlerts + summary.attentionAlerts, status: summary.highAlerts ? 'risco' : summary.attentionAlerts ? 'atencao' : 'ok' } : getPatientStatusFromExams(exams)
 
   return {
     id: patient._id,
@@ -282,16 +283,7 @@ export default function MeusAtletas() {
     try {
       const data = await getDoctorPatients()
 
-      const pacientesFormatados = await Promise.all(
-        data.patients.map(async (patient) => {
-          try {
-            const examsResponse = await getDoctorPatientExams(patient._id)
-            return formatPatient(patient, examsResponse.exams || [])
-          } catch {
-            return formatPatient(patient, [])
-          }
-        })
-      )
+      const pacientesFormatados = data.patients.map(patient => formatPatient(patient))
 
       setPatients(sortPatientsByRisk(pacientesFormatados))
     } catch (error) {
@@ -314,7 +306,7 @@ export default function MeusAtletas() {
       if (document.hidden || fetching) return
       fetching = true
       try {
-        const response = await getDoctorPatients()
+        const response = await getDoctorPatients({ summary: false })
         if (active) setPatients(current => current.map(patient => ({
           ...patient,
           pendingMessageCount: response.patients.find(item => item._id === patient.id)?.pendingMessageCount || 0,

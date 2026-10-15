@@ -1,7 +1,6 @@
-import { createContext, useContext } from 'react'
 import { useClinicalState } from '../hooks/useClinicalState.js'
 
-const ClinicalContext = createContext(null)
+import { ClinicalContext } from './clinical.js'
 
 export function ClinicalProvider({ children }) {
   const value = useClinicalState()
@@ -11,14 +10,4 @@ export function ClinicalProvider({ children }) {
       {children}
     </ClinicalContext.Provider>
   )
-}
-
-export function useClinical() {
-  const ctx = useContext(ClinicalContext)
-
-  if (!ctx) {
-    throw new Error('useClinical precisa estar dentro de ClinicalProvider')
-  }
-
-  return ctx
 }

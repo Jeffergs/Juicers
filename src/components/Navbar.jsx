@@ -1,8 +1,8 @@
 import { useState, useEffect, useRef } from 'react'
 import '../style/navbar.css'
 import { Link } from 'react-router-dom'
-import { useLanguage, useTranslation } from '../context/LanguageContext'
-import logoIcon from '../assets/juicers.png'
+import { useLanguage, useTranslation } from '../context/language'
+import logoIcon from '../assets/juicers-optimized.png'
 
 const MENU_LINKS = {
     pt: [
@@ -32,13 +32,11 @@ const NAV_LINKS = {
         { label: 'SIMULADOR',     to: '/simulador'     },
         { label: 'MAPA CORPORAL', to: '/mapa-corporal' },
         { label: 'REFERÊNCIA',    to: '/referencias'   },
-        { label: 'FEEDBACK',      href: '#feedback'    },
     ],
     en: [
         { label: 'SIMULATOR',  to: '/simulador'     },
         { label: 'BODY MAP',   to: '/mapa-corporal' },
         { label: 'REFERENCE',  to: '/referencias'   },
-        { label: 'FEEDBACK',   href: '#feedback'    },
     ],
 }
 

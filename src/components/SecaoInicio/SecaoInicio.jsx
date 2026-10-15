@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useTranslation } from "../../context/LanguageContext";
+import { useTranslation } from "../../context/language";
 import "../../style/SecaoInicio.css";
 
 const T = {
@@ -13,7 +13,7 @@ const T = {
     bodyPost: " de cada indicador e te ajuda a saber a hora certa de procurar um profissional.",
     ctaPrimary: "Começar a acompanhar",
     ctaGhost: "Ver como funciona",
-    reassure: "Anônimo e privado. Seus dados de saúde ficam com você.",
+    reassure: "Acesso autenticado. Você escolhe o médico com quem compartilha seus dados.",
     hdlName: "HDL (colesterol bom)",
     dashEyebrow: "visão geral",
     dashGreeting: "Olá, André",
@@ -40,7 +40,7 @@ const T = {
     bodyPost: " of each indicator and helps you know the right time to see a professional.",
     ctaPrimary: "Start tracking",
     ctaGhost: "See how it works",
-    reassure: "Anonymous and private. Your health data stays with you.",
+    reassure: "Authenticated access. You choose the doctor you share your data with.",
     hdlName: "HDL (good cholesterol)",
     dashEyebrow: "overview",
     dashGreeting: "Hi, André",

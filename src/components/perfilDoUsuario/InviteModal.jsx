@@ -177,7 +177,7 @@ export default function InviteModal({ onClose, onToast }) {
             disabled={carregando}
             style={{
               background: '#2fd6be',
-              color: '#06201d',
+              color: '#fff',
               border: 'none',
               fontSize: 13.5,
               fontWeight: 700,

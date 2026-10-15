@@ -1,8 +1,9 @@
+import { useUiText } from '../context/uiText'
 import { useState } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
-import { useAuth } from '../context/AuthContext'
+import { useAuth } from '../context/auth'
 import { usePatientFollowup } from '../context/patientFollowup'
-import logoIcon from '../assets/juicers.png'
+import logoIcon from '../assets/juicers-optimized.png'
 import '../style/sidebarAtleta.css'
 import '../style/sidebarMedico.css'
 
@@ -67,13 +68,18 @@ const VARIANTS = {
 }
 
 export default function Sidebar({ variant = 'atleta', showAccount = false }) {
+  const ui = useUiText()
+
     const [open, setOpen] = useState(false)
     const { logout, usuario } = useAuth()
     const patientFollowup = usePatientFollowup()
     const navigate = useNavigate()
 
     const { prefix, items } = VARIANTS[variant]
-    const handleSair = () => { logout(); navigate('/login') }
+    const handleSair = async () => {
+        try { await logout(); navigate('/login') }
+        catch { window.alert('Não foi possível encerrar a sessão. Tente novamente.') }
+    }
 
     return (
         <>
@@ -102,7 +108,7 @@ export default function Sidebar({ variant = 'atleta', showAccount = false }) {
                             onClick={() => setOpen(false)}
                         >
                             <span className={`${prefix}-link-icon`}>{item.icon}</span>
-                            <span className={`${prefix}-link-label`}>{item.label}</span>
+                            <span className={`${prefix}-link-label`}>{ui(item.label)}</span>
                             {variant === 'atleta' && item.to === '/perfil/acompanhamento' && patientFollowup?.unreadReplies.length > 0 && <span className="sa-reply-count" aria-label={`${patientFollowup.unreadReplies.length} respostas não lidas`}>{patientFollowup.unreadReplies.length}</span>}
                         </NavLink>
                     ))}
@@ -124,7 +130,7 @@ export default function Sidebar({ variant = 'atleta', showAccount = false }) {
                             <path d="M10 5L13.5 8.5 10 12" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
                             <line x1="13" y1="8.5" x2="6" y2="8.5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
                         </svg>
-                        Sair
+                        {ui("Sair")}
                     </button>
                 </div>
             </aside>

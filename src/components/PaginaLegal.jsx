@@ -1,6 +1,6 @@
 import '../style/legal.css'
 import { useEffect } from 'react'
-import { useLanguage } from '../context/LanguageContext'
+import { useLanguage } from '../context/language'
 
 /**
  * Casca compartilhada das páginas legais (Privacidade e Termos).

@@ -1,4 +1,4 @@
-import { useTranslation } from "../../context/LanguageContext";
+import { useTranslation } from "../../context/language";
 import "../../style/EntendaProjeto.css";
 
 const T = {

@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 const userSchema = new mongoose.Schema(
   {
     sessionVersion: { type: Number, default: 0 },
+    dataRevision: { type: Number, default: 0 },
     name: {
       type: String,
       required: true,
@@ -12,6 +13,8 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
       unique: true,
+      trim: true,
+      lowercase: true,
     },
 
     password: {

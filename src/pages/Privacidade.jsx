@@ -1,5 +1,5 @@
 import PaginaLegal from '../components/PaginaLegal'
-import { useTranslation } from '../context/LanguageContext'
+import { useTranslation } from '../context/language'
 
 const CONTATO = 'sophiacoelho40@gmail.com'
 const RESPONSAVEL = 'André Felipe Xavier de Melo, Gabriel da Silva Soares, Jefferson Gomes Silva, Natalia Alves Lugão e Sophia Heringer Coelho'
@@ -9,7 +9,7 @@ const T = {
     pt: {
         titulo: 'Política de Privacidade',
         subtitulo: 'O que coletamos, por quê, quem vê e como você apaga.',
-        atualizado: '13 de outubro de 2026',
+        atualizado: '14 de outubro de 2026',
 
         resumo: [
             'Seus exames ficam em um banco de dados nosso, na nuvem — não no seu dispositivo.',
@@ -32,7 +32,7 @@ const T = {
                     'Cadastro: nome, e-mail e senha. A senha é guardada como hash, nunca em texto legível, e ninguém da equipe consegue lê-la.',
                     'Login com Google: se você entrar por essa opção, recebemos do Google o seu nome, e-mail e foto de perfil.',
                     'Perfil: as informações que você preenche no cadastro inicial, como data de nascimento, sexo, peso e altura.',
-                    'Saúde: os arquivos PDF de exames que você envia, os valores numéricos extraídos deles (hematócrito, HDL, testosterona, enzimas hepáticas e demais marcadores) e a data de cada coleta.',
+                    'Saúde: os PDFs originais enviados, os valores extraídos dos exames, a data de coleta e o nome do arquivo. O PDF original é armazenado para que você e o profissional vinculado possam visualizá-lo ou baixá-lo. Ele é excluído junto com o exame ou a conta. Mensagens, respostas, orientações e solicitações de exames ficam vinculadas ao seu perfil.',
                     'Vínculo: o registro de qual profissional de saúde você autorizou a ver seus exames, e desde quando.',
                 ],
                 destaque: 'Dados sobre saúde são dados pessoais sensíveis (LGPD, art. 5º, II). Por isso só os tratamos com o seu consentimento explícito e específico (art. 11, I), e apenas para as finalidades da seção 3.',
@@ -41,7 +41,7 @@ const T = {
                 h: 'Para que usamos',
                 lista: [
                     'Organizar seus exames em um histórico único e mostrar a evolução de cada marcador ao longo do tempo.',
-                    'Comparar cada valor com a faixa de referência do laudo e sinalizar quando um marcador sai dela.',
+                    'Comparar os indicadores com as faixas de acompanhamento configuradas na plataforma. A leitura automática não substitui a conferência do laudo e a avaliação do profissional.',
                     'Permitir que o profissional de saúde que você vincular acompanhe esse histórico.',
                 ],
                 p: [
@@ -70,7 +70,7 @@ const T = {
             {
                 h: 'Por quanto tempo guardamos',
                 p: [
-                    'Enquanto a sua conta existir. Se você pedir a exclusão, apagamos os seus dados de cadastro, de perfil e de exames — incluindo os PDFs enviados — em até 30 dias. O projeto não mantém cópias de segurança (backups) do banco de dados.',
+                    'Enquanto a sua conta existir. Em Dados da Conta, você pode baixar uma cópia dos seus dados e solicitar a exclusão definitiva. Ao concluir a exclusão, removemos cadastro, perfil, exames, mensagens, orientações, solicitações e convites vinculados, sem manter esses registros no banco da aplicação. O projeto atualmente não mantém backups do banco de dados. Pedidos feitos por e-mail continuam disponíveis e são atendidos em até 30 dias.',
                 ],
             },
             {

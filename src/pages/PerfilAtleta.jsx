@@ -1,5 +1,6 @@
+import { useUiText } from '../context/uiText'
 import { useEffect, useState } from 'react'
-import { getMyExams, getMyPatientProfile } from '../services/api'
+import { DATA_EVENT, getMyExams, getMyPatientProfile } from '../services/api'
 import Dashboard from '../components/perfilDoUsuario/Dashboard.jsx'
 import MarkerModal from '../components/perfilDoUsuario/MarkerModal.jsx'
 import { buildDashboardData, formatExamDate } from '../data/markers.js'
@@ -39,29 +40,43 @@ function formatarStatusCiclo(cicloAtivo) {
 const formatarDataExame = formatExamDate
 
 export default function PerfilAtleta() {
+  const ui = useUiText()
+
     const [perfilPaciente, setPerfilPaciente] = useState(null)
     const [exames, setExames] = useState([])
     const [carregando, setCarregando] = useState(true)
+    const [erro, setErro] = useState('')
     const [marcador, setMarcador] = useState(null)
 
     useEffect(() => {
+        let active = true
+        let fetching = false
         async function carregarDadosDashboard() {
+            if (fetching || document.hidden) return
+            fetching = true
             try {
                 const [perfilResponse, examesResponse] = await Promise.all([
                     getMyPatientProfile(),
                     getMyExams(),
                 ])
 
+                if (!active) return
+                setErro('')
                 setPerfilPaciente(perfilResponse.patient)
                 setExames(examesResponse.exams || [])
             } catch (error) {
+                if (active) setErro(error.message || 'Não foi possível carregar o dashboard.')
                 console.error('Erro ao carregar dashboard:', error)
             } finally {
-                setCarregando(false)
+                fetching = false
+                if (active) setCarregando(false)
             }
         }
 
         carregarDadosDashboard()
+        window.addEventListener(DATA_EVENT, carregarDadosDashboard)
+        window.addEventListener('focus', carregarDadosDashboard)
+        return () => { active = false; window.removeEventListener(DATA_EVENT, carregarDadosDashboard); window.removeEventListener('focus', carregarDadosDashboard) }
     }, [])
 
     const dashboardData = buildDashboardData(exames)
@@ -96,11 +111,12 @@ export default function PerfilAtleta() {
         return (
             <div className="main atleta-dashboard">
                 <div className="content">
-                    <p className="page-sub">Carregando dashboard...</p>
+                    <p className="page-sub">{ui("Carregando dashboard...")}</p>
                 </div>
             </div>
         )
     }
+    if (erro) return <div className="main atleta-dashboard" role="alert"><p>{erro}</p><button onClick={() => window.location.reload()}>{ui("Tentar novamente")}</button></div>
 
     return (
         <div className="main atleta-dashboard">

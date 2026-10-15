@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import referencias, { CATEGORIES } from "../data/referencias";
-import { useLanguage, useTranslation } from "../context/LanguageContext";
+import { useLanguage, useTranslation } from "../context/language";
 import "../style/referencias.css";
 
 const T = {

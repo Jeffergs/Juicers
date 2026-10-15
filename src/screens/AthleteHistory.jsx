@@ -1,6 +1,7 @@
 import React from 'react';
 import UploadZone from '../components/UploadZone.jsx';
-import { PageHeader, SectionLabel, ExamRow, decorateExam } from '../components/Primitives.jsx';
+import { PageHeader, SectionLabel, ExamRow } from '../components/perfilDoUsuario/Primitives.jsx';
+import { decorateExam } from '../utils/decorateExam.js';
 import { STATUS } from '../theme.js';
 
 /** Histórico de Exames (atleta): resumo + upload + lista de exames importados. */

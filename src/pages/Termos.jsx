@@ -1,5 +1,5 @@
 import PaginaLegal from '../components/PaginaLegal'
-import { useTranslation } from '../context/LanguageContext'
+import { useTranslation } from '../context/language'
 
 const CONTATO = 'sophiacoelho40@gmail.com'
 const RESPONSAVEL = 'André Felipe Xavier de Melo, Gabriel da Silva Soares, Jefferson Gomes Silva, Natalia Alves Lugão e Sophia Heringer Coelho'

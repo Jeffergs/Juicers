@@ -2,7 +2,7 @@ import { useEffect, useId, useRef, useState } from 'react';
 import AudioReader from './LeitorDeAudio/AudioReader';
 import Acessibilidade from '../../assets/Acessibilidade.png';
 import './AccessibilityMenu.css';
-import { useTranslation } from '../../context/LanguageContext';
+import { useTranslation } from '../../context/language';
 
 const RETRACT_DELAY = 8000;
 const T = {

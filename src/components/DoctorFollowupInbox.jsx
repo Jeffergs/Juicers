@@ -1,8 +1,11 @@
+import { useUiText } from '../context/uiText'
 import { useState } from 'react'
 import { respondToPatientFollowup } from '../services/api'
 import '../style/doctorFollowupInbox.css'
 
 function PlanForm({ item, patientId, onRefresh }) {
+  const ui = useUiText()
+
   const [reason, setReason] = useState(item.reason || '')
   const [dueDate, setDueDate] = useState(item.dueDate?.slice(0, 10) || '')
   const [busy, setBusy] = useState(false)
@@ -11,10 +14,12 @@ function PlanForm({ item, patientId, onRefresh }) {
     event.preventDefault(); setBusy(true); setMessage('')
     try { await respondToPatientFollowup(patientId, item._id, { kind: 'plan', reason, dueDate }); await onRefresh(); setMessage('Plano atualizado.') }
     catch (error) { setMessage(error.message) } finally { setBusy(false) }
-  }}><label htmlFor={`reason-${item._id}`}>Motivo do acompanhamento</label><textarea id={`reason-${item._id}`} maxLength={2000} value={reason} onChange={event => setReason(event.target.value)} /><label htmlFor={`due-${item._id}`}>Realizar até (opcional)</label><input id={`due-${item._id}`} type="date" value={dueDate} onChange={event => setDueDate(event.target.value)} /><div><button disabled={busy}>{busy ? 'Salvando…' : 'Salvar plano'}</button></div>{message && <p role="status">{message}</p>}</form></details>
+  }}><label htmlFor={`reason-${item._id}`}>{ui("Motivo do acompanhamento")}</label><textarea id={`reason-${item._id}`} maxLength={2000} value={reason} onChange={event => setReason(event.target.value)} /><label htmlFor={`due-${item._id}`}>Realizar até (opcional)</label><input id={`due-${item._id}`} type="date" value={dueDate} onChange={event => setDueDate(event.target.value)} /><div><button disabled={busy}>{busy ? 'Salvando…' : 'Salvar plano'}</button></div>{message && <p role="status">{message}</p>}</form></details>
 }
 
 function ReplyForm({ item, patientId, onRefresh }) {
+  const ui = useUiText()
+
   const [text, setText] = useState('')
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState('')
@@ -23,10 +28,12 @@ function ReplyForm({ item, patientId, onRefresh }) {
     event.preventDefault(); setBusy(true); setError('')
     try { await respondToPatientFollowup(patientId, item._id, { reply: text }); setSentReply(text.trim()); try { await onRefresh() } catch { setError('Resposta enviada. Atualize a conversa para sincronizar os dados.') } }
     catch (err) { setError(err.message) } finally { setBusy(false) }
-  }}><label htmlFor={`reply-${item._id}`}>Responder ao paciente</label><textarea id={`reply-${item._id}`} value={text} required maxLength={2000} onChange={event => setText(event.target.value)} /><button disabled={busy || !text.trim()}>{busy ? 'Enviando…' : 'Enviar resposta'}</button></form>}{error && <p role="alert">{error}</p>}</article>
+  }}><label htmlFor={`reply-${item._id}`}>Responder ao paciente</label><textarea id={`reply-${item._id}`} value={text} required maxLength={2000} onChange={event => setText(event.target.value)} /><button disabled={busy || !text.trim()}>{busy ? ui("Enviando…") : 'Enviar resposta'}</button></form>}{error && <p role="alert">{error}</p>}</article>
 }
 
 export default function DoctorFollowupInbox({ followup, patientId, onRefresh }) {
+  const ui = useUiText()
+
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState('')
   const [filter, setFilter] = useState('pending')
@@ -39,7 +46,7 @@ export default function DoctorFollowupInbox({ followup, patientId, onRefresh }) 
     <header className="dfi-header"><div><h2 id="dfi-title">Comunicação com o paciente</h2><p>Mensagens enviadas pelo acompanhamento do atleta. Sua resposta aparece na mesma conversa para ele.</p></div><button disabled={busy} onClick={async () => {
       setBusy(true); setError('')
       try { await onRefresh() } catch (err) { setError(err.message) } finally { setBusy(false) }
-    }}>{busy ? 'Atualizando…' : 'Atualizar mensagens'}</button></header>
+    }}>{busy ? 'Atualizando…' : ui("Atualizar mensagens")}</button></header>
     <div className="dfi-filters" role="group" aria-label="Filtrar mensagens">
       {[['pending', `Aguardando resposta (${pending})`], ['answered', 'Respondidas'], ['all', 'Todas']].map(([value, label]) => <button key={value} className={value === filter ? 'dfi-filter dfi-filter--active' : 'dfi-filter'} aria-pressed={filter === value} onClick={() => setFilter(value)}>{label}</button>)}
     </div>

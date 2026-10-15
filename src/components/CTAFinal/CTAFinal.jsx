@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useTranslation } from "../../context/LanguageContext";
+import { useTranslation } from "../../context/language";
 import "../../style/cta.css";
 
 const T = {
@@ -7,13 +7,11 @@ const T = {
     h2: "Acompanhe sua saúde com mais clareza.",
     p: "Organize seus exames e entenda a evolução dos seus indicadores.",
     primary: "Começar agora",
-    ghost: "Conhecer o projeto",
   },
   en: {
     h2: "Track your health with greater clarity.",
     p: "Organize your exams and understand how your indicators change over time.",
     primary: "Start now",
-    ghost: "About the project",
   },
 };
 
@@ -31,7 +29,6 @@ export default function CTAFinal() {
             </div>
             <div className="cta-actions">
               <Link className="btn-j btn-primary-j" to="/login">{t.primary}</Link>
-              <Link className="btn-j btn-ghost-j" to="/#sobre">{t.ghost}</Link>
             </div>
           </div>
         </div>

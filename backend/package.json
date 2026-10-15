@@ -5,6 +5,7 @@
   "main": "src/server.js",
   "type": "module",
   "scripts": {
+    "test": "node --test test/*.test.js src/controllers/*.test.js",
     "dev": "node scripts/runWithSystemCa.js dev",
     "start": "node scripts/runWithSystemCa.js start"
   },

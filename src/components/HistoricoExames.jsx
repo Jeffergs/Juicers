@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import '../style/historicoExames.css'
-import { createExam, deleteExam, getMyExams } from '../services/api'
+import ExamFileActions from './ExamFileActions'
+import { uploadPatientExamPdf, deleteExam, getMyExams } from '../services/api'
 
 const RISK_LABELS = {
     high: 'Risco alto',
@@ -73,6 +74,11 @@ function mapRiskLevel(riskLevel) {
 export default function HistoricoExames() {
     const [exams, setExams] = useState([])
     const [loading, setLoading] = useState(true)
+    const [uploading, setUploading] = useState(false)
+    const [loadError, setLoadError] = useState('')
+    const [nextCursor, setNextCursor] = useState(null)
+    const [stats, setStats] = useState(null)
+    const [loadingMore, setLoadingMore] = useState(false)
     const [dragging, setDragging] = useState(false)
     const [toast, setToast] = useState({ show: false, msg: '', warn: false })
 
@@ -86,9 +92,11 @@ export default function HistoricoExames() {
     useEffect(() => {
         async function carregarExames() {
             try {
-                const data = await getMyExams()
+                const data = await getMyExams({ limit: 50 })
                 setExams(data.exams || [])
+                setNextCursor(data.nextCursor); setStats(data.stats)
             } catch (error) {
+                setLoadError(error.message || 'Não foi possível carregar os exames.')
                 showToast(error.message || 'Erro ao carregar exames', true)
             } finally {
                 setLoading(false)
@@ -99,35 +107,32 @@ export default function HistoricoExames() {
     }, [])
 
     const addExam = async (file) => {
+        if (uploading) return
         if (!file || file.type !== 'application/pdf') {
             showToast('Apenas arquivos PDF são aceitos', true)
             return
         }
+        if (file.size > 5 * 1024 * 1024) { showToast('O PDF deve ter até 5 MB.', true); return }
 
         try {
-            const hoje = new Date().toISOString().split('T')[0]
-
-            const data = await createExam({
-                examDate: hoje,
-                source: 'manual',
-                markers: {},
-                riskLevel: 'attention',
-                alerts: [`PDF importado: ${file.name}`],
-            })
-
-            setExams(prev => [data.exam, ...prev])
-            showToast(`"${file.name}" importado com sucesso`)
+            setUploading(true)
+            const data = await uploadPatientExamPdf(file)
+            setExams(prev => [data.exam, ...prev.filter(exam => exam._id !== data.exam._id)].sort((a, b) => b.examDate.localeCompare(a.examDate)))
+            const refreshed = await getMyExams({ limit: 50 }); setStats(refreshed.stats)
+            showToast(data.message)
         } catch (error) {
             showToast(error.message || 'Erro ao importar exame', true)
-        }
+        } finally { setUploading(false); if (fileRef.current) fileRef.current.value = '' }
     }
 
     const removeExam = async (id, e) => {
         e.stopPropagation()
+        if (!window.confirm('Excluir este exame do histórico?')) return
 
         try {
             await deleteExam(id)
             setExams(prev => prev.filter(ex => ex._id !== id))
+            const refreshed = await getMyExams({ limit: 50 }); setStats(refreshed.stats)
             showToast('Exame removido', true)
         } catch (error) {
             showToast(error.message || 'Erro ao remover exame', true)
@@ -140,11 +145,18 @@ export default function HistoricoExames() {
         addExam(e.dataTransfer.files[0])
     }
 
-    const highCount = exams.filter(e => e.riskLevel === 'high').length
-    const lastDate = exams[0]?.examDate ? formatarData(exams[0].examDate) : '—'
+    const highCount = stats?.highCount ?? exams.filter(e => e.riskLevel === 'high').length
+    const lastDate = stats?.lastDate ? formatarData(stats.lastDate) : exams[0]?.examDate ? formatarData(exams[0].examDate) : '—'
 
     return (
         <div className="he-wrap">
+            {nextCursor && <button disabled={loadingMore} onClick={async () => {
+                setLoadingMore(true)
+                try { const data = await getMyExams({ limit: 50, cursor: nextCursor }); setExams(current => [...current, ...data.exams.filter(exam => !current.some(existing => existing._id === exam._id))]); setNextCursor(data.nextCursor) }
+                catch (error) { showToast(error.message, true) } finally { setLoadingMore(false) }
+            }}>{loadingMore ? 'Carregando…' : 'Carregar mais exames'}</button>}
+            {loadError && <div role="alert"><p>{loadError}</p><button onClick={() => window.location.reload()}>Tentar novamente</button></div>}
+            {uploading && <p role="status">Importando PDF… Confira os valores extraídos com o laudo original.</p>}
             <div className="he-page">
                 <div className="he-page-header">
                     <h1>Histórico de Exames</h1>
@@ -154,7 +166,7 @@ export default function HistoricoExames() {
                 <div className="he-stats">
                     <StatCard
                         label="Total de exames"
-                        value={exams.length}
+                        value={stats?.total ?? exams.length}
                         sub="laudos importados"
                     />
 
@@ -202,7 +214,7 @@ export default function HistoricoExames() {
                     <div className="he-upload-title">Arrastar PDF de exame aqui</div>
 
                     <div className="he-upload-sub">
-                        ou clique para selecionar arquivo · PDF, até 20MB
+                        ou clique para selecionar arquivo · PDF, até 5 MB
                     </div>
 
                     <div className="he-upload-btn">Selecionar arquivo</div>
@@ -247,6 +259,7 @@ export default function HistoricoExames() {
                                     {formatarData(exam.examDate)} ·{' '}
                                     {exam.source === 'manual' ? 'Importado manualmente' : 'PDF'}
                                 </div>
+                                <ExamFileActions examId={exam._id} fileName={exam.originalFileName} available={exam.hasOriginalPdf} />
                             </div>
 
                             <div className="he-exam-badges">

@@ -1,4 +1,4 @@
-import { useTranslation } from "../../../context/LanguageContext";
+import { useTranslation } from "../../../context/language";
 import "../../../style/SecaoProjeto.css";
 
 const T = {
@@ -7,14 +7,14 @@ const T = {
     h2: "Acompanhar é cuidar.",
     p: "A Juicers é uma ferramenta de acompanhamento de saúde, educação e redução de danos para quem usa anabolizantes, e para os profissionais que os apoiam. A maioria das pessoas já conhece os riscos; o que costuma faltar é acompanhamento. Em vez de julgar, ajudamos a enxergar e a decidir melhor.",
     sealTitle: "Privado por padrão",
-    sealP: "Seus dados de saúde ficam no seu dispositivo. Você no controle, sempre.",
+    sealP: "Seus dados ficam no nosso banco de dados e são compartilhados com o médico que você vincular. Você pode exportá-los ou excluir sua conta.",
   },
   en: {
     eyebrow: "About the project",
     h2: "Tracking is caring.",
     p: "Juicers is a health tracking, education and harm reduction tool for people who use anabolic steroids, and for the professionals who support them. Most people already know the risks; what's usually missing is tracking. Instead of judging, we help you see clearly and decide better.",
     sealTitle: "Private by default",
-    sealP: "Your health data stays on your device. You're always in control.",
+    sealP: "Your data is stored in our database and shared with the doctor you link. You can export it or delete your account.",
   },
 };
 

@@ -1,13 +1,10 @@
-import { createRequire } from 'node:module';
 import { isValidObjectId } from 'mongoose';
 import Patient from '../models/Patient.js';
 import Doctor from '../models/Doctor.js';
 import ClinicalNote from '../models/ClinicalNote.js';
 import RequestedExam from '../models/RequestedExam.js';
 import FollowupInteraction from '../models/FollowupInteraction.js';
-import Exam from '../models/Exam.js';
-import { parseExamPdfText } from '../utils/examPdfParser.js';
-const pdfParse = createRequire(import.meta.url)('pdf-parse');
+import { importExamPdf } from '../services/examImportService.js';
 
 export async function patientFollowupAction(req, res) {
   try {
@@ -42,7 +39,7 @@ export async function patientFollowupAction(req, res) {
     }
     const interaction = await FollowupInteraction.create({ ...scope, kind, text, ...(kind === 'checkin' ? { mood } : {}), noteId, requestedExamId });
     return res.status(201).json({ interaction });
-  } catch (error) { return res.status(500).json({ message: error.message }); }
+  } catch (error) { return res.status(error.status || 500).json({ message: error.status ? error.message : 'Não foi possível atualizar o acompanhamento.' }); }
 }
 
 export async function submitRequestedResult(req, res) {
@@ -53,20 +50,9 @@ export async function submitRequestedResult(req, res) {
     const request = await RequestedExam.findOne({ _id: req.params.id, patientId: patient._id, doctorId: patient.doctorId, isActive: true });
     if (!request) return res.status(404).json({ message: 'Solicitação não encontrada.' });
     if (!req.file) return res.status(400).json({ message: 'Selecione um PDF de até 5 MB.' });
-    const pdf = await pdfParse(req.file.buffer);
-    const parsed = parseExamPdfText(pdf.text || '');
-    if (!Object.keys(parsed.markers || {}).length) return res.status(422).json({ message: 'Não foi possível ler os indicadores. Envie o laudo original com texto selecionável.' });
-    const exam = await Exam.create({ patientId: patient._id, ...parsed, source: 'pdf', originalFileName: req.file.originalname });
-    request.resultExamId = exam._id;
-    request.submittedAt = new Date();
-    if (!request.performedAt) request.performedAt = new Date(`${parsed.examDate}T12:00:00-03:00`);
-    request.reviewedAt = undefined;
-    await request.save();
-    patient.lastExamDate = parsed.examDate;
-    patient.examStatus = 'recentes';
-    await patient.save();
-    return res.status(201).json({ exam, message: 'Resultado enviado ao médico.' });
-  } catch (error) { return res.status(500).json({ message: error.message }); }
+    const result = await importExamPdf({ patientId: patient._id, file: req.file, requestedExamId: request._id, doctorId: patient.doctorId });
+    return res.status(result.duplicate ? 200 : 201).json({ ...result, message: 'Resultado enviado ao médico. Confira os valores extraídos com o laudo original.' });
+  } catch (error) { return res.status(error.status || 500).json({ message: error.status ? error.message : 'Não foi possível atualizar o acompanhamento.' }); }
 }
 
 export async function doctorFollowupAction(req, res) {
@@ -94,5 +80,5 @@ export async function doctorFollowupAction(req, res) {
     const interaction = await FollowupInteraction.findOneAndUpdate(scope, { reply: reply.trim(), repliedAt: new Date(), replyReadAt: null }, { returnDocument: 'after', runValidators: true });
     if (!interaction) return res.status(404).json({ message: 'Mensagem não encontrada.' });
     return res.json({ interaction });
-  } catch (error) { return res.status(500).json({ message: error.message }); }
+  } catch (error) { return res.status(error.status || 500).json({ message: error.status ? error.message : 'Não foi possível atualizar o acompanhamento.' }); }
 }

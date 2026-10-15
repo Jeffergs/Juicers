@@ -1,24 +1,19 @@
 import crypto from "crypto";
 import { isValidObjectId } from "mongoose";
-import { createRequire } from "module";
 import Doctor from "../models/Doctor.js";
 import Patient from "../models/Patient.js";
 import Exam from "../models/Exam.js";
 import DoctorInvite from "../models/DoctorInvite.js";
-import { parseExamPdfText } from "../utils/examPdfParser.js";
+import { importExamPdf } from '../services/examImportService.js';
 import ClinicalNote from "../models/ClinicalNote.js";
 import RequestedExam from "../models/RequestedExam.js";
 import User from "../models/User.js";
 import FollowupInteraction from '../models/FollowupInteraction.js';
 import { sendDoctorInviteEmail } from "../services/doctorInviteEmailService.js";
+import { MARKERS } from '../../../shared/markerCatalog.js';
+import { markerStatus } from '../../../shared/markerStatus.js';
 
-const require = createRequire(import.meta.url);
-const pdfParseModule = require("pdf-parse");
 
-const pdfParse =
-  typeof pdfParseModule === "function"
-    ? pdfParseModule
-    : pdfParseModule.default;
 
 export const createDoctorInvite = async (req, res) => {
   try {
@@ -147,9 +142,24 @@ export const getMyDoctorPatients = async (req, res) => {
       { $group: { _id: '$patientId', count: { $sum: 1 } } },
     ]);
     const counts = new Map(pendingMessages.map(item => [String(item._id), item.count]));
+    const summaries = new Map();
+    if (req.query?.summary === '1' && patients.length) {
+      const exams = await Exam.find({ patientId: { $in: patients.map(patient => patient._id) } }).select('patientId examDate markers').lean();
+      for (const exam of exams) {
+        const key = String(exam.patientId);
+        const summary = summaries.get(key) || { highAlerts: 0, attentionAlerts: 0, lastExamDate: null };
+        if (!summary.lastExamDate || exam.examDate > summary.lastExamDate) summary.lastExamDate = exam.examDate;
+        for (const marker of MARKERS) {
+          const status = markerStatus(marker, exam.markers?.[marker.key]);
+          if (status === 'risco') summary.highAlerts += 1;
+          if (status === 'atencao') summary.attentionAlerts += 1;
+        }
+        summaries.set(key, summary);
+      }
+    }
 
     return res.status(200).json({
-      patients: patients.map(patient => ({ ...patient.toObject(), pendingMessageCount: counts.get(String(patient._id)) || 0 })),
+      patients: patients.map(patient => ({ ...patient.toObject(), pendingMessageCount: counts.get(String(patient._id)) || 0, ...(req.query?.summary === '1' ? { examSummary: summaries.get(String(patient._id)) || { highAlerts: 0, attentionAlerts: 0, lastExamDate: null } } : {}) })),
     });
   } catch (error) {
     return res.status(500).json({
@@ -312,42 +322,11 @@ export const uploadPatientExamPdf = async (req, res) => {
       });
     }
 
-    const pdfData = await pdfParse(req.file.buffer);
-    if (!pdfData.text?.trim()) {
-      return res.status(422).json({
-        message: "O PDF não contém texto legível para importação. Envie o laudo original com texto selecionável; PDFs digitalizados como imagem ainda não são reconhecidos.",
-      });
-    }
-    const parsedExam = parseExamPdfText(pdfData.text);
-
-    if (!parsedExam.markers || Object.keys(parsedExam.markers).length === 0) {
-      return res.status(400).json({
-        message: "Não foi possível identificar os indicadores acompanhados pelo sistema neste PDF. Confira se o texto é selecionável e envie o laudo original do laboratório.",
-      });
-    }
-
-    const exam = await Exam.create({
-      patientId: patient._id,
-      examDate: parsedExam.examDate,
-      markers: parsedExam.markers,
-      riskLevel: parsedExam.riskLevel,
-      alerts: parsedExam.alerts,
-      source: "pdf",
-      originalFileName: req.file.originalname,
-    });
-
-    patient.lastExamDate = parsedExam.examDate;
-    patient.examStatus = "recentes";
-    await patient.save();
-
-    return res.status(201).json({
-      message: "PDF importado e exame criado com sucesso",
-      exam,
-      extractedMarkers: parsedExam.markers,
-    });
+    const result = await importExamPdf({ patientId: patient._id, file: req.file, doctorId: doctor._id });
+    return res.status(result.duplicate ? 200 : 201).json({ ...result, message: result.duplicate ? 'Este PDF já foi importado.' : 'PDF importado. Confira os valores com o laudo original.' });
   } catch (error) {
-    return res.status(500).json({
-      message: error.message,
+    return res.status(error.status || 503).json({
+      message: error.status ? error.message : 'Não foi possível concluir a importação. Tente novamente.',
     });
   }
 };
@@ -469,6 +448,7 @@ export const acceptInvite = async (req, res) => {
     await patient.save();
 
     invite.status = "accepted";
+    invite.patientUserId = userId;
     invite.acceptedAt = new Date();
     await invite.save();
 
@@ -526,7 +506,7 @@ export const deleteDoctorPatientExam = async (req, res) => {
   try {
     const { patientId, examId } = req.params;
 
-    const { doctor, patient, error } = await getDoctorAndPatient(req, patientId);
+    const { patient, error } = await getDoctorAndPatient(req, patientId);
 
     if (error) {
       return res.status(error.status).json({ message: error.message });
@@ -546,6 +526,7 @@ export const deleteDoctorPatientExam = async (req, res) => {
     const latestExam = await Exam.findOne({ patientId: patient._id }).sort({
       examDate: -1,
     });
+    await RequestedExam.updateMany({ patientId: patient._id, resultExamId: exam._id }, { $unset: { resultExamId: '', submittedAt: '', reviewedAt: '' } });
 
     patient.lastExamDate = latestExam?.examDate || "";
     patient.examStatus = latestExam ? "recentes" : "nunca";

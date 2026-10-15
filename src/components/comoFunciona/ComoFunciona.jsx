@@ -1,4 +1,4 @@
-import { useTranslation } from "../../context/LanguageContext";
+import { useTranslation } from "../../context/language";
 import "../../style/ComoFunciona.css";
 
 const ICONS = [

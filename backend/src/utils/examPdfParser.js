@@ -36,16 +36,6 @@ function toNumber(value) {
   return Number.isFinite(number) ? number : null;
 }
 
-function findDate(text) {
-  const match = text.match(/COLETADO EM:\s*(\d{2}\/\d{2}\/\d{4})/i);
-
-  if (!match) {
-    return new Date().toISOString().slice(0, 10);
-  }
-
-  const [day, month, year] = match[1].split("/");
-  return `${year}-${month}-${day}`;
-}
 
 function cleanMarkers(markers) {
   return Object.fromEntries(
@@ -253,7 +243,7 @@ function findAnyDate(text) {
     })
     .sort();
 
-  return todas[0] || new Date().toISOString().slice(0, 10);
+  return todas[0] || '';
 }
 
 export function parseExamPdfText(rawText = "") {

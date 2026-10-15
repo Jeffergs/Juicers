@@ -34,6 +34,7 @@ export default function GoogleLoginButton({ onCredential, onError, disabled = fa
 
     useEffect(() => {
         if (!GOOGLE_CLIENT_ID || !containerRef.current) return undefined
+        const container = containerRef.current
 
         let mounted = true
         loadGoogleIdentityServices()
@@ -62,7 +63,7 @@ export default function GoogleLoginButton({ onCredential, onError, disabled = fa
 
         return () => {
             mounted = false
-            containerRef.current?.replaceChildren()
+            container?.replaceChildren()
         }
     }, [])
 
