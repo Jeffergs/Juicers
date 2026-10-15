@@ -1,5 +1,10 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
+  "functions": {
+    "api/index.js": {
+      "includeFiles": "node_modules/pdf-parse/lib/**"
+    }
+  },
   "rewrites": [
     { "source": "/api/health", "destination": "/api/index?path=health" },
     { "source": "/api/users/:path*", "destination": "/api/index?path=users/:path*" },
