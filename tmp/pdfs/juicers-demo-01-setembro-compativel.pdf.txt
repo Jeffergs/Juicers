@@ -1,0 +1,21 @@
+JUICERS | DEMONSTRACAO
+EXAME FICTICIO - SEM VALIDADE CLINICA
+Paciente: Pessoa de Demonstracao (identidade ficticia)
+Data da coleta: 01/09/2026
+Finalidade: testar importacao e variacao dos graficos da Juicers.
+INDICADOR
+RESULTADO SIMULADO
+Colesterol HDL: 54 mg/dL
+Colesterol LDL: 96 mg/dL
+Triglicerideos: 105 mg/dL
+Hematocrito: 44 %
+Hemoglobina: 14,8 g/dL
+Creatinina: 0,9 mg/dL
+Glicose: 86 mg/dL
+Hemoglobina glicada: 5,1 %
+Vitamina D: 32 ng/mL
+Vitamina B12: 480 pg/mL
+DADOS INTEIRAMENTE SIMULADOS PARA APRESENTACAO
+Documento cenografico, sem laboratorio ou profissional emissor.
+Valores escolhidos apenas para produzir variacao visual entre duas datas.
+Nao representa exame real, diagnostico ou efeito de qualquer tratamento.

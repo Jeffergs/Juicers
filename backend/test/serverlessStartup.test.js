@@ -8,6 +8,15 @@ import { pathToFileURL } from 'node:url';
 import mongoose from 'mongoose';
 import { importExamPdf } from '../src/services/examImportService.js';
 
+test('the production parser opens a small generated exam without changing its bytes', async t => {
+  const buffer = await readFile(new URL('./fixtures/demo-exam.pdf', import.meta.url));
+  const original = Buffer.from(buffer);
+  const databaseBoundary = new Error('Validated exam reached database boundary');
+  t.mock.method(mongoose, 'startSession', () => { throw databaseBoundary; });
+  await assert.rejects(importExamPdf({ file: { buffer, originalname: 'demo.pdf' } }), error => error === databaseBoundary);
+  assert.deepEqual(buffer, original);
+});
+
 test('serverless health and unauthenticated routes survive an unavailable PDF parser', async () => {
   const script = `
     import { registerHooks, createRequire } from 'node:module';

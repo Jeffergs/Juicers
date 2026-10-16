@@ -10,7 +10,9 @@ import { validateExamPayload } from '../utils/examValidation.js';
 // uploads, and bypass pdf-parse's package entry point (which runs debug code).
 async function pdfParse(buffer) {
   const { default: parse } = await import('pdf-parse/lib/pdf-parse.js');
-  return parse(buffer);
+  // Legacy PDF.js expects Uint8Array.slice() to copy. Buffer.slice() shares
+  // memory, which breaks decoding and can modify the original uploaded PDF.
+  return parse(new Uint8Array(buffer));
 }
 
 export async function importExamPdf({ patientId, file, requestedExamId, doctorId, parsePdf = pdfParse }) {
