@@ -7,7 +7,6 @@ import logoIcon from '../assets/juicers-optimized.png'
 const MENU_LINKS = {
     pt: [
         { label: 'INÍCIO',        href: '#inicio'    },
-        { label: 'CONHEÇA',       href: '#entenda'   },
         { label: 'SOBRE',         href: '#sobre'     },
         { label: 'SOLUÇÃO',       href: '#sol'       },
         { label: 'SINAIS',        href: '#monitorar' },
@@ -17,7 +16,6 @@ const MENU_LINKS = {
     ],
     en: [
         { label: 'HOME',          href: '#inicio'    },
-        { label: 'LEARN',         href: '#entenda'   },
         { label: 'ABOUT',         href: '#sobre'     },
         { label: 'SOLUTION',      href: '#sol'       },
         { label: 'SIGNALS',       href: '#monitorar' },

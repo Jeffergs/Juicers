@@ -3,7 +3,6 @@ import { useLocation } from "react-router-dom";
 import "../style/juicer-tokens.css";
 import "../style/home.css";
 import SecaoInicio from "../components/SecaoInicio/SecaoInicio";
-import EntendaProjeto from "../components/entendaProjeto/EntendaProjeto";
 import ComoFunciona from "../components/comoFunciona/ComoFunciona";
 import OQueAcompanhar from "../components/oQueAcompanhar/OQueAcompanhar";
 import Planos from "../components/planos/Planos";
@@ -41,7 +40,6 @@ export default function Home() {
 return (
     <div className="juicer">
     <SecaoInicio />
-    <EntendaProjeto />
     <SecaoSobre />
     <ComoFunciona />
     <OQueAcompanhar />

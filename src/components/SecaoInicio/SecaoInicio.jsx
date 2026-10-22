@@ -79,7 +79,7 @@ export default function SecaoInicio() {
             </p>
         <div className="hero-ctas">
             <Link className="btn-j btn-primary-j" to="/login">{t.ctaPrimary}</Link>
-            <a className="btn-j btn-ghost-j" href="#entenda">{t.ctaGhost}</a>
+            <a className="btn-j btn-ghost-j" href="#sol">{t.ctaGhost}</a>
         </div>
         <div className="reassure">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
