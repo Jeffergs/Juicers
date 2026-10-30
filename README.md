@@ -1,35 +1,22 @@
+<div align="center">
 
-# ![Logo da Juicers](./src/assets/juicers1.png)
+<img width="250" alt="Logo da Juicers" src="./src/assets/juicers1.png" /> 
+
+[![Typing SVG](https://readme-typing-svg.demolab.com?font=Fira+Code&pause=1000&color=00E3F0&multiline=true&width=800&lines=Sa%C3%BAde+e+redu%C3%A7%C3%A3o+de+danos+para+usu%C3%A1rios+de+esteroides+anabolizantes)](https://git.io/typing-svg)
+Plataforma de monitoramento de saúde e redução de danos para pessoas que utilizam esteroides anabolizantes
 
 
-**Plataforma de monitoramento de saúde e redução de danos para pessoas
-que utilizam esteroides anabolizantes.**
 
-![React](https://img.shields.io/badge/React-19-149eca?style=for-the-badge&logo=react)
-![Vite](https://img.shields.io/badge/Vite-8-646cff?style=for-the-badge&logo=vite)
-![JavaScript](https://img.shields.io/badge/JavaScript-ES6-f7df1e?style=for-the-badge&logo=javascript)
-![React
-Router](https://img.shields.io/badge/React_Router-7-ca4245?style=for-the-badge&logo=reactrouter)
-![MongoDB](https://img.shields.io/badge/MongoDB-Database-47a248?style=for-the-badge&logo=mongodb)
-
-```{=html}
 <p>
-```
-🌐 `<strong>`{=html}Aplicação:`</strong>`{=html}
-`<a href="https://juicers-next.vercel.app/">`{=html}Acesse o
-Juicers`</a>`{=html}
-```{=html}
+🌐 <strong>Deploy:</strong> https://juicers-next.vercel.app/
+<p>🎥 <strong>Pitch:</strong> <a href="https://www.youtube.com/watch?v=7a0OCLeTvXU" style="color:#f57c00;">Assista aqui</a></p>
 </p>
-```
-```{=html}
-<p>
-```
-💻 `<strong>`{=html}Repositório:`</strong>`{=html}
-`<a href="https://github.com/Jeffergs/Juicers">`{=html}GitHub`</a>`{=html}
-```{=html}
-</p>
-```
-:::
+
+</div>
+
+
+
+
 
 ------------------------------------------------------------------------
 
@@ -225,39 +212,47 @@ discutidas com profissionais qualificados.
 
 ------------------------------------------------------------------------
 
-`<a id="tecnologias-utilizadas">`{=html}`</a>`{=html} \## 💻 Tecnologias
-utilizadas
+## 💻 Tecnologias utilizadas
 
 ### Frontend
+<div>
+&nbsp <img width="20" height="20" alt="React 19" src="https://github.com/user-attachments/assets/6188ab74-3abf-4347-8b82-295a49e375ab" /> &nbsp; <a href="https://react.dev/" target="_blank" rel="noopener noreferrer">React 19</a> - Construção da interface por componentes
+<br>
+&nbsp <img width="20" height="20" alt="React-Router" src="https://cdn.svglogos.dev/logos/react-router.svg" /> &nbsp; <a href="https://react.dev/" target="_blank" rel="noopener noreferrer">React Router</a> - Roteamento entre páginas
+<br>
+&nbsp <img width="20" height="20" alt="Javascript" src="https://github.com/user-attachments/assets/035a2d94-4ddc-4673-92c7-35bf18e3f965" /> &nbsp; <a href="https://developer.mozilla.org/pt-BR/docs/Web/JavaScript" target="_blank" rel="noopener noreferrer"> JavaScript</a> - Lógica da aplicação
+<br>
+&nbsp <img width="20" height="20" alt="Vite" src="https://github.com/user-attachments/assets/c8f05793-3230-4dea-b41c-a219cf033689" /> &nbsp; <a href="https://developer.mozilla.org/pt-BR/docs/Web/JavaScript" target="_blank" rel="noopener noreferrer"> Vite</a> - Ambiente de desenvolvimento e build
+</div>
+<div>
+&nbsp <img width="20" height="20" alt="CSS 3" src="https://github.com/user-attachments/assets/dc7b892c-b557-4f37-8bd8-275574743dde" /> &nbsp; <a href="https://developer.mozilla.org/pt-BR/docs/Web/CSS" target="_blank" rel="noopener noreferrer">CSS 3</a>
+<br>
+&nbsp <img width="20" height="20"  alt="bootstrap" src="https://github.com/user-attachments/assets/b2efa926-4a9e-4fa8-b59f-92240e152954" /> &nbsp; <a href="https://getbootstrap.com/" target="_blank" rel="noopener noreferrer">Bootstrap 5.3</a> - Recursos de layout e interface   
+<br>
+&nbsp <img width="20" height="20" alt="image" src="https://github.com/user-attachments/assets/6c9ccd81-3aef-4fd7-b1f1-5b892837e880" /> &nbsp; <a href="https://lucide.dev/" target="_blank" rel="noopener noreferrer">Lucide React</a>
+</div>
 
-  -----------------------------------------------------------------------------------------------------------
-  Tecnologia                                                              Uso
-  ----------------------------------------------------------------------- -----------------------------------
-  [React 19](https://react.dev/)                                          Construção da interface por
-                                                                          componentes
+<img width="40" height="40" alt="mongo-db" src="https://cdn.svglogos.dev/logos/mongodb-icon.svg" />
 
-  [Vite 8](https://vite.dev/)                                             Ambiente de desenvolvimento e build
 
-  [JavaScript](https://developer.mozilla.org/pt-BR/docs/Web/JavaScript)   Lógica da aplicação
+  [Vite 8](https://vite.dev/)                                             
 
-  [React Router DOM 7](https://reactrouter.com/)                          Roteamento entre páginas
+  [JavaScript](https://developer.mozilla.org/pt-BR/docs/Web/JavaScript)   
+
+  [React Router DOM 7](https://reactrouter.com/)                          
 
   [Recharts 3](https://recharts.org/)                                     Gráficos e visualização de
                                                                           indicadores
 
-  [CSS modular](https://developer.mozilla.org/pt-BR/docs/Web/CSS)         Estilização dos componentes
-
-  [Bootstrap 5](https://getbootstrap.com/)                                Recursos de layout e interface
+  [CSS modular](https://developer.mozilla.org/pt-BR/docs/Web/CSS)         Estilização dos componentes            
 
   [ESLint 9](https://eslint.org/)                                         Análise estática e padronização do
                                                                           código
-  -----------------------------------------------------------------------------------------------------------
 
 ### Backend e persistência
 
-  -----------------------------------------------------------------------
-  Tecnologia / recurso                Uso
-  ----------------------------------- -----------------------------------
+  
+
   Node.js                             Ambiente de execução do backend
 
   Express                             API utilizada pela aplicação
