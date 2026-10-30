@@ -1,5 +1,6 @@
-::: {align="center"}
-# 🧪 Juicers
+
+# ![Logo da Juicers](./src/assets/juicers1.png)
+
 
 **Plataforma de monitoramento de saúde e redução de danos para pessoas
 que utilizam esteroides anabolizantes.**
