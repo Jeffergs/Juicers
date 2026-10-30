@@ -13,10 +13,6 @@
 
 
 
-
-
-------------------------------------------------------------------------
-
 ## 📑 Índice
 
 1.  [📝 Contexto do desafio](#contexto-do-desafio)
@@ -38,37 +34,22 @@
 17. [👥 Equipe](#equipe)
 18. [📚 Referências](#referências)
 
-------------------------------------------------------------------------
 
-`<a id="contexto-do-desafio">`{=html}`</a>`{=html} \## 📝 Contexto do
-desafio
+<a id="contexto-do-desafio"></a>
+## 📝 Contexto do desafio
 
-O **Juicers** foi desenvolvido como projeto acadêmico da FIAP, no
-contexto de um desafio voltado à criação de uma solução digital para uma
-questão real de saúde. A proposta aborda a redução de danos para pessoas
-que fazem uso de esteroides anabolizantes, com foco na organização de
-informações e no acompanhamento de indicadores laboratoriais.
+O **Juicers** foi desenvolvido como projeto acadêmico da FIAP, no contexto de um desafio voltado à criação de uma solução digital para uma questão real de saúde. A proposta aborda a redução de danos para pessoas que fazem uso de esteroides anabolizantes, com foco na organização de informações e no acompanhamento de indicadores laboratoriais. O projeto contou com parceria da **THM Estatística** e orientação de mentores durante seu desenvolvimento.
 
-O projeto contou com parceria da **THM Estatística** e orientação de
-mentores durante seu desenvolvimento.
 
-------------------------------------------------------------------------
+<a id="objetivo-do-projeto"></a>
+## 🎯 Objetivo do projeto
 
-`<a id="objetivo-do-projeto">`{=html}`</a>`{=html} \## 🎯 Objetivo do
-projeto
+Desenvolver uma aplicação web que reúna informações relevantes para o acompanhamento de saúde, permitindo que o usuário visualize indicadores laboratoriais, acompanhe sua evolução ao longo do tempo e compreenda alertas associados a diferentes sistemas orgânicos.
+A plataforma foi concebida como ferramenta de apoio à organização e à compreensão de dados, sem substituir o acompanhamento de profissionais de saúde.
 
-Desenvolver uma aplicação web que reúna informações relevantes para o
-acompanhamento de saúde, permitindo que o usuário visualize indicadores
-laboratoriais, acompanhe sua evolução ao longo do tempo e compreenda
-alertas associados a diferentes sistemas orgânicos.
 
-A plataforma foi concebida como ferramenta de apoio à organização e à
-compreensão de dados, sem substituir o acompanhamento de profissionais
-de saúde.
-
-------------------------------------------------------------------------
-
-`<a id="sobre-o-juicers">`{=html}`</a>`{=html} \## 🌍 Sobre o Juicers
+<a id="sobre-o-juicers"></a>
+## 🌍 Sobre o Juicers
 
 O **Juicers** é uma plataforma web voltada à redução de danos para
 pessoas que utilizam esteroides anabolizantes. A aplicação organiza
@@ -76,44 +57,26 @@ dados de saúde em uma interface com painéis, gráficos, histórico de
 exames e alertas por sistema orgânico.
 
 A proposta combina:
+-   🧪 **Monitoramento laboratorial:** organização de marcadores e resultados de exames.
+-   📊 **Visualização de dados:** gráficos para acompanhar indicadores ao longo do tempo.
+-   🚦 **Alertas de risco:** classificações baseadas nas faixas configuradas na plataforma.
+-   🧍 **Mapa corporal interativo:** visualização de sistemas orgânicos associados aos indicadores.
+-   🧮 **Simulador de compostos:** experiência demonstrativa para explorar possíveis efeitos e riscos.
+-   ♿ **Acessibilidade:** recursos de acessibilidade e leitura de conteúdo por áudio.
 
--   🧪 **Monitoramento laboratorial:** organização de marcadores e
-    resultados de exames.
--   📊 **Visualização de dados:** gráficos para acompanhar indicadores
-    ao longo do tempo.
--   🚦 **Alertas de risco:** classificações baseadas nas faixas
-    configuradas na plataforma.
--   🧍 **Mapa corporal interativo:** visualização de sistemas orgânicos
-    associados aos indicadores.
--   🧮 **Simulador de compostos:** experiência demonstrativa para
-    explorar possíveis efeitos e riscos.
--   ♿ **Acessibilidade:** recursos de acessibilidade e leitura de
-    conteúdo por áudio.
 
-------------------------------------------------------------------------
+<a id="problema"></a>
+## 🚨 Problema
 
-`<a id="problema">`{=html}`</a>`{=html} \## 🚨 Problema
+O uso de esteroides anabolizantes pode envolver riscos à saúde, enquanto a interpretação de indicadores laboratoriais e o acompanhamento de alterações ao longo do tempo exigem informação organizada e, quando necessário, avaliação profissional.
+Quando resultados de exames ficam dispersos, torna-se mais difícil visualizar tendências, manter um histórico organizado e identificar quais informações precisam ser discutidas com um profissional de saúde.
+O Juicers busca tornar esses dados mais acessíveis e compreensíveis por meio de uma experiência digital centralizada.
 
-O uso de esteroides anabolizantes pode envolver riscos à saúde, enquanto
-a interpretação de indicadores laboratoriais e o acompanhamento de
-alterações ao longo do tempo exigem informação organizada e, quando
-necessário, avaliação profissional.
 
-Quando resultados de exames ficam dispersos, torna-se mais difícil
-visualizar tendências, manter um histórico organizado e identificar
-quais informações precisam ser discutidas com um profissional de saúde.
+<a id="solução-proposta"></a>`{=html} 
+## 💡 Solução proposta
 
-O Juicers busca tornar esses dados mais acessíveis e compreensíveis por
-meio de uma experiência digital centralizada.
-
-------------------------------------------------------------------------
-
-`<a id="solução-proposta">`{=html}`</a>`{=html} \## 💡 Solução proposta
-
-O Juicers reúne dados de conta, informações de saúde e exames em uma
-plataforma com acesso autenticado. Os indicadores são apresentados em
-painéis e gráficos, enquanto alertas e classificações ajudam o usuário a
-organizar informações que podem precisar de acompanhamento.
+O Juicers reúne dados de conta, informações de saúde e exames em uma plataforma com acesso autenticado. Os indicadores são apresentados em painéis e gráficos, enquanto alertas e classificações ajudam o usuário a organizar informações que podem precisar de acompanhamento.
 
 ### Como funciona
 
@@ -121,15 +84,13 @@ organizar informações que podem precisar de acompanhamento.
 2.  Preenche ou atualiza os dados solicitados para seu perfil.
 3.  Consulta indicadores e visualizações disponíveis no painel.
 4.  Acompanha a evolução dos resultados e o histórico de exames.
-5.  Utiliza recursos interativos para explorar as informações
-    apresentadas.
+5.  Utiliza recursos interativos para explorar as informações apresentadas.
 
-A aplicação também oferece importação de exames em PDF, desde que os
-arquivos atendam aos critérios de validação implementados.
+A aplicação também oferece importação de exames em PDF, desde que os arquivos atendam aos critérios de validação implementados.
 
-------------------------------------------------------------------------
 
-`<a id="funcionalidades">`{=html}`</a>`{=html} \## 🧩 Funcionalidades
+<a id="funcionalidades"></a>
+## 🧩 Funcionalidades
 
 ### 🏠 Página inicial e painel
 
@@ -150,24 +111,18 @@ arquivos atendam aos critérios de validação implementados.
 ### 📄 Importação e histórico de exames
 
 -   Upload de arquivos PDF de até 5 MB com texto extraível.
--   Validação, no servidor, de datas, unidades e indicadores
-    reconhecidos.
+-   Validação, no servidor, de datas, unidades e indicadores reconhecidos.
 -   Visualização e download do PDF original por rotas autenticadas.
--   Reaproveitamento de exames existentes em reenvios reconhecidos para
-    o mesmo paciente.
--   Exportação dos dados da conta e dos exames em JSON, sem incluir os
-    arquivos PDF binários.
+-   Reaproveitamento de exames existentes em reenvios reconhecidos para o mesmo paciente.
+-   Exportação dos dados da conta e dos exames em JSON, sem incluir os arquivos PDF binários.
 
-PDFs digitalizados sem texto extraível não são aceitos pelo fluxo de
-importação descrito nesta versão.
+PDFs digitalizados sem texto extraível não são aceitos pelo fluxo de importação descrito nesta versão.
 
 ### 🧮 Simulador interativo
 
 -   Interface para explorar a simulação de compostos e riscos.
--   Apresentação visual de informações relacionadas aos efeitos
-    simulados.
--   Recurso educativo e demonstrativo; não constitui previsão clínica
-    individual.
+-   Apresentação visual de informações relacionadas aos efeitos simulados.
+-   Recurso educativo e demonstrativo; não constitui previsão clínica individual.
 
 ### ♿ Acessibilidade
 
@@ -182,32 +137,26 @@ importação descrito nesta versão.
 -   Login Google para pacientes, quando configurado.
 -   Fluxos específicos de validação para contas médicas.
 
-------------------------------------------------------------------------
 
-`<a id="impacto-e-responsabilidade">`{=html}`</a>`{=html} \## 📈 Impacto
-e responsabilidade
+<a id="impacto-e-responsabilidade"></a>
+## 📈 Impacto e responsabilidade
 
 ### 🧪 Organização de informações
 
-Centraliza indicadores e resultados de exames para facilitar a consulta
-e o acompanhamento ao longo do tempo.
+Centraliza indicadores e resultados de exames para facilitar a consulta e o acompanhamento ao longo do tempo.
 
 ### 📊 Compreensão dos dados
 
-Gráficos, painéis e mapa corporal interativo ajudam a apresentar
-informações de saúde em formato visual.
+Gráficos, painéis e mapa corporal interativo ajudam a apresentar informações de saúde em formato visual.
 
 ### 🛡️ Redução de danos
 
-A proposta é apoiar a organização e a conscientização sobre informações
-relacionadas à saúde, incentivando que dúvidas e alterações sejam
-discutidas com profissionais qualificados.
+A proposta é apoiar a organização e a conscientização sobre informações relacionadas à saúde, incentivando que dúvidas e alterações sejam discutidas com profissionais qualificados.
 
 > **Importante:** as classificações exibidas dependem das faixas
 > configuradas na plataforma e não substituem diagnóstico, orientação
 > médica ou avaliação clínica individual.
 
-------------------------------------------------------------------------
 
 ## 💻 Tecnologias utilizadas
 
@@ -270,8 +219,8 @@ discutidas com profissionais qualificados.
 
 ------------------------------------------------------------------------
 
-`<a id="fluxo-de-navegação">`{=html}`</a>`{=html} \## 🗺️ Fluxo de
-navegação
+<a id="fluxo-de-navegação"></a>
+## 🗺️ Fluxo de navegação
 
 ``` text
 / (Home)
@@ -293,13 +242,11 @@ navegação
 /conta                 — edição isolada dos dados da conta
 ```
 
-Os componentes de acessibilidade são montados globalmente no `App.jsx` e
-ficam disponíveis nas rotas da aplicação.
+Os componentes de acessibilidade são montados globalmente no `App.jsx` e ficam disponíveis nas rotas da aplicação.
 
-------------------------------------------------------------------------
 
-`<a id="arquitetura-do-projeto">`{=html}`</a>`{=html} \## 📂 Arquitetura
-do projeto
+<a id="arquitetura-do-projeto"></a>
+## 📂 Arquitetura do projeto
 
 ### Frontend
 
@@ -332,39 +279,30 @@ src/
 └── style/                   # Estilos individuais dos componentes
 ```
 
-O backend fica na pasta `backend/`. A aplicação também publica a API por
-meio de `api/index.js` no deploy da Vercel.
+O backend fica na pasta `backend/`. A aplicação também publica a API por meio de `api/index.js` no deploy da Vercel.
 
-------------------------------------------------------------------------
 
-`<a id="segurança-e-persistência">`{=html}`</a>`{=html} \## 🔐 Segurança
-e persistência
 
-A aplicação utiliza MongoDB para armazenar contas, perfis e exames. O
-frontend mantém a sessão em cookie `HttpOnly` emitido pela API; dados
-clínicos e tokens não são persistidos no `localStorage`.
+<a id="segurança-e-persistência"></a>
+## 🔐 Segurança e persistência
+
+A aplicação utiliza MongoDB para armazenar contas, perfis e exames. O frontend mantém a sessão em cookie `HttpOnly` emitido pela API; dados clínicos e tokens não são persistidos no `localStorage`.
 
 Outros cuidados implementados:
 
 -   Rotas autenticadas para acessar PDFs de exames.
--   Acesso aos arquivos restrito ao paciente ou ao médico atualmente
-    vinculado.
+-   Acesso aos arquivos restrito ao paciente ou ao médico atualmente vinculado.
 -   Exclusão dos PDFs junto com o exame ou a conta correspondente.
--   Revogação de sessões anteriores em operações de logout e troca de
-    senha.
--   Operações relacionadas de exclusão e alteração protegidas por
-    transações.
+-   Revogação de sessões anteriores em operações de logout e troca de senha.
+-   Operações relacionadas de exclusão e alteração protegidas por transações.
 -   Validação no servidor dos dados extraídos dos PDFs.
--   Verificação da identidade médica por integração com o CFM, quando
-    habilitada.
+-   Verificação da identidade médica por integração com o CFM, quando habilitada.
 
-A aplicação requer configuração segura das variáveis de ambiente. Em
-produção, utilize HTTPS e mantenha segredos exclusivamente no backend.
+A aplicação requer configuração segura das variáveis de ambiente. Em produção, utilize HTTPS e mantenha segredos exclusivamente no backend.
 
-------------------------------------------------------------------------
 
-`<a id="como-executar-localmente">`{=html}`</a>`{=html} \## 🚀 Como
-executar localmente
+<a id="como-executar-localmente"></a>
+🚀 Como executar localmente
 
 ### Pré-requisitos
 
@@ -395,8 +333,7 @@ Copie o arquivo de exemplo de variáveis de ambiente:
 cp backend/.env.example backend/.env
 ```
 
-Preencha as variáveis necessárias conforme a seção [Configuração do
-ambiente](#configuração-do-ambiente).
+Preencha as variáveis necessárias conforme a seção [Configuração doambiente](#configuração-do-ambiente).
 
 ### 4. Iniciar o backend
 
@@ -408,8 +345,7 @@ npm install
 npm run dev
 ```
 
-O comando de desenvolvimento disponível pode variar conforme os scripts
-definidos no `package.json` do backend.
+O comando de desenvolvimento disponível pode variar conforme os scripts definidos no `package.json` do backend.
 
 ### 5. Iniciar o frontend
 
@@ -425,18 +361,15 @@ Por padrão, o frontend fica disponível em:
 http://localhost:5173
 ```
 
-O Vite encaminha as requisições de `/api` para o backend local, conforme
-a configuração do projeto.
+O Vite encaminha as requisições de `/api` para o backend local, conforme a configuração do projeto.
 
-------------------------------------------------------------------------
 
-`<a id="configuração-do-ambiente">`{=html}`</a>`{=html} \## ⚙️
-Configuração do ambiente
+<a id="configuração-do-ambiente"></a>
+## ⚙️Configuração do ambiente
 
 ### Backend
 
-Copie `backend/.env.example` para `backend/.env` e configure os valores
-aplicáveis:
+Copie `backend/.env.example` para `backend/.env` e configure os valores aplicáveis:
 
 ``` env
 MONGO_URI=mongodb://...
@@ -444,8 +377,7 @@ JWT_SECRET=seu-segredo-jwt
 FRONTEND_URL=http://localhost:5173
 ```
 
-Para habilitar funcionalidades adicionais, podem ser necessárias outras
-variáveis:
+Para habilitar funcionalidades adicionais, podem ser necessárias outras variáveis:
 
 ``` env
 CFM_ACCESS_KEY=chave-fornecida-pelo-CFM
@@ -455,48 +387,31 @@ GMAIL_APP_PASSWORD=senha-de-app-do-google
 ```
 
 -   `MONGO_URI`: conexão com o MongoDB.
--   `JWT_SECRET`: segredo usado pelo backend para operações relacionadas
-    à autenticação.
+-   `JWT_SECRET`: segredo usado pelo backend para operações relacionadas à autenticação.
 -   `FRONTEND_URL`: origem do frontend autorizada pela API.
--   `CFM_ACCESS_KEY`: chave necessária para a integração de verificação
-    médica pelo CFM.
--   `GOOGLE_CLIENT_ID`: ID OAuth utilizado pelo backend para validar o
-    login Google.
--   `GMAIL_USER` e `GMAIL_APP_PASSWORD`: configuração de envio de
-    convites por e-mail, quando utilizada.
+-   `CFM_ACCESS_KEY`: chave necessária para a integração de verificação médica pelo CFM.
+-   `GOOGLE_CLIENT_ID`: ID OAuth utilizado pelo backend para validar o login Google.
+-   `GMAIL_USER` e `GMAIL_APP_PASSWORD`: configuração de envio de convites por e-mail, quando utilizada.
 
-Nunca publique arquivos `.env`, chaves de integração ou senhas. Para o
-envio por Gmail, utilize uma senha de app, não a senha normal da conta.
+Nunca publique arquivos `.env`, chaves de integração ou senhas. Para o envio por Gmail, utilize uma senha de app, não a senha normal da conta.
 
 ### Login Google para pacientes
-
-Configure `VITE_GOOGLE_CLIENT_ID` no `.env` da raiz e `GOOGLE_CLIENT_ID`
-no `backend/.env` com o mesmo ID de cliente OAuth do tipo **Aplicativo
+Configure `VITE_GOOGLE_CLIENT_ID` no `.env` da raiz e `GOOGLE_CLIENT_ID`no `backend/.env` com o mesmo ID de cliente OAuth do tipo **Aplicativo
 da Web**.
 
-No Google Cloud Console, autorize as origens locais e de produção
-utilizadas pela aplicação. O backend valida o ID token e limita o
-vínculo às contas elegíveis conforme as regras implementadas.
+No Google Cloud Console, autorize as origens locais e de produção utilizadas pela aplicação. O backend valida o ID token e limita o vínculo às contas elegíveis conforme as regras implementadas.
 
 ### Deploy na Vercel
-
-O frontend chama a API pelo mesmo domínio (`/api`). No deploy descrito
-pelo projeto, a Vercel publica o Express como uma função a partir de
+O frontend chama a API pelo mesmo domínio (`/api`). No deploy descrito pelo projeto, a Vercel publica o Express como uma função a partir de
 `api/index.js`.
-
-Configure no projeto da Vercel as variáveis de ambiente necessárias para
-o ambiente de produção, incluindo `MONGO_URI`, `JWT_SECRET`,
-`FRONTEND_URL`, `GOOGLE_CLIENT_ID` e `VITE_GOOGLE_CLIENT_ID`. Configure
-`CFM_ACCESS_KEY` se o cadastro de médicos com verificação CFM estiver
+Configure no projeto da Vercel as variáveis de ambiente necessárias para o ambiente de produção, incluindo `MONGO_URI`, `JWT_SECRET`, `FRONTEND_URL`, `GOOGLE_CLIENT_ID` e `VITE_GOOGLE_CLIENT_ID`. Configure `CFM_ACCESS_KEY` se o cadastro de médicos com verificação CFM estiver
 habilitado.
 
-Depois de adicionar ou alterar variáveis de ambiente, faça um novo
-deploy.
+Depois de adicionar ou alterar variáveis de ambiente, faça um novo deploy.
 
-------------------------------------------------------------------------
 
-`<a id="verificações-e-testes">`{=html}`</a>`{=html} \## 🧪 Verificações
-e testes
+<a id="verificações-e-testes"></a>
+## 🧪 Verificações e testes
 
 Na raiz do projeto, execute:
 
@@ -504,12 +419,9 @@ Na raiz do projeto, execute:
 npm run check
 ```
 
-Esse comando reúne as verificações de lint, testes e build. O workflow
-`.github/workflows/checks.yml` executa a mesma verificação em pushes e
-pull requests.
+Esse comando reúne as verificações de lint, testes e build. O workflow `.github/workflows/checks.yml` executa a mesma verificação em pushes e pull requests.
 
-Os testes utilizam fixtures e mocks. De acordo com a documentação atual
-do projeto, não excluem contas nem alteram os pacientes do Atlas.
+Os testes utilizam fixtures e mocks. De acordo com a documentação atual do projeto, não excluem contas nem alteram os pacientes do Atlas.
 
 Para gerar o build de produção do frontend:
 
@@ -517,58 +429,32 @@ Para gerar o build de produção do frontend:
 npm run build
 ```
 
-------------------------------------------------------------------------
+<a id="integração-com-o-cfm"></a>
+## 🩺 Integração com o CFM
 
-`<a id="integração-com-o-cfm">`{=html}`</a>`{=html} \## 🩺 Integração
-com o CFM
-
-O cadastro de médicos consulta o Web Service oficial do Conselho Federal
-de Medicina (CFM). O backend verifica se a inscrição está regular e
-confere a correspondência entre CRM, UF, CPF e data de nascimento.
-
-CPF e data de nascimento são enviados ao CFM durante a verificação e não
-são persistidos pela aplicação. O perfil médico e suas rotas protegidas
-são liberados após a confirmação.
-
-Contas médicas criadas antes da integração podem passar por um fluxo de
-revalidação. Após a conferência pelo CFM, o registro médico existente é
-atualizado, preservando a conta e os dados associados.
+O cadastro de médicos consulta o Web Service oficial do Conselho Federal de Medicina (CFM). O backend verifica se a inscrição está regular e confere a correspondência entre CRM, UF, CPF e data de nascimento.
+CPF e data de nascimento são enviados ao CFM durante a verificação e não são persistidos pela aplicação. O perfil médico e suas rotas protegidas são liberados após a confirmação.
+Contas médicas criadas antes da integração podem passar por um fluxo de revalidação. Após a conferência pelo CFM, o registro médico existente é atualizado, preservando a conta e os dados associados.
 
 ### Modo local de apresentação sem licença CFM
 
-Para apresentações locais, existe uma opção de demonstração restrita a
-contas médicas já existentes no banco e que possuam perfil em `doctors`.
-Ela não verifica nem confirma que o CRM está regular, e a interface deve
-exibir o aviso de demonstração.
+Para apresentações locais, existe uma opção de demonstração restrita a contas médicas já existentes no banco e que possuam perfil em `doctors`. Ela não verifica nem confirma que o CRM está regular, e a interface deve exibir o aviso de demonstração.
+Não utilize esse modo como verificação real de credenciais médicas nem o habilite inadvertidamente em produção.
+A integração oficial exige que a própria pessoa jurídica usuária solicite acesso ao Web Service e obtenha uma chave válida diretamente com o CFM.
 
-Não utilize esse modo como verificação real de credenciais médicas nem o
-habilite inadvertidamente em produção.
 
-A integração oficial exige que a própria pessoa jurídica usuária
-solicite acesso ao Web Service e obtenha uma chave válida diretamente
-com o CFM.
+<a id="limitações-e-cuidados"></a>
+## ⚠️ Limitações e cuidados
 
-------------------------------------------------------------------------
+-   As classificações de indicadores utilizam faixas configuradas na plataforma e não substituem avaliação clínica.
+-   A importação de exames depende de PDFs com texto extraível; arquivos digitalizados sem texto não passam pelo fluxo descrito.
+-   A restauração de backup ainda não foi testada, conforme o registro de infraestrutura do projeto de 14/10/2026.
+-   O cluster MongoDB Atlas Free mencionado na documentação não possuía backup automático ativo na conferência de 14/10/2026. Essa condição deve ser verificada antes de depender do ambiente para operação contínua.
+-   O uso em produção requer revisão das variáveis de ambiente, HTTPS, permissões, capacidade de armazenamento e política de backup.
 
-`<a id="limitações-e-cuidados">`{=html}`</a>`{=html} \## ⚠️ Limitações e
-cuidados
 
--   As classificações de indicadores utilizam faixas configuradas na
-    plataforma e não substituem avaliação clínica.
--   A importação de exames depende de PDFs com texto extraível; arquivos
-    digitalizados sem texto não passam pelo fluxo descrito.
--   A restauração de backup ainda não foi testada, conforme o registro
-    de infraestrutura do projeto de 14/10/2026.
--   O cluster MongoDB Atlas Free mencionado na documentação não possuía
-    backup automático ativo na conferência de 14/10/2026. Essa condição
-    deve ser verificada antes de depender do ambiente para operação
-    contínua.
--   O uso em produção requer revisão das variáveis de ambiente, HTTPS,
-    permissões, capacidade de armazenamento e política de backup.
-
-------------------------------------------------------------------------
-
-`<a id="equipe">`{=html}`</a>`{=html} \## 👥 Equipe
+<a id="equipe"></a>
+## 👥 Equipe
 
   -----------------------------------------------------------------------
   Integrante                          Contribuição
@@ -599,25 +485,17 @@ cuidados
 O projeto foi desenvolvido em equipe no contexto acadêmico da FIAP, com
 parceria da THM Estatística e orientação de mentores.
 
-------------------------------------------------------------------------
 
-`<a id="referências">`{=html}`</a>`{=html} \## 📚 Referências
 
--   [Conselho Federal de Medicina --- Web Service de consulta de
-    médicos](https://sistemas.cfm.org.br/listamedicos/informacoes)
--   [CFM --- Especificação técnica
-    SOAP](https://sistemas.cfm.org.br/listamedicos/arquivos/manualwebservices.pdf)
--   [Resolução CFM nº
-    2.309/2022](https://sistemas.cfm.org.br/normas/arquivos/resolucoes/BR/2022/2309_2022.pdf)
+<a id="referências"></a>
+## 📚 Referências
+
+-   [Conselho Federal de Medicina --- Web Service de consulta de  médicos](https://sistemas.cfm.org.br/listamedicos/informacoes)
+-   [CFM --- Especificação técnica SOAP](https://sistemas.cfm.org.br/listamedicos/arquivos/manualwebservices.pdf)
+-   [Resolução CFM nº 2.309/2022](https://sistemas.cfm.org.br/normas/arquivos/resolucoes/BR/2022/2309_2022.pdf)
 -   [React](https://react.dev/)
 -   [Vite](https://vite.dev/)
 -   [React Router](https://reactrouter.com/)
 -   [Recharts](https://recharts.org/)
 -   [Bootstrap](https://getbootstrap.com/)
 -   [MongoDB](https://www.mongodb.com/)
-
-------------------------------------------------------------------------
-
-::: {align="center"}
-**Juicers --- informação organizada para apoiar a redução de danos.**
-:::
