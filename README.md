@@ -1,6 +1,6 @@
 <div align="center">
 
-<img width="250" alt="Logo da Juicers" src="./src/assets/juicers.png" /> 
+<h1> <img width="28" alt="Logo da Juicers" src="./src/assets/favicon.png" /> Juicers </h1>
 
 [![Typing SVG](https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&letterSpacing=&pause=1000&color=31C0A7&multiline=true&width=799&lines=Sa%C3%BAde+e+redu%C3%A7%C3%A3o+de+danos+para+usu%C3%A1rios+de+esteroides+anabolizantes)](https://git.io/typing-svg)
 
