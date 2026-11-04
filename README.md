@@ -192,8 +192,9 @@ A proposta é apoiar a organização e a conscientização sobre informações r
 &nbsp; <img src="https://github.com/user-attachments/assets/89d25bfd-dad6-4535-abe8-776c5183f72e"  width="20" height="20" alt="Multer" /> &nbsp; 
 <a href="https://expressjs.com/pt-br/resources/middleware/multer/" target="_blank" rel="noopener noreferrer">Multer</a> 
 
+&nbsp; <img src="https://github.com/user-attachments/assets/e31a3254-8691-46ad-a3a6-d15a138b26d3" width="40" height="40" alt="mongo-db" /> &nbsp; <a href="https://nodemailer.com/" target="_blank" rel="noopener noreferrer">Nodemailer</a>
 
-- &nbsp; <img src="https://cdn.svglogos.dev/logos/mongodb-icon.svg" width="40" height="40" alt="mongo-db" /> &nbsp; <a href="https://www.mongodb.com/pt-br" target="_blank" rel="noopener noreferrer">MongoDB</a> 
+
 - **Nodemailer** — envio de e-mails.
   
 - &nbsp; <img src="https://cdn.svglogos.dev/logos/mongodb-icon.svg" width="40" height="40" alt="mongo-db" /> &nbsp; <a href="https://www.mongodb.com/pt-br" target="_blank" rel="noopener noreferrer">MongoDB</a> 
@@ -212,7 +213,6 @@ A proposta é apoiar a organização e a conscientização sobre informações r
 
 ### Versionamento e Integração Contínua
 - **Git** — controle de versão.
-- **GitHub** — hospedagem e colaboração no código-fonte.
 - **GitHub Actions** — automação de verificações por meio de workflows de integração contínua.
 
   [Vite 8](https://vite.dev/)                                             
