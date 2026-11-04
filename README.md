@@ -192,11 +192,12 @@ A proposta é apoiar a organização e a conscientização sobre informações r
 - **Recharts** — visualização de dados por meio de gráficos.
 
 ### Backend
-&nbsp; <img src="https://skillicons.dev/icons?i=nodejs" width="20" /> &nbsp; <a href="https://nodejs.org/pt-br" target="_blank" rel="noopener noreferrer">NodeJS</a> 
-- **Node.js** — ambiente de execução JavaScript no servidor.
-- &nbsp; <img src="https://cdn.svglogos.dev/logos/mongodb-icon.svg" width="40" height="40" alt="mongo-db" /> &nbsp; <a href="https://www.mongodb.com/pt-br" target="_blank" rel="noopener noreferrer">MongoDB</a> 
-- **Express** — desenvolvimento da API REST.
-- &nbsp; <img src="https://cdn.svglogos.dev/logos/mongodb-icon.svg" width="40" height="40" alt="mongo-db" /> &nbsp; <a href="https://www.mongodb.com/pt-br" target="_blank" rel="noopener noreferrer">MongoDB</a> 
+&nbsp; <img src="https://skillicons.dev/icons?i=nodejs" width="20" /> &nbsp; <a href="https://nodejs.org/pt-br" target="_blank" rel="noopener noreferrer">Node.js</a> 
+<br>
+&nbsp; <img src="https://skillicons.dev/icons?i=express" width="20" /> &nbsp; <a href="https://expressjs.com/pt-br/" target="_blank" rel="noopener noreferrer">Express</a> 
+<br>
+&nbsp; <img src="https://github.com/user-attachments/assets/319c93f2-40b3-460b-98b3-206cdd8aa38c" width="20" height="20" alt="mongoose" />&nbsp; <a href="https://mongoosejs.com/" target="_blank" rel="noopener noreferrer">Mongoose</a> 
+
 - **Mongoose** — modelagem de dados e integração com o banco de dados.
 - &nbsp; <img src="https://cdn.svglogos.dev/logos/mongodb-icon.svg" width="40" height="40" alt="mongo-db" /> &nbsp; <a href="https://www.mongodb.com/pt-br" target="_blank" rel="noopener noreferrer">MongoDB</a> 
 - **JSON Web Token (JWT)** — autenticação baseada em tokens.
