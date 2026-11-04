@@ -175,8 +175,6 @@ A proposta é apoiar a organização e a conscientização sobre informações r
 &nbsp; <img src="https://github.com/user-attachments/assets/b2efa926-4a9e-4fa8-b59f-92240e152954" width="20" height="20"  alt="bootstrap" /> &nbsp; <a href="https://getbootstrap.com/" target="_blank" rel="noopener noreferrer">Bootstrap 5.3</a>
 <br>  
 &nbsp; 📈 &nbsp; <a href="https://recharts.github.io/" target="_blank" rel="noopener noreferrer">Recharts</a>
-</div>
-
 
 ### Backend
 &nbsp; <img src="https://skillicons.dev/icons?i=nodejs" width="20" /> &nbsp; <a href="https://nodejs.org/pt-br" target="_blank" rel="noopener noreferrer">Node.js</a> 
@@ -190,12 +188,14 @@ A proposta é apoiar a organização e a conscientização sobre informações r
 &nbsp; <img src="https://github.com/user-attachments/assets/5c9a6f80-920e-43d0-9675-bfb00eef4020" width="20" height="20" alt="bcriptJS" /> &nbsp; <a href="https://www.npmjs.com/package/bcryptjs" target="_blank" rel="noopener noreferrer">bcryptjs</a> 
 <br>
 &nbsp; <img src="https://github.com/user-attachments/assets/e400e89c-6a63-4865-81b6-71826bf564c2" width="20" height="20" alt="Google-Auth-Library" /> &nbsp; <a href="https://googleapis.dev/nodejs/google-auth-library/5.6.1/" target="_blank" rel="noopener noreferrer">Google Auth Library</a> - Integração com autenticação do Google.
+<br>
+&nbsp; <img src="https://github.com/user-attachments/assets/89d25bfd-dad6-4535-abe8-776c5183f72e"  width="20" height="20" alt="Multer" /> &nbsp; 
+<a href="https://expressjs.com/pt-br/resources/middleware/multer/" target="_blank" rel="noopener noreferrer">Multer</a> 
 
 
-- &nbsp; <img src="https://cdn.svglogos.dev/logos/mongodb-icon.svg" width="40" height="40" alt="mongo-db" /> &nbsp; <a href="https://www.mongodb.com/pt-br" target="_blank" rel="noopener noreferrer">MongoDB</a> 
-- **Multer** — processamento de uploads de arquivos.
 - &nbsp; <img src="https://cdn.svglogos.dev/logos/mongodb-icon.svg" width="40" height="40" alt="mongo-db" /> &nbsp; <a href="https://www.mongodb.com/pt-br" target="_blank" rel="noopener noreferrer">MongoDB</a> 
 - **Nodemailer** — envio de e-mails.
+  
 - &nbsp; <img src="https://cdn.svglogos.dev/logos/mongodb-icon.svg" width="40" height="40" alt="mongo-db" /> &nbsp; <a href="https://www.mongodb.com/pt-br" target="_blank" rel="noopener noreferrer">MongoDB</a> 
 - **dotenv** — gerenciamento de variáveis de ambiente.
 
