@@ -178,19 +178,6 @@ A proposta é apoiar a organização e a conscientização sobre informações r
 </div>
 
 
-
-
-## 🛠️ Tecnologias Utilizadas
-
-### Frontend
-- **React** — 
-- **JavaScript (ES6+)** — desenvolvimento da aplicação.
-- **Vite** — 
-- **React Router DOM** — 
-- **Bootstrap** — 
-
-- **Recharts** — visualização de dados por meio de gráficos.
-
 ### Backend
 &nbsp; <img src="https://skillicons.dev/icons?i=nodejs" width="20" /> &nbsp; <a href="https://nodejs.org/pt-br" target="_blank" rel="noopener noreferrer">Node.js</a> 
 <br>
@@ -199,13 +186,12 @@ A proposta é apoiar a organização e a conscientização sobre informações r
 &nbsp; <img src="https://github.com/user-attachments/assets/319c93f2-40b3-460b-98b3-206cdd8aa38c" width="20" height="20" alt="mongoose" /> &nbsp; <a href="https://mongoosejs.com/" target="_blank" rel="noopener noreferrer">Mongoose</a> 
 <br>
 &nbsp; <img src="https://github.com/user-attachments/assets/1bf0e27c-d8d0-44a7-a792-9bb1dab9974a" width="20" height="20" alt="JWT" /> &nbsp; <a href="https://www.jwt.io/" target="_blank" rel="noopener noreferrer">JSON Web Token (JWT)</a> 
-
-
+<br>
 &nbsp; <img src="https://github.com/user-attachments/assets/5c9a6f80-920e-43d0-9675-bfb00eef4020" width="20" height="20" alt="bcriptJS" /> &nbsp; <a href="https://www.npmjs.com/package/bcryptjs" target="_blank" rel="noopener noreferrer">bcryptjs</a> 
+<br>
+&nbsp; <img src="https://github.com/user-attachments/assets/e400e89c-6a63-4865-81b6-71826bf564c2" width="20" height="20" alt="Google-Auth-Library" /> &nbsp; <a href="https://googleapis.dev/nodejs/google-auth-library/5.6.1/" target="_blank" rel="noopener noreferrer">Google Auth Library</a> - Integração com autenticação do Google.
 
 
-- &nbsp; <img src="https://cdn.svglogos.dev/logos/mongodb-icon.svg" width="40" height="40" alt="mongo-db" /> &nbsp; <a href="https://www.mongodb.com/pt-br" target="_blank" rel="noopener noreferrer">MongoDB</a> 
-- **Google Auth Library** — integração com autenticação do Google.
 - &nbsp; <img src="https://cdn.svglogos.dev/logos/mongodb-icon.svg" width="40" height="40" alt="mongo-db" /> &nbsp; <a href="https://www.mongodb.com/pt-br" target="_blank" rel="noopener noreferrer">MongoDB</a> 
 - **Multer** — processamento de uploads de arquivos.
 - &nbsp; <img src="https://cdn.svglogos.dev/logos/mongodb-icon.svg" width="40" height="40" alt="mongo-db" /> &nbsp; <a href="https://www.mongodb.com/pt-br" target="_blank" rel="noopener noreferrer">MongoDB</a> 
