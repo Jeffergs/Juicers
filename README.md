@@ -197,11 +197,13 @@ A proposta é apoiar a organização e a conscientização sobre informações r
 &nbsp; <img src="https://github.com/user-attachments/assets/6195f61d-4839-425b-ad98-01df53807460" width="20" height="20" alt="dotenv"/> &nbsp; <a href="https://www.dotenv.org/" target="_blank" rel="noopener noreferrer">dotenv</a> 
 
 ### Banco de Dados
-&nbsp; <img src="https://cdn.svglogos.dev/logos/mongodb-icon.svg" width="40" height="40" alt="mongo-db" /> &nbsp; <a href="https://www.mongodb.com/pt-br" target="_blank" rel="noopener noreferrer">MongoDB</a> 
+&nbsp; <img src="https://cdn.svglogos.dev/logos/mongodb-icon.svg" width="20" height="20" alt="mongo-db" /> &nbsp; <a href="https://www.mongodb.com/pt-br" target="_blank" rel="noopener noreferrer">MongoDB</a> 
 
 ### Processamento de Documentos
-- **pdf-parse** — extração de conteúdo de documentos PDF.
-- **PDF.js** — processamento e visualização de documentos PDF.
+&nbsp; <img src="https://github.com/user-attachments/assets/7758d7e3-396b-46ac-8c03-9de471067d05" width="20" height="20" alt="pdf-parse" /> &nbsp; <a href="https://www.npmjs.com/package/pdf-parse" target="_blank" rel="noopener noreferrer">pdf-pars</a> - Extração de conteúdo de documentos PDF.
+<br>
+&nbsp; <img src="https://github.com/user-attachments/assets/98e700a5-7ae0-415f-9397-10603da3a980" width="20" height="20" alt="pdf.js" /> &nbsp; <a href="https://www.npmjs.com/package/pdf-parse" target="_blank" rel="noopener noreferrer">pdf.js</a> - Processamento e visualização de documentos PDF.
+
 
 ### Testes e Qualidade de Código
 - **Node.js Test Runner** — execução de testes automatizados.
