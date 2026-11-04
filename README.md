@@ -173,7 +173,7 @@ A proposta é apoiar a organização e a conscientização sobre informações r
 &nbsp; <img src="https://github.com/user-attachments/assets/dc7b892c-b557-4f37-8bd8-275574743dde" width="20" height="20" alt="CSS 3" /> &nbsp; <a href="https://developer.mozilla.org/pt-BR/docs/Web/CSS" target="_blank" rel="noopener noreferrer">CSS 3</a>
 <br>
 &nbsp; <img src="https://github.com/user-attachments/assets/b2efa926-4a9e-4fa8-b59f-92240e152954" width="20" height="20"  alt="bootstrap" /> &nbsp; <a href="https://getbootstrap.com/" target="_blank" rel="noopener noreferrer">Bootstrap 5.3</a>
-<br>  
+<br>
 &nbsp; 📈 &nbsp; <a href="https://recharts.github.io/" target="_blank" rel="noopener noreferrer">Recharts</a>
 
 ### Backend
