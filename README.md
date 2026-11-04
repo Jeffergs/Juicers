@@ -192,14 +192,23 @@ A proposta é apoiar a organização e a conscientização sobre informações r
 - **Recharts** — visualização de dados por meio de gráficos.
 
 ### Backend
+&nbsp; <img src="https://skillicons.dev/icons?i=nodejs" width="20" /> &nbsp; <a href="https://nodejs.org/pt-br" target="_blank" rel="noopener noreferrer">NodeJS</a> 
 - **Node.js** — ambiente de execução JavaScript no servidor.
+- &nbsp; <img src="https://cdn.svglogos.dev/logos/mongodb-icon.svg" width="40" height="40" alt="mongo-db" /> &nbsp; <a href="https://www.mongodb.com/pt-br" target="_blank" rel="noopener noreferrer">MongoDB</a> 
 - **Express** — desenvolvimento da API REST.
+- &nbsp; <img src="https://cdn.svglogos.dev/logos/mongodb-icon.svg" width="40" height="40" alt="mongo-db" /> &nbsp; <a href="https://www.mongodb.com/pt-br" target="_blank" rel="noopener noreferrer">MongoDB</a> 
 - **Mongoose** — modelagem de dados e integração com o banco de dados.
+- &nbsp; <img src="https://cdn.svglogos.dev/logos/mongodb-icon.svg" width="40" height="40" alt="mongo-db" /> &nbsp; <a href="https://www.mongodb.com/pt-br" target="_blank" rel="noopener noreferrer">MongoDB</a> 
 - **JSON Web Token (JWT)** — autenticação baseada em tokens.
+- &nbsp; <img src="https://cdn.svglogos.dev/logos/mongodb-icon.svg" width="40" height="40" alt="mongo-db" /> &nbsp; <a href="https://www.mongodb.com/pt-br" target="_blank" rel="noopener noreferrer">MongoDB</a> 
 - **bcryptjs** — hash de senhas.
+- &nbsp; <img src="https://cdn.svglogos.dev/logos/mongodb-icon.svg" width="40" height="40" alt="mongo-db" /> &nbsp; <a href="https://www.mongodb.com/pt-br" target="_blank" rel="noopener noreferrer">MongoDB</a> 
 - **Google Auth Library** — integração com autenticação do Google.
+- &nbsp; <img src="https://cdn.svglogos.dev/logos/mongodb-icon.svg" width="40" height="40" alt="mongo-db" /> &nbsp; <a href="https://www.mongodb.com/pt-br" target="_blank" rel="noopener noreferrer">MongoDB</a> 
 - **Multer** — processamento de uploads de arquivos.
+- &nbsp; <img src="https://cdn.svglogos.dev/logos/mongodb-icon.svg" width="40" height="40" alt="mongo-db" /> &nbsp; <a href="https://www.mongodb.com/pt-br" target="_blank" rel="noopener noreferrer">MongoDB</a> 
 - **Nodemailer** — envio de e-mails.
+- &nbsp; <img src="https://cdn.svglogos.dev/logos/mongodb-icon.svg" width="40" height="40" alt="mongo-db" /> &nbsp; <a href="https://www.mongodb.com/pt-br" target="_blank" rel="noopener noreferrer">MongoDB</a> 
 - **dotenv** — gerenciamento de variáveis de ambiente.
 
 ### Banco de Dados
