@@ -206,7 +206,9 @@ A proposta é apoiar a organização e a conscientização sobre informações r
 
 
 ### Testes e Qualidade de Código
-- **Node.js Test Runner** — execução de testes automatizados.
+&nbsp; <img src="https://github.com/user-attachments/assets/aeaeae1b-4f96-4438-8bdd-1711b8c16fe5" width="20" height="20" alt="Node.js-Test-Runner" /> &nbsp; <a href="https://nodejs.org/api/test.html" target="_blank" rel="noopener noreferrer">Node.js Test Runner</a> - Execução de testes automatizados.
+
+https://eslint.org/
 - **ESLint** — análise estática e padronização do código.
 
 ### Versionamento e Integração Contínua
