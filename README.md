@@ -162,22 +162,22 @@ A proposta é apoiar a organização e a conscientização sobre informações r
 ## 💻 Tecnologias utilizadas
 
 ### Frontend
-&nbsp; <img width="20" height="20" alt="React 19" src="https://github.com/user-attachments/assets/6188ab74-3abf-4347-8b82-295a49e375ab" /> &nbsp; <a href="https://react.dev/" target="_blank" rel="noopener noreferrer">React 19</a> 
+&nbsp; <img src="https://github.com/user-attachments/assets/6188ab74-3abf-4347-8b82-295a49e375ab" width="20" height="20" alt="React 19" /> &nbsp; <a href="https://react.dev/" target="_blank" rel="noopener noreferrer">React 19</a> 
 <br>
-&nbsp; <img width="20" height="20" alt="React-Router" src="https://cdn.svglogos.dev/logos/react-router.svg" /> &nbsp; <a href="https://react.dev/" target="_blank" rel="noopener noreferrer">React Router</a> 
+&nbsp; <img alt="React-Router" src="https://cdn.svglogos.dev/logos/react-router.svg" width="20" height="20" /> &nbsp; <a href="https://react.dev/" target="_blank" rel="noopener noreferrer">React Router</a> 
 <br>
-&nbsp; <img width="20" height="20" alt="Vite" src="https://github.com/user-attachments/assets/c8f05793-3230-4dea-b41c-a219cf033689" /> &nbsp; <a href="https://developer.mozilla.org/pt-BR/docs/Web/JavaScript" target="_blank" rel="noopener noreferrer"> Vite</a> 
+&nbsp; <img src="https://github.com/user-attachments/assets/c8f05793-3230-4dea-b41c-a219cf033689" width="20" height="20" alt="Vite" /> &nbsp; <a href="https://developer.mozilla.org/pt-BR/docs/Web/JavaScript" target="_blank" rel="noopener noreferrer"> Vite</a> 
 <br>
-&nbsp; <img width="20" height="20" alt="Javascript" src="https://github.com/user-attachments/assets/035a2d94-4ddc-4673-92c7-35bf18e3f965" /> &nbsp; <a href="https://developer.mozilla.org/pt-BR/docs/Web/JavaScript" target="_blank" rel="noopener noreferrer"> JavaScript</a> 
+&nbsp; <img src="https://github.com/user-attachments/assets/035a2d94-4ddc-4673-92c7-35bf18e3f965" width="20" height="20" alt="Javascript" /> &nbsp; <a href="https://developer.mozilla.org/pt-BR/docs/Web/JavaScript" target="_blank" rel="noopener noreferrer"> JavaScript</a> 
 <br>
-&nbsp; <img width="20" height="20" alt="CSS 3" src="https://github.com/user-attachments/assets/dc7b892c-b557-4f37-8bd8-275574743dde" /> &nbsp; <a href="https://developer.mozilla.org/pt-BR/docs/Web/CSS" target="_blank" rel="noopener noreferrer">CSS 3</a>
+&nbsp; <img src="https://github.com/user-attachments/assets/dc7b892c-b557-4f37-8bd8-275574743dde" width="20" height="20" alt="CSS 3" /> &nbsp; <a href="https://developer.mozilla.org/pt-BR/docs/Web/CSS" target="_blank" rel="noopener noreferrer">CSS 3</a>
 <br>
-&nbsp; <img width="20" height="20"  alt="bootstrap" src="https://github.com/user-attachments/assets/b2efa926-4a9e-4fa8-b59f-92240e152954" /> &nbsp; <a href="https://getbootstrap.com/" target="_blank" rel="noopener noreferrer">Bootstrap 5.3</a>
+&nbsp; <img src="https://github.com/user-attachments/assets/b2efa926-4a9e-4fa8-b59f-92240e152954" width="20" height="20"  alt="bootstrap" /> &nbsp; <a href="https://getbootstrap.com/" target="_blank" rel="noopener noreferrer">Bootstrap 5.3</a>
 <br>  
 &nbsp; 📈 &nbsp; <a href="https://recharts.github.io/" target="_blank" rel="noopener noreferrer">Recharts</a>
 </div>
 
-<img width="40" height="40" alt="mongo-db" src="https://cdn.svglogos.dev/logos/mongodb-icon.svg" />
+
 
 
 ## 🛠️ Tecnologias Utilizadas
@@ -203,6 +203,7 @@ A proposta é apoiar a organização e a conscientização sobre informações r
 - **dotenv** — gerenciamento de variáveis de ambiente.
 
 ### Banco de Dados
+<img width="40" height="40" alt="mongo-db" src="https://cdn.svglogos.dev/logos/mongodb-icon.svg" /> https://www.mongodb.com/pt-br
 - **MongoDB** — banco de dados NoSQL para persistência de informações.
 
 ### Processamento de Documentos
