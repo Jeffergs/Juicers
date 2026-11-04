@@ -196,11 +196,11 @@ A proposta é apoiar a organização e a conscientização sobre informações r
 <br>
 &nbsp; <img src="https://skillicons.dev/icons?i=express" width="20" /> &nbsp; <a href="https://expressjs.com/pt-br/" target="_blank" rel="noopener noreferrer">Express</a> 
 <br>
-&nbsp; <img src="https://github.com/user-attachments/assets/319c93f2-40b3-460b-98b3-206cdd8aa38c" width="20" height="20" alt="mongoose" />&nbsp; <a href="https://mongoosejs.com/" target="_blank" rel="noopener noreferrer">Mongoose</a> 
+&nbsp; <img src="https://github.com/user-attachments/assets/319c93f2-40b3-460b-98b3-206cdd8aa38c" width="20" height="20" alt="mongoose" /> &nbsp; <a href="https://mongoosejs.com/" target="_blank" rel="noopener noreferrer">Mongoose</a> 
+<br>
+&nbsp; <img src="https://github.com/user-attachments/assets/1bf0e27c-d8d0-44a7-a792-9bb1dab9974a" width="20" height="20" alt="JWT" /> &nbsp; <a href="https://www.jwt.io/" target="_blank" rel="noopener noreferrer">JSON Web Token (JWT)</a> 
 
-- **Mongoose** — modelagem de dados e integração com o banco de dados.
-- &nbsp; <img src="https://cdn.svglogos.dev/logos/mongodb-icon.svg" width="40" height="40" alt="mongo-db" /> &nbsp; <a href="https://www.mongodb.com/pt-br" target="_blank" rel="noopener noreferrer">MongoDB</a> 
-- **JSON Web Token (JWT)** — autenticação baseada em tokens.
+
 - &nbsp; <img src="https://cdn.svglogos.dev/logos/mongodb-icon.svg" width="40" height="40" alt="mongo-db" /> &nbsp; <a href="https://www.mongodb.com/pt-br" target="_blank" rel="noopener noreferrer">MongoDB</a> 
 - **bcryptjs** — hash de senhas.
 - &nbsp; <img src="https://cdn.svglogos.dev/logos/mongodb-icon.svg" width="40" height="40" alt="mongo-db" /> &nbsp; <a href="https://www.mongodb.com/pt-br" target="_blank" rel="noopener noreferrer">MongoDB</a> 
