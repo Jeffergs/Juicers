@@ -162,24 +162,66 @@ A proposta é apoiar a organização e a conscientização sobre informações r
 
 ### Frontend
 <div>
-&nbsp <img width="20" height="20" alt="React 19" src="https://github.com/user-attachments/assets/6188ab74-3abf-4347-8b82-295a49e375ab" /> &nbsp; <a href="https://react.dev/" target="_blank" rel="noopener noreferrer">React 19</a> - Construção da interface por componentes
+&nbsp <img width="20" height="20" alt="React 19" src="https://github.com/user-attachments/assets/6188ab74-3abf-4347-8b82-295a49e375ab" /> &nbsp; <a href="https://react.dev/" target="_blank" rel="noopener noreferrer">React 19</a> - Construção da interface e dos componentes.
 <br>
-&nbsp <img width="20" height="20" alt="React-Router" src="https://cdn.svglogos.dev/logos/react-router.svg" /> &nbsp; <a href="https://react.dev/" target="_blank" rel="noopener noreferrer">React Router</a> - Roteamento entre páginas
+&nbsp <img width="20" height="20" alt="React-Router" src="https://cdn.svglogos.dev/logos/react-router.svg" /> &nbsp; <a href="https://react.dev/" target="_blank" rel="noopener noreferrer">React Router</a> - Gerenciamento de rotas e navegação.
 <br>
 &nbsp <img width="20" height="20" alt="Javascript" src="https://github.com/user-attachments/assets/035a2d94-4ddc-4673-92c7-35bf18e3f965" /> &nbsp; <a href="https://developer.mozilla.org/pt-BR/docs/Web/JavaScript" target="_blank" rel="noopener noreferrer"> JavaScript</a> - Lógica da aplicação
 <br>
-&nbsp <img width="20" height="20" alt="Vite" src="https://github.com/user-attachments/assets/c8f05793-3230-4dea-b41c-a219cf033689" /> &nbsp; <a href="https://developer.mozilla.org/pt-BR/docs/Web/JavaScript" target="_blank" rel="noopener noreferrer"> Vite</a> - Ambiente de desenvolvimento e build
+&nbsp <img width="20" height="20" alt="Vite" src="https://github.com/user-attachments/assets/c8f05793-3230-4dea-b41c-a219cf033689" /> &nbsp; <a href="https://developer.mozilla.org/pt-BR/docs/Web/JavaScript" target="_blank" rel="noopener noreferrer"> Vite</a> - Ferramenta de build e servidor de desenvolvimento.
 </div>
 <div>
 &nbsp <img width="20" height="20" alt="CSS 3" src="https://github.com/user-attachments/assets/dc7b892c-b557-4f37-8bd8-275574743dde" /> &nbsp; <a href="https://developer.mozilla.org/pt-BR/docs/Web/CSS" target="_blank" rel="noopener noreferrer">CSS 3</a>
 <br>
-&nbsp <img width="20" height="20"  alt="bootstrap" src="https://github.com/user-attachments/assets/b2efa926-4a9e-4fa8-b59f-92240e152954" /> &nbsp; <a href="https://getbootstrap.com/" target="_blank" rel="noopener noreferrer">Bootstrap 5.3</a> - Recursos de layout e interface   
+&nbsp <img width="20" height="20"  alt="bootstrap" src="https://github.com/user-attachments/assets/b2efa926-4a9e-4fa8-b59f-92240e152954" /> &nbsp; <a href="https://getbootstrap.com/" target="_blank" rel="noopener noreferrer">Bootstrap 5.3</a> - Componentes e estilização responsiva.   
 <br>
-&nbsp <img width="20" height="20" alt="image" src="https://github.com/user-attachments/assets/6c9ccd81-3aef-4fd7-b1f1-5b892837e880" /> &nbsp; <a href="https://lucide.dev/" target="_blank" rel="noopener noreferrer">Lucide React</a>
+  
+&nbsp 📈 &nbsp; <a href="https://recharts.github.io/" target="_blank" rel="noopener noreferrer">Recharts</a>
 </div>
+
+- **CSS3** — Estilização da interface.
+https://developer.mozilla.org/pt-BR/docs/Web/CSS
 
 <img width="40" height="40" alt="mongo-db" src="https://cdn.svglogos.dev/logos/mongodb-icon.svg" />
 
+
+## 🛠️ Tecnologias Utilizadas
+
+### Frontend
+- **React** — 
+- **JavaScript (ES6+)** — desenvolvimento da aplicação.
+- **Vite** — 
+- **React Router DOM** — 
+- **Bootstrap** — 
+
+- **Recharts** — visualização de dados por meio de gráficos.
+
+### Backend
+- **Node.js** — ambiente de execução JavaScript no servidor.
+- **Express** — desenvolvimento da API REST.
+- **Mongoose** — modelagem de dados e integração com o banco de dados.
+- **JSON Web Token (JWT)** — autenticação baseada em tokens.
+- **bcryptjs** — hash de senhas.
+- **Google Auth Library** — integração com autenticação do Google.
+- **Multer** — processamento de uploads de arquivos.
+- **Nodemailer** — envio de e-mails.
+- **dotenv** — gerenciamento de variáveis de ambiente.
+
+### Banco de Dados
+- **MongoDB** — banco de dados NoSQL para persistência de informações.
+
+### Processamento de Documentos
+- **pdf-parse** — extração de conteúdo de documentos PDF.
+- **PDF.js** — processamento e visualização de documentos PDF.
+
+### Testes e Qualidade de Código
+- **Node.js Test Runner** — execução de testes automatizados.
+- **ESLint** — análise estática e padronização do código.
+
+### Versionamento e Integração Contínua
+- **Git** — controle de versão.
+- **GitHub** — hospedagem e colaboração no código-fonte.
+- **GitHub Actions** — automação de verificações por meio de workflows de integração contínua.
 
   [Vite 8](https://vite.dev/)                                             
 
