@@ -207,48 +207,13 @@ A proposta é apoiar a organização e a conscientização sobre informações r
 
 ### Testes e Qualidade de Código
 &nbsp; <img src="https://github.com/user-attachments/assets/aeaeae1b-4f96-4438-8bdd-1711b8c16fe5" width="20" height="20" alt="Node.js-Test-Runner" /> &nbsp; <a href="https://nodejs.org/api/test.html" target="_blank" rel="noopener noreferrer">Node.js Test Runner</a> - Execução de testes automatizados.
+<br>
+&nbsp; <img src="https://github.com/user-attachments/assets/fdf220ea-657c-4792-ba8a-15b1be58edf8" width="20" height="20" alt="ESLint" /> &nbsp; <a href="https://eslint.org/" target="_blank" rel="noopener noreferrer">ESLint</a> - Análise estática e padronização do código.
 
-https://eslint.org/
-- **ESLint** — análise estática e padronização do código.
+### Integração Contínua (CI)
+&nbsp; <img src="https://github.com/user-attachments/assets/a832d40a-70f0-405c-8630-adb626867d28" width="20" height="20" alt="github-actions" /> &nbsp; <a href="https://github.com/features/actions?locale=pt-br" target="_blank" rel="noopener noreferrer">GitHub Actions</a> - Automação de verificações por meio de workflow de integração contínua.
 
-### Versionamento e Integração Contínua
-- **Git** — controle de versão.
-- **GitHub Actions** — automação de verificações por meio de workflows de integração contínua.
 
-  [Vite 8](https://vite.dev/)                                             
-
-  [JavaScript](https://developer.mozilla.org/pt-BR/docs/Web/JavaScript)   
-
-  [React Router DOM 7](https://reactrouter.com/)                          
-
-  [Recharts 3](https://recharts.org/)                                     Gráficos e visualização de
-                                                                          indicadores
-
-  [CSS modular](https://developer.mozilla.org/pt-BR/docs/Web/CSS)         Estilização dos componentes            
-
-  [ESLint 9](https://eslint.org/)                                         Análise estática e padronização do
-                                                                          código
-
-### Backend e persistência
-
-  
-
-  Node.js                             Ambiente de execução do backend
-
-  Express                             API utilizada pela aplicação
-
-  MongoDB                             Persistência de contas, perfis e
-                                      exames
-
-  JWT                                 Base das operações de autenticação
-
-  Cookies `HttpOnly`                  Manutenção da sessão no navegador
-
-  Google OAuth                        Autenticação Google para pacientes,
-                                      quando configurada
-
-  Web Service do CFM                  Verificação de inscrição médica,
-                                      quando configurada
   -----------------------------------------------------------------------
 
 ------------------------------------------------------------------------
