@@ -158,29 +158,24 @@ A proposta é apoiar a organização e a conscientização sobre informações r
 > médica ou avaliação clínica individual.
 
 
+<a id="tecnologias-utilizadas"></a>
 ## 💻 Tecnologias utilizadas
 
 ### Frontend
-<div>
-&nbsp <img width="20" height="20" alt="React 19" src="https://github.com/user-attachments/assets/6188ab74-3abf-4347-8b82-295a49e375ab" /> &nbsp; <a href="https://react.dev/" target="_blank" rel="noopener noreferrer">React 19</a> - Construção da interface e dos componentes.
+&nbsp; <img width="20" height="20" alt="React 19" src="https://github.com/user-attachments/assets/6188ab74-3abf-4347-8b82-295a49e375ab" /> &nbsp; <a href="https://react.dev/" target="_blank" rel="noopener noreferrer">React 19</a> 
 <br>
-&nbsp <img width="20" height="20" alt="React-Router" src="https://cdn.svglogos.dev/logos/react-router.svg" /> &nbsp; <a href="https://react.dev/" target="_blank" rel="noopener noreferrer">React Router</a> - Gerenciamento de rotas e navegação.
+&nbsp; <img width="20" height="20" alt="React-Router" src="https://cdn.svglogos.dev/logos/react-router.svg" /> &nbsp; <a href="https://react.dev/" target="_blank" rel="noopener noreferrer">React Router</a> 
 <br>
-&nbsp <img width="20" height="20" alt="Javascript" src="https://github.com/user-attachments/assets/035a2d94-4ddc-4673-92c7-35bf18e3f965" /> &nbsp; <a href="https://developer.mozilla.org/pt-BR/docs/Web/JavaScript" target="_blank" rel="noopener noreferrer"> JavaScript</a> - Lógica da aplicação
+&nbsp; <img width="20" height="20" alt="Vite" src="https://github.com/user-attachments/assets/c8f05793-3230-4dea-b41c-a219cf033689" /> &nbsp; <a href="https://developer.mozilla.org/pt-BR/docs/Web/JavaScript" target="_blank" rel="noopener noreferrer"> Vite</a> 
 <br>
-&nbsp <img width="20" height="20" alt="Vite" src="https://github.com/user-attachments/assets/c8f05793-3230-4dea-b41c-a219cf033689" /> &nbsp; <a href="https://developer.mozilla.org/pt-BR/docs/Web/JavaScript" target="_blank" rel="noopener noreferrer"> Vite</a> - Ferramenta de build e servidor de desenvolvimento.
+&nbsp; <img width="20" height="20" alt="Javascript" src="https://github.com/user-attachments/assets/035a2d94-4ddc-4673-92c7-35bf18e3f965" /> &nbsp; <a href="https://developer.mozilla.org/pt-BR/docs/Web/JavaScript" target="_blank" rel="noopener noreferrer"> JavaScript</a> 
+<br>
+&nbsp; <img width="20" height="20" alt="CSS 3" src="https://github.com/user-attachments/assets/dc7b892c-b557-4f37-8bd8-275574743dde" /> &nbsp; <a href="https://developer.mozilla.org/pt-BR/docs/Web/CSS" target="_blank" rel="noopener noreferrer">CSS 3</a>
+<br>
+&nbsp; <img width="20" height="20"  alt="bootstrap" src="https://github.com/user-attachments/assets/b2efa926-4a9e-4fa8-b59f-92240e152954" /> &nbsp; <a href="https://getbootstrap.com/" target="_blank" rel="noopener noreferrer">Bootstrap 5.3</a>
+<br>  
+&nbsp; 📈 &nbsp; <a href="https://recharts.github.io/" target="_blank" rel="noopener noreferrer">Recharts</a>
 </div>
-<div>
-&nbsp <img width="20" height="20" alt="CSS 3" src="https://github.com/user-attachments/assets/dc7b892c-b557-4f37-8bd8-275574743dde" /> &nbsp; <a href="https://developer.mozilla.org/pt-BR/docs/Web/CSS" target="_blank" rel="noopener noreferrer">CSS 3</a>
-<br>
-&nbsp <img width="20" height="20"  alt="bootstrap" src="https://github.com/user-attachments/assets/b2efa926-4a9e-4fa8-b59f-92240e152954" /> &nbsp; <a href="https://getbootstrap.com/" target="_blank" rel="noopener noreferrer">Bootstrap 5.3</a> - Componentes e estilização responsiva.   
-<br>
-  
-&nbsp 📈 &nbsp; <a href="https://recharts.github.io/" target="_blank" rel="noopener noreferrer">Recharts</a>
-</div>
-
-- **CSS3** — Estilização da interface.
-https://developer.mozilla.org/pt-BR/docs/Web/CSS
 
 <img width="40" height="40" alt="mongo-db" src="https://cdn.svglogos.dev/logos/mongodb-icon.svg" />
 
