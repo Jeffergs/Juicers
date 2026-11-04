@@ -203,8 +203,7 @@ A proposta é apoiar a organização e a conscientização sobre informações r
 - **dotenv** — gerenciamento de variáveis de ambiente.
 
 ### Banco de Dados
-<img width="40" height="40" alt="mongo-db" src="https://cdn.svglogos.dev/logos/mongodb-icon.svg" /> https://www.mongodb.com/pt-br
-- **MongoDB** — banco de dados NoSQL para persistência de informações.
+&nbsp; <img src="https://cdn.svglogos.dev/logos/mongodb-icon.svg" width="40" height="40" alt="mongo-db" /> &nbsp; <a href="https://www.mongodb.com/pt-br" target="_blank" rel="noopener noreferrer">MongoDB</a> 
 
 ### Processamento de Documentos
 - **pdf-parse** — extração de conteúdo de documentos PDF.
