@@ -201,8 +201,9 @@ A proposta é apoiar a organização e a conscientização sobre informações r
 &nbsp; <img src="https://github.com/user-attachments/assets/1bf0e27c-d8d0-44a7-a792-9bb1dab9974a" width="20" height="20" alt="JWT" /> &nbsp; <a href="https://www.jwt.io/" target="_blank" rel="noopener noreferrer">JSON Web Token (JWT)</a> 
 
 
-- &nbsp; <img src="https://cdn.svglogos.dev/logos/mongodb-icon.svg" width="40" height="40" alt="mongo-db" /> &nbsp; <a href="https://www.mongodb.com/pt-br" target="_blank" rel="noopener noreferrer">MongoDB</a> 
-- **bcryptjs** — hash de senhas.
+&nbsp; <img src="https://github.com/user-attachments/assets/5c9a6f80-920e-43d0-9675-bfb00eef4020" width="20" height="20" alt="bcriptJS" /> &nbsp; <a href="https://www.npmjs.com/package/bcryptjs" target="_blank" rel="noopener noreferrer">bcryptjs</a> 
+
+
 - &nbsp; <img src="https://cdn.svglogos.dev/logos/mongodb-icon.svg" width="40" height="40" alt="mongo-db" /> &nbsp; <a href="https://www.mongodb.com/pt-br" target="_blank" rel="noopener noreferrer">MongoDB</a> 
 - **Google Auth Library** — integração com autenticação do Google.
 - &nbsp; <img src="https://cdn.svglogos.dev/logos/mongodb-icon.svg" width="40" height="40" alt="mongo-db" /> &nbsp; <a href="https://www.mongodb.com/pt-br" target="_blank" rel="noopener noreferrer">MongoDB</a> 
