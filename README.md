@@ -301,7 +301,7 @@ A aplicação requer configuração segura das variáveis de ambiente. Em produ�
 
 
 <a id="como-executar-localmente"></a>
-🚀 Como executar localmente
+## 🚀 Como executar localmente
 
 ### Pré-requisitos
 
